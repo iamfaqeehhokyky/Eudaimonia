@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -17,7 +17,9 @@ def index():
     return 'Welcome to EUDAIMONIA web app. Let\'s get to building'
 
 
-
+@app.route('/input')
+def input():
+    return render_template ('input.html')
 
 
 
