@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -14,7 +14,7 @@ class User(db.Model):
 
 @app.route('/')
 def index():
-    return 'Welcome to EUDAIMONIA web app. Let\'s get to building'
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
