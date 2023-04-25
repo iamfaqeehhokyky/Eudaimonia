@@ -17,5 +17,10 @@ def index():
     return 'Welcome to EUDAIMONIA web app. Let\'s get to building'
 
 
+
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
