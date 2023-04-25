@@ -66,7 +66,7 @@ INSERT INTO Vegetarian_OW3 (Date, BreakFast, Lunch, Dinner) VALUES
 -- #####################People That Eat Twice Daily####################################################
 
 -- Create Timetable for Under_weight
-INSERT INTO Under_weight (Date, BreakFast, Lunch, Dinner) VALUES 
+INSERT INTO Under_weight2 (Date, BreakFast, Lunch, Dinner) VALUES 
   ('Sunday', 'Bread and tea', '', 'Eba and Vegetable soup'),
   ('Monday', 'Yam and Egg', '', 'Pasta(White)'),
   ('Tueday', 'Oatmeal', 'Rice and Beef Stew', ''),
@@ -99,7 +99,7 @@ INSERT INTO Over_weight2 (Date, BreakFast, Lunch, Dinner) VALUES
 -- ####################################Vegetarian################################################################
 
 -- Create Timetable for Under_weight
-INSERT INTO Vegetarian_UW3 (Date, BreakFast, Lunch, Dinner) VALUES 
+INSERT INTO Vegetarian_UW2 (Date, BreakFast, Lunch, Dinner) VALUES 
   ('Sunday', 'Bread and tea', 'Jollof rice and Tofu', ''),
   ('Monday', 'Tofu Lettuce Wraps', '', 'Pasta(White)'),
   ('Tueday', '', 'Rice and Beef Stew', 'Tofu'),
@@ -110,7 +110,7 @@ INSERT INTO Vegetarian_UW3 (Date, BreakFast, Lunch, Dinner) VALUES
 
   
 -- Create Timetable for Normal_weight
-INSERT INTO Vegetarian_NW3 (Date, BreakFast, Lunch, Dinner) VALUES 
+INSERT INTO Vegetarian_NW2 (Date, BreakFast, Lunch, Dinner) VALUES 
   ('Sunday', '', 'Jollof rice and Tofu', 'Eba and Vegetable soup'),
   ('Monday', 'Tofu Lettuce Wraps', 'Beans', ''),
   ('Tueday', 'Apple Fruit', 'Rice and Beef Stew', 'Wheat with Cream of Mushroom Soup'),
@@ -120,7 +120,7 @@ INSERT INTO Vegetarian_NW3 (Date, BreakFast, Lunch, Dinner) VALUES
   ('Saturday', 'Beans cake(Akara)', 'Cucumber(Fruit intake)', 'Jollof Rice');
 
 -- Create Timetable for Over_weight
-INSERT INTO Vegetarian_OW3 (Date, BreakFast, Lunch, Dinner) VALUES 
+INSERT INTO Vegetarian_OW2 (Date, BreakFast, Lunch, Dinner) VALUES 
   ('Sunday', 'Beans cake(Akara)', 'Fruit Salad', 'Jollof Rice'),
   ('Monday', '', 'Tofu Lettuce Wraps', 'Wheat and Vegetanble soup'),
   ('Tueday', 'Apple Fruit', 'Tofu', 'Jollof rice'),
