@@ -62,6 +62,41 @@ INSERT INTO Vegetarian_OW3 (Date, BreakFast, Lunch, Dinner) VALUES
   ('Friday', 'Potatoes(Boiled)', 'Watermellon', 'Eba and Edi Ikiankon soup'),
   ('Saturday', 'Healthy Body Fast', 'Cucumber(Fruit intakes)', 'Rice and Beans with Beaf Stew');
 
+  -- ####################################Vegetarian################################################################
+
+-- Create Timetable for Under_weight
+INSERT INTO Allegies_UW3 (Date, BreakFast, Lunch, Dinner) VALUES 
+  ('Sunday', 'Bread and tea', 'Jollof rice and Tofu', 'Eba and Vegetable soup'),
+  ('Monday', 'Tofu Lettuce Wraps', 'Beans', 'Pasta(White)'),
+  ('Tueday', 'Akara(beans cake)', 'Rice and Beef Stew', 'Tofu'),
+  ('Wenesday', 'Bread and tea', 'Beans and Pap', 'Amala and Egusi Soup'),
+  ('Thursday', 'Fried Potatoes ', 'Watermellon', 'Rice and Tomatoe Stew'),
+  ('Friday', 'Breadand tea', 'Jollof Spaghetti', 'Eba and Edikang Ikang soup'),
+  ('Saturday', 'Beans cake(Akara)', 'Pasta(white)', 'Eko and Vegetable Soup');
+
+  
+-- Create Timetable for Normal_weight
+INSERT INTO Allegies_NW3 (Date, BreakFast, Lunch, Dinner) VALUES 
+  ('Sunday', 'Bread and tea', 'Jollof rice and Tofu', 'Eba and Vegetable soup'),
+  ('Monday', 'Tofu Lettuce Wraps', 'Beans', 'Pasta(White)'),
+  ('Tueday', 'Fruit Salad', 'Rice and Beef Stew', 'Eba with Cream of Beaf Soup'),
+  ('Wenesday', 'Sweet Potatoes', 'Tofu', 'Semovita and Ogbono Soup'),
+  ('Thursday', 'Tofu Lettuce Wraps', 'Beans', 'Rice and Tomatoe Stew'),
+  ('Friday', 'Bread and tea', 'Jollof Spaghetti', 'Eba and Edi Ikiankon soup'),
+  ('Saturday', 'Beans cake(Akara)', 'Grape', 'Jollof Rice');
+
+-- Create Timetable for Over_weight
+INSERT INTO Allegies_OW3 (Date, BreakFast, Lunch, Dinner) VALUES 
+  ('Sunday', 'Beans cake(Akara)', 'Fruit Salad', 'Jollof Rice'),
+  ('Monday', 'White Spaghetti with Beaf Stew', 'Tofu Lettuce Wraps', 'Amala and Vegetanble soup'),
+  ('Tueday', 'Fruit Salad', 'Tofu', 'Jollof rice'),
+  ('Wenesday', 'Beans Cake(Akara)', 'Berry', 'Vegetables'),
+  ('Thursday', 'Bread and tea ', 'Fruit Salad', 'Eba and Egusi Soup'),
+  ('Friday', 'Potatoes(Boiled)', 'Orange', 'Eba and Edi Ikiankon soup'),
+  ('Saturday', 'Healthy Body Fast', 'Cucumber', 'Rice and Beans with Beaf Stew');
+
+
+
 -- ####################################################################################################
 -- #####################People That Eat Twice Daily####################################################
 
@@ -128,3 +163,38 @@ INSERT INTO Vegetarian_OW2 (Date, BreakFast, Lunch, Dinner) VALUES
   ('Thursday', 'Bread and tea ', 'Peas/Almond', 'Eba and Egusi Soup'),
   ('Friday', 'Potatoes(Boiled)', 'Watermellon', ''),
   ('Saturday', 'Healthy Body Fast', 'Cucumber(Fruit intakes)', 'Rice and Beans with Beaf Stew');
+
+
+
+  -- ####################################Vegetarian################################################################
+
+-- Create Timetable for Under_weight
+INSERT INTO Allegies_UW2 (Date, BreakFast, Lunch, Dinner) VALUES 
+  ('Sunday', 'Bread and tea', 'Jollof rice and Tofu', 'Eba and Vegetable soup'),
+  ('Monday', 'Tofu Lettuce Wraps', 'Beans', 'Pasta(White)'),
+  ('Tueday', 'Akara(beans cake)', 'Rice and Beef Stew', 'Tofu'),
+  ('Wenesday', 'Bread and tea', 'Beans and Pap', 'Amala and Egusi Soup'),
+  ('Thursday', 'Fried Potatoes ', 'Watermellon', 'Rice and Tomatoe Stew'),
+  ('Friday', 'Breadand tea', 'Jollof Spaghetti', 'Eba and Edikang Ikang soup'),
+  ('Saturday', 'Beans cake(Akara)', 'Pasta(white)', 'Eko and Vegetable Soup');
+
+  
+-- Create Timetable for Normal_weight
+INSERT INTO Allegies_NW2 (Date, BreakFast, Lunch, Dinner) VALUES 
+  ('Sunday', 'Bread and tea', 'Jollof rice and Tofu', 'Eba and Vegetable soup'),
+  ('Monday', 'Tofu Lettuce Wraps', 'Beans', 'Pasta(White)'),
+  ('Tueday', 'Fruit Salad', 'Rice and Beef Stew', 'Eba with Cream of Beaf Soup'),
+  ('Wenesday', 'Sweet Potatoes', 'Tofu', 'Amala and Ogbono Soup'),
+  ('Thursday', 'Tofu Lettuce Wraps', 'Beans', 'Rice and Tomatoe Stew'),
+  ('Friday', 'Bread and tea', 'Jollof Spaghetti', 'Eba and Edi Ikiankon soup'),
+  ('Saturday', 'Beans cake(Akara)', 'Grape', 'Jollof Rice');
+
+-- Create Timetable for Over_weight
+INSERT INTO Allegies_OW2 (Date, BreakFast, Lunch, Dinner) VALUES 
+  ('Sunday', 'Beans cake(Akara)', 'Fruit Salad', 'Jollof Rice'),
+  ('Monday', 'White Spaghetti with Beaf Stew', 'Tofu Lettuce Wraps', 'Amala and Vegetanble soup'),
+  ('Tueday', 'Fruit Salad', 'Tofu', 'Jollof rice'),
+  ('Wenesday', 'Beans Cake(Akara)', 'Berry', 'Vegetables'),
+  ('Thursday', 'Bread and tea ', 'Fruit Salad', 'Eba and Egusi Soup'),
+  ('Friday', 'Potatoes(Boiled)', 'Orange', 'Eba and Edi Ikiankon soup'),
+  ('Saturday', 'Healthy Body Fast', 'Cucumber', 'Rice and Beans with Beaf Stew');

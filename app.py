@@ -117,8 +117,8 @@ def meal():
         if request.method == "POST":    
             name=request.form['name']
             session['name'] = name
-            Vegetarian=request.form['Vegetarian']
-            # Allergies=request.form['Allergies']
+            vegetarian=request.form['Vegetarian']
+            allergies=request.form['Allergies']
             height=float(request.form['height'])
             weight=float(request.form['weight'])
             meal=request.form['meal']
@@ -129,45 +129,81 @@ def meal():
 
             if bmi <= 18.5:        
 
-                if Vegetarian == 'Yes':
-                    if meal == 'two':
-                        replicate_table('Vegetarian_UW2', name)
-                    elif meal == 'three':
-                        replicate_table('Vegetarian_UW3', name)
-                elif Vegetarian == 'N0':
-                    if meal == 'two':
-                        replicate_table('Under_weight2', name)
-                    elif meal == 'three':
-                        replicate_table('Under_weight3', name)
+                if vegetarian == 'Yes':
+                    if allergies == "Yes":
+                        if meal == 'two':
+                            replicate_table('Allegies_UW2', name)
+                        elif meal == 'three':
+                            replicate_table('Allegies_UW3', name)
+                    elif allergies == "No":
+                        if meal == 'two':
+                            replicate_table('Vegetarian_UW2', name)
+                        elif meal == 'three':
+                            replicate_table('Vegetarian_UW3', name)
+                elif vegetarian == 'N0':
+                    if allergies == "Yes":
+                        if meal == 'two':
+                            replicate_table('Allegies_UW2', name)
+                        elif meal == 'three':
+                            replicate_table('Allegies_UW3', name)
+                    elif allergies == "No":
+                        if meal == 'two':
+                            replicate_table('Under_weight2', name)
+                        elif meal == 'three':
+                            replicate_table('Under_weight3', name)
                 meal = get_meal_from_db(name)
                 return render_template("meal.html", meal=meal)
 
 
             elif bmi > 18.5:
-                if Vegetarian == 'Yes':
-                    if meal == 'two':
-                        replicate_table('Vegetarian_NW2', name)
-                    elif meal == 'three':
-                        replicate_table('Vegetarian_NW3', name)
-                elif Vegetarian == 'N0':
-                    if meal == 'two':
-                        replicate_table('Normal_weight2', name)
-                    elif meal == 'three':
-                        replicate_table('Normal_weight3', name)
+                if vegetarian == 'Yes':
+                    if allergies == "Yes":
+                        if meal == 'two':
+                            replicate_table('Allegies_NW2', name)
+                        elif meal == 'three':
+                            replicate_table('Allegies_NW3', name)
+                    elif allergies == "No":
+                        if meal == 'two':
+                            replicate_table('Vegetarian_NW2', name)
+                        elif meal == 'three':
+                            replicate_table('Vegetarian_NW3', name)
+                elif vegetarian == 'N0':
+                    if allergies == "Yes":
+                        if meal == 'two':
+                            replicate_table('Allegies_NW2', name)
+                        elif meal == 'three':
+                            replicate_table('Allegies_NW3', name)
+                    elif allergies == "No":
+                        if meal == 'two':
+                            replicate_table('Normal_weight2', name)
+                        elif meal == 'three':
+                            replicate_table('Normal_weight3', name)
                 meal = get_meal_from_db(name)
                 return render_template("meal.html", meal=meal)
                 
             elif bmi > 26.0:
-                if Vegetarian == 'Yes':
-                    if meal == 'two':
-                        replicate_table('Vegetarian_OW2', name)
-                    elif meal == 'three':
-                        replicate_table('Vegetarian_OW3', name)
-                elif Vegetarian == 'N0':
-                    if meal == 'two':
-                        replicate_table('Over_weight2', name)
-                    elif meal == 'three':
-                        replicate_table('Over_weight3', name)
+                if vegetarian == 'Yes':
+                    if allergies == "Yes":
+                        if meal == 'two':
+                            replicate_table('Allegies_OW2', name)
+                        elif meal == 'three':
+                            replicate_table('Allegies_OW3', name)
+                    elif allergies == "No":
+                        if meal == 'two':
+                            replicate_table('Vegetarian_OW2', name)
+                        elif meal == 'three':
+                            replicate_table('Vegetarian_OW3', name)
+                elif vegetarian == 'N0':
+                    if allergies == "Yes":
+                        if meal == 'two':
+                            replicate_table('Allegies_OW2', name)
+                        elif meal == 'three':
+                            replicate_table('Allegies_OW3', name)
+                    elif allergies == "No":
+                        if meal == 'two':
+                            replicate_table('Over_weight2', name)
+                        elif meal == 'three':
+                            replicate_table('Over_weight3', name)
                 meal = get_meal_from_db(name)
                 return render_template("meal.html", meal=meal)
         elif request.method == "GET":

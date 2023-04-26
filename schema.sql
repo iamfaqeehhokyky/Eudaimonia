@@ -42,6 +42,28 @@ CREATE TABLE IF NOT EXISTS Vegetarian_OW3 (
 );
 
 
+CREATE TABLE IF NOT EXISTS Allegies_UW3 (
+  Date TEXT Not NULL,
+  BreakFast TEXT,
+  Lunch TEXT,
+  Dinner TEXT
+);
+
+CREATE TABLE IF NOT EXISTS Allegies_NW3 (
+  Date TEXT Not NULL,
+  BreakFast TEXT,
+  Lunch TEXT,
+  Dinner TEXT
+);
+
+CREATE TABLE IF NOT EXISTS Allegies_OW3 (
+  Date TEXT Not NULL,
+  BreakFast TEXT,
+  Lunch TEXT,
+  Dinner TEXT
+);
+
+
 
 
 
@@ -97,6 +119,27 @@ CREATE TABLE IF NOT EXISTS Vegetarian_OW2 (
   Dinner TEXT
 );
 
+
+CREATE TABLE IF NOT EXISTS Allegies_UW2 (
+  Date TEXT Not NULL,
+  BreakFast TEXT,
+  Lunch TEXT,
+  Dinner TEXT
+);
+
+CREATE TABLE IF NOT EXISTS Allegies_NW2 (
+  Date TEXT Not NULL,
+  BreakFast TEXT,
+  Lunch TEXT,
+  Dinner TEXT
+);
+
+CREATE TABLE IF NOT EXISTS Allegies_OW2 (
+  Date TEXT Not NULL,
+  BreakFast TEXT,
+  Lunch TEXT,
+  Dinner TEXT
+);
 
 
 
