@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, g, redirect
+from flask import Flask, render_template, request, g, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///example.db'
 db = SQLAlchemy(app)
+app.secret_key='your'
 
 
 class User(db.Model):
@@ -62,6 +63,14 @@ def db_execute(script, args=()):
     conn.commit()
     return True
 
+# @app.before_request
+# def before_request():
+#     g.user = None
+#     if 'user_id' in session:
+#         # Retrieve user from the database using session['user_id']
+#         # and store it in g.user
+#         g.user = get_user_from_database(session['user_id'])
+
 def replicate_table(table_name, new_table_name):
     try:
         # Retrieve column names and types for the original table
@@ -107,6 +116,7 @@ def input():
 def meal():
         if request.method == "POST":    
             name=request.form['name']
+            session['name'] = name
             Vegetarian=request.form['Vegetarian']
             # Allergies=request.form['Allergies']
             height=float(request.form['height'])
@@ -161,7 +171,10 @@ def meal():
                 meal = get_meal_from_db(name)
                 return render_template("meal.html", meal=meal)
         elif request.method == "GET":
-            return render_template("meal.html")
+            name = session.get('name')
+            print(name)
+            meal = get_meal_from_db(name)
+            return render_template("meal.html", meal=meal)
 
 
 if __name__ == '__main__':
