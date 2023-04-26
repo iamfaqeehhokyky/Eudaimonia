@@ -60,42 +60,44 @@ def db_execute(script, args=()):
     conn = get_db()
     conn.execute(script, args)
     conn.commit()
-    conn.close()
     return True
 
-conn = sqlite3.connect('database.db')
-
 def replicate_table(table_name, new_table_name):
-    c = conn.cursor()
+    try:
+        # Retrieve column names and types for the original table
+        column_data = db_query("PRAGMA table_info(%s)" % table_name)
 
-    # Retrieve column names and types for the original table
-    c.execute("PRAGMA table_info(%s)" % table_name)
-    column_data = c.fetchall()
+        # Construct a new CREATE TABLE query with the same columns and types
+        create_query = "CREATE TABLE %s (" % new_table_name
+        for column in column_data:
+            column_name = column[1]
+            column_type = column[2]
+            create_query += "%s %s, " % (column_name, column_type)
+        create_query = create_query[:-2] + ")"
 
-    # Construct a new CREATE TABLE query with the same columns and types
-    create_query = "CREATE TABLE %s (" % new_table_name
-    for column in column_data:
-        column_name = column[1]
-        column_type = column[2]
-        create_query += "%s %s, " % (column_name, column_type)
-    create_query = create_query[:-2] + ")"
+        # Execute the CREATE TABLE query for the new table
+        db_execute(create_query)
 
-    # Execute the CREATE TABLE query for the new table
-    c.execute(create_query)
+        # Insert the data from the original table into the new table
+        db_execute("INSERT INTO %s SELECT * FROM %s" % (new_table_name, table_name))
 
-    # Insert the data from the original table into the new table
-    c.execute("INSERT INTO %s SELECT * FROM %s" % (new_table_name, table_name))
-
-    conn.commit()
-    print("Successfully replicated %s as %s" % (table_name, new_table_name))
+        print("Successfully replicated %s as %s" % (table_name, new_table_name))
+    except sqlite3.Error as e:
+        if str(e).startswith('table %s already exists' % new_table_name):
+            print('Table %s already exists. Please choose a different name.' % new_table_name)
+        else:
+            print('Error replicating table:', e)
 
 # Example usage: replicate_table('original_table_name', 'new_table_name')
-def get_meal_from_db(name):
-    results = db_query("SELECT * FROM name = :name", {"name": name})
+def get_meal_from_db(table_name):
+    query = "SELECT * FROM {}".format(table_name)
+    results = db_query(query)
     if results:
-        return results[0]
+        return results
     else:
         return None
+
+
 
 @app.route('/input')
 def input():
@@ -103,61 +105,63 @@ def input():
 
 @app.route('/meal', methods=("GET", "POST"))
 def meal():
-    
-        name=request.form['name']
-        Vegetarian=request.form['Vegetarian']
-        # Allergies=request.form['Allergies']
-        height=float(request.form['height'])
-        weight=float(request.form['weight'])
-        meal=request.form['meal']
+        if request.method == "POST":    
+            name=request.form['name']
+            Vegetarian=request.form['Vegetarian']
+            # Allergies=request.form['Allergies']
+            height=float(request.form['height'])
+            weight=float(request.form['weight'])
+            meal=request.form['meal']
 
-        m = height*height
-        kg= weight
-        bmi = kg/m
+            m = height*height
+            kg= weight
+            bmi = kg/m
 
-        if bmi <= 18.5:        
+            if bmi <= 18.5:        
 
-            if Vegetarian == 'Yes':
-                if meal == 'two':
-                    replicate_table('Vegetarian_UW2', name)
-                elif meal == 'three':
-                    replicate_table('Vegetarian_UW3', name)
-            elif Vegetarian == 'N0':
-                if meal == 'two':
-                    replicate_table('Under_weight2', name)
-                elif meal == 'three':
-                    replicate_table('Under_weight3', name)
-            meal = get_meal_from_db(name)
-            return render_template("meal.html", meal=meal)
+                if Vegetarian == 'Yes':
+                    if meal == 'two':
+                        replicate_table('Vegetarian_UW2', name)
+                    elif meal == 'three':
+                        replicate_table('Vegetarian_UW3', name)
+                elif Vegetarian == 'N0':
+                    if meal == 'two':
+                        replicate_table('Under_weight2', name)
+                    elif meal == 'three':
+                        replicate_table('Under_weight3', name)
+                meal = get_meal_from_db(name)
+                return render_template("meal.html", meal=meal)
 
 
-        elif bmi > 18.5:
-            if Vegetarian == 'Yes':
-                if meal == 'two':
-                    replicate_table('Vegetarian_NW2', name)
-                elif meal == 'three':
-                    replicate_table('Vegetarian_NW3', name)
-            elif Vegetarian == 'N0':
-                if meal == 'two':
-                    replicate_table('Normal_weight2', name)
-                elif meal == 'three':
-                    replicate_table('Normal_weight3', name)
-            meal = get_meal_from_db(name)
-            return render_template("meal.html", meal=meal)
-            
-        elif bmi > 26.0:
-            if Vegetarian == 'Yes':
-                if meal == 'two':
-                    replicate_table('Vegetarian_OW2', name)
-                elif meal == 'three':
-                    replicate_table('Vegetarian_OW3', name)
-            elif Vegetarian == 'N0':
-                if meal == 'two':
-                    replicate_table('Over_weight2', name)
-                elif meal == 'three':
-                    replicate_table('Over_weight3', name)
-            meal = get_meal_from_db(name)
-            return render_template("meal.html", meal=meal)
+            elif bmi > 18.5:
+                if Vegetarian == 'Yes':
+                    if meal == 'two':
+                        replicate_table('Vegetarian_NW2', name)
+                    elif meal == 'three':
+                        replicate_table('Vegetarian_NW3', name)
+                elif Vegetarian == 'N0':
+                    if meal == 'two':
+                        replicate_table('Normal_weight2', name)
+                    elif meal == 'three':
+                        replicate_table('Normal_weight3', name)
+                meal = get_meal_from_db(name)
+                return render_template("meal.html", meal=meal)
+                
+            elif bmi > 26.0:
+                if Vegetarian == 'Yes':
+                    if meal == 'two':
+                        replicate_table('Vegetarian_OW2', name)
+                    elif meal == 'three':
+                        replicate_table('Vegetarian_OW3', name)
+                elif Vegetarian == 'N0':
+                    if meal == 'two':
+                        replicate_table('Over_weight2', name)
+                    elif meal == 'three':
+                        replicate_table('Over_weight3', name)
+                meal = get_meal_from_db(name)
+                return render_template("meal.html", meal=meal)
+        elif request.method == "GET":
+            return render_template("meal.html")
 
 
 if __name__ == '__main__':
