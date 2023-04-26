@@ -7,6 +7,26 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <h1>Meal</h1>
+
+    <p>Find your student id in the table below.</p>
+
+    <table>
+    <tr>
+        <th>Date</th>
+        <th>BreakFast</th>
+        <th>Lunch</th>
+        <th>Dinner</th>
+    </tr>
+    {% for food in meal %}
+        <tr>
+        <td>{{ food['Date'] }}</td>
+        <td>{{ food['BreakFast'] }}</td>
+        <td>{{ food['Lunch'] }}</td>
+        <td>{{ food['Dinner'] }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
 </body>
 </html>
