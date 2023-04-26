@@ -140,7 +140,7 @@ def meal():
                             replicate_table('Vegetarian_UW2', name)
                         elif meal == 'three':
                             replicate_table('Vegetarian_UW3', name)
-                elif vegetarian == 'N0':
+                elif vegetarian == 'No':
                     if allergies == "Yes":
                         if meal == 'two':
                             replicate_table('Allegies_UW2', name)
@@ -167,7 +167,7 @@ def meal():
                             replicate_table('Vegetarian_NW2', name)
                         elif meal == 'three':
                             replicate_table('Vegetarian_NW3', name)
-                elif vegetarian == 'N0':
+                elif vegetarian == 'No':
                     if allergies == "Yes":
                         if meal == 'two':
                             replicate_table('Allegies_NW2', name)
@@ -193,7 +193,7 @@ def meal():
                             replicate_table('Vegetarian_OW2', name)
                         elif meal == 'three':
                             replicate_table('Vegetarian_OW3', name)
-                elif vegetarian == 'N0':
+                elif vegetarian == 'No':
                     if allergies == "Yes":
                         if meal == 'two':
                             replicate_table('Allegies_OW2', name)
@@ -215,5 +215,3 @@ def meal():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
