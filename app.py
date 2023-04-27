@@ -6,8 +6,8 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///example.db'
 db = SQLAlchemy(app)
 
-#for mySQLite
-app.secret_key='your'
+# for mySQLite
+app.secret_key = 'your'
 DATABASE_FILE = 'database.db'
 
 
@@ -19,11 +19,10 @@ class User(db.Model):
 
 @app.route('/')
 def index():
-    return 'Welcome to EUDAIMONIA web app. Let\'s get to building'
+    return render_template('index.html')
 
 
-
-#Usuage based on mySQLite
+# Usuage based on mySQLite
 
 # Get a useable connection to the database
 def get_db():
@@ -34,6 +33,8 @@ def get_db():
     return db
 
 # Close the database connection when the app shuts down
+
+
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
@@ -41,6 +42,8 @@ def close_connection(exception):
         db.close()
 
 # return the results from a database query
+
+
 def db_query(query, args=()):
     cur = get_db().execute(query, args)
     rv = cur.fetchall()
@@ -48,11 +51,14 @@ def db_query(query, args=()):
     return rv
 
 # execute a database query
+
+
 def db_execute(script, args=()):
     conn = get_db()
     conn.execute(script, args)
     conn.commit()
     return True
+
 
 def replicate_table(table_name, new_table_name):
     try:
@@ -71,16 +77,21 @@ def replicate_table(table_name, new_table_name):
         db_execute(create_query)
 
         # Insert the data from the original table into the new table
-        db_execute("INSERT INTO %s SELECT * FROM %s" % (new_table_name, table_name))
+        db_execute("INSERT INTO %s SELECT * FROM %s" %
+                   (new_table_name, table_name))
 
-        print("Successfully replicated %s as %s" % (table_name, new_table_name))
+        print("Successfully replicated %s as %s" %
+              (table_name, new_table_name))
     except sqlite3.Error as e:
         if str(e).startswith('table %s already exists' % new_table_name):
-            print('Table %s already exists. Please choose a different name.' % new_table_name)
+            print('Table %s already exists. Please choose a different name.' %
+                  new_table_name)
         else:
             print('Error replicating table:', e)
 
-# This get the details from the table in the database 
+# This get the details from the table in the database
+
+
 def get_meal_from_db(table_name):
     query = "SELECT * FROM {}".format(table_name)
     results = db_query(query)
@@ -89,109 +100,110 @@ def get_meal_from_db(table_name):
     else:
         return None
 
+
 @app.route('/input')
 def input():
-    return render_template ('input.html')
+    return render_template('input.html')
+
 
 @app.route('/meal', methods=("GET", "POST"))
 def meal():
-        if request.method == "POST":    
-            name=request.form['name']
-            session['name'] = name
-            vegetarian=request.form['Vegetarian']
-            allergies=request.form['Allergies']
-            height=float(request.form['height'])
-            weight=float(request.form['weight'])
-            meal=request.form['meal']
+    if request.method == "POST":
+        name = request.form['name']
+        session['name'] = name
+        vegetarian = request.form['Vegetarian']
+        allergies = request.form['Allergies']
+        height = float(request.form['height'])
+        weight = float(request.form['weight'])
+        meal = request.form['meal']
 
-            m = height*height
-            kg= weight
-            bmi = kg/m
+        m = height*height
+        kg = weight
+        bmi = kg/m
 
-            if bmi <= 18.5:        
+        if bmi <= 18.5:
 
-                if vegetarian == 'Yes':
-                    if allergies == "Yes":
-                        if meal == 'two':
-                            replicate_table('Allegies_UW2', name)
-                        elif meal == 'three':
-                            replicate_table('Allegies_UW3', name)
-                    elif allergies == "No":
-                        if meal == 'two':
-                            replicate_table('Vegetarian_UW2', name)
-                        elif meal == 'three':
-                            replicate_table('Vegetarian_UW3', name)
-                elif vegetarian == 'No':
-                    if allergies == "Yes":
-                        if meal == 'two':
-                            replicate_table('Allegies_UW2', name)
-                        elif meal == 'three':
-                            replicate_table('Allegies_UW3', name)
-                    elif allergies == "No":
-                        if meal == 'two':
-                            replicate_table('Under_weight2', name)
-                        elif meal == 'three':
-                            replicate_table('Under_weight3', name)
-                meal = get_meal_from_db(name)
-                return render_template("meal.html", meal=meal)
-
-
-            elif bmi > 18.5:
-                if vegetarian == 'Yes':
-                    if allergies == "Yes":
-                        if meal == 'two':
-                            replicate_table('Allegies_NW2', name)
-                        elif meal == 'three':
-                            replicate_table('Allegies_NW3', name)
-                    elif allergies == "No":
-                        if meal == 'two':
-                            replicate_table('Vegetarian_NW2', name)
-                        elif meal == 'three':
-                            replicate_table('Vegetarian_NW3', name)
-                elif vegetarian == 'No':
-                    if allergies == "Yes":
-                        if meal == 'two':
-                            replicate_table('Allegies_NW2', name)
-                        elif meal == 'three':
-                            replicate_table('Allegies_NW3', name)
-                    elif allergies == "No":
-                        if meal == 'two':
-                            replicate_table('Normal_weight2', name)
-                        elif meal == 'three':
-                            replicate_table('Normal_weight3', name)
-                meal = get_meal_from_db(name)
-                return render_template("meal.html", meal=meal)
-                
-            elif bmi > 26.0:
-                if vegetarian == 'Yes':
-                    if allergies == "Yes":
-                        if meal == 'two':
-                            replicate_table('Allegies_OW2', name)
-                        elif meal == 'three':
-                            replicate_table('Allegies_OW3', name)
-                    elif allergies == "No":
-                        if meal == 'two':
-                            replicate_table('Vegetarian_OW2', name)
-                        elif meal == 'three':
-                            replicate_table('Vegetarian_OW3', name)
-                elif vegetarian == 'No':
-                    if allergies == "Yes":
-                        if meal == 'two':
-                            replicate_table('Allegies_OW2', name)
-                        elif meal == 'three':
-                            replicate_table('Allegies_OW3', name)
-                    elif allergies == "No":
-                        if meal == 'two':
-                            replicate_table('Over_weight2', name)
-                        elif meal == 'three':
-                            replicate_table('Over_weight3', name)
-                meal = get_meal_from_db(name)
-                return render_template("meal.html", meal=meal)
-        elif request.method == "GET":
-            name = session.get('name')
-            print(name)
+            if vegetarian == 'Yes':
+                if allergies == "Yes":
+                    if meal == 'two':
+                        replicate_table('Allegies_UW2', name)
+                    elif meal == 'three':
+                        replicate_table('Allegies_UW3', name)
+                elif allergies == "No":
+                    if meal == 'two':
+                        replicate_table('Vegetarian_UW2', name)
+                    elif meal == 'three':
+                        replicate_table('Vegetarian_UW3', name)
+            elif vegetarian == 'No':
+                if allergies == "Yes":
+                    if meal == 'two':
+                        replicate_table('Allegies_UW2', name)
+                    elif meal == 'three':
+                        replicate_table('Allegies_UW3', name)
+                elif allergies == "No":
+                    if meal == 'two':
+                        replicate_table('Under_weight2', name)
+                    elif meal == 'three':
+                        replicate_table('Under_weight3', name)
             meal = get_meal_from_db(name)
             return render_template("meal.html", meal=meal)
+
+        elif bmi > 18.5:
+            if vegetarian == 'Yes':
+                if allergies == "Yes":
+                    if meal == 'two':
+                        replicate_table('Allegies_NW2', name)
+                    elif meal == 'three':
+                        replicate_table('Allegies_NW3', name)
+                elif allergies == "No":
+                    if meal == 'two':
+                        replicate_table('Vegetarian_NW2', name)
+                    elif meal == 'three':
+                        replicate_table('Vegetarian_NW3', name)
+            elif vegetarian == 'No':
+                if allergies == "Yes":
+                    if meal == 'two':
+                        replicate_table('Allegies_NW2', name)
+                    elif meal == 'three':
+                        replicate_table('Allegies_NW3', name)
+                elif allergies == "No":
+                    if meal == 'two':
+                        replicate_table('Normal_weight2', name)
+                    elif meal == 'three':
+                        replicate_table('Normal_weight3', name)
+            meal = get_meal_from_db(name)
+            return render_template("meal.html", meal=meal)
+
+        elif bmi > 26.0:
+            if vegetarian == 'Yes':
+                if allergies == "Yes":
+                    if meal == 'two':
+                        replicate_table('Allegies_OW2', name)
+                    elif meal == 'three':
+                        replicate_table('Allegies_OW3', name)
+                elif allergies == "No":
+                    if meal == 'two':
+                        replicate_table('Vegetarian_OW2', name)
+                    elif meal == 'three':
+                        replicate_table('Vegetarian_OW3', name)
+            elif vegetarian == 'No':
+                if allergies == "Yes":
+                    if meal == 'two':
+                        replicate_table('Allegies_OW2', name)
+                    elif meal == 'three':
+                        replicate_table('Allegies_OW3', name)
+                elif allergies == "No":
+                    if meal == 'two':
+                        replicate_table('Over_weight2', name)
+                    elif meal == 'three':
+                        replicate_table('Over_weight3', name)
+            meal = get_meal_from_db(name)
+            return render_template("meal.html", meal=meal)
+    elif request.method == "GET":
+        name = session.get('name')
+        print(name)
+        meal = get_meal_from_db(name)
+        return render_template("meal.html", meal=meal)
 
 
 if __name__ == '__main__':
