@@ -1,11 +1,14 @@
-from flask import Flask, render_template, request, g, redirect, session
+from flask import Flask, render_template, request, g, session
 from flask_sqlalchemy import SQLAlchemy
-
+import sqlite3
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///example.db'
 db = SQLAlchemy(app)
+
+#for mySQLite
 app.secret_key='your'
+DATABASE_FILE = 'database.db'
 
 
 class User(db.Model):
@@ -20,19 +23,7 @@ def index():
 
 
 
-
-
-
-
-
-
-
-
-
-
-import sqlite3
-
-DATABASE_FILE = 'database.db'
+#Usuage based on mySQLite
 
 # Get a useable connection to the database
 def get_db():
@@ -63,14 +54,6 @@ def db_execute(script, args=()):
     conn.commit()
     return True
 
-# @app.before_request
-# def before_request():
-#     g.user = None
-#     if 'user_id' in session:
-#         # Retrieve user from the database using session['user_id']
-#         # and store it in g.user
-#         g.user = get_user_from_database(session['user_id'])
-
 def replicate_table(table_name, new_table_name):
     try:
         # Retrieve column names and types for the original table
@@ -97,7 +80,7 @@ def replicate_table(table_name, new_table_name):
         else:
             print('Error replicating table:', e)
 
-# Example usage: replicate_table('original_table_name', 'new_table_name')
+# This get the details from the table in the database 
 def get_meal_from_db(table_name):
     query = "SELECT * FROM {}".format(table_name)
     results = db_query(query)
@@ -105,8 +88,6 @@ def get_meal_from_db(table_name):
         return results
     else:
         return None
-
-
 
 @app.route('/input')
 def input():
