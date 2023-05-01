@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, g, session
+from flask import Flask, render_template, request, g, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 
@@ -88,6 +88,18 @@ def get_meal_from_db(table_name):
         return results
     else:
         return None
+    
+@app.route('/update', methods=['POST'])
+def update():
+    name = session.get('name')
+    data = request.json
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute('UPDATE {} SET Breakfast = ?, Lunch = ?, Dinner = ? WHERE Date = ?'.format(name), (data['BreakFast'], data['Lunch'], data['Dinner'], data['Date']))
+    conn.commit()
+    conn.close()
+    return '/meal'
+
 
 @app.route('/input')
 def input():
@@ -104,6 +116,8 @@ def meal():
             weight=float(request.form['weight'])
             meal=request.form['meal']
 
+            grocery = name +'1'
+
             m = height*height
             kg= weight
             bmi = kg/m
@@ -114,24 +128,32 @@ def meal():
                     if allergies == "Yes":
                         if meal == 'two':
                             replicate_table('Allegies_UW2', name)
+                            replicate_table('Allegies_UW2_Grocery', grocery)
                         elif meal == 'three':
                             replicate_table('Allegies_UW3', name)
+                            replicate_table('Allegies_UW3_Grocery', grocery)
                     elif allergies == "No":
                         if meal == 'two':
                             replicate_table('Vegetarian_UW2', name)
+                            replicate_table('Vegetarian_UW2_Grocery', grocery)
                         elif meal == 'three':
                             replicate_table('Vegetarian_UW3', name)
+                            replicate_table('Vegetarian_UW3_Grocery', grocery)
                 elif vegetarian == 'No':
                     if allergies == "Yes":
                         if meal == 'two':
                             replicate_table('Allegies_UW2', name)
+                            replicate_table('Allegies_UW2_Grocery', grocery)
                         elif meal == 'three':
                             replicate_table('Allegies_UW3', name)
+                            replicate_table('Allegies_UW3_Grocery', grocery)
                     elif allergies == "No":
                         if meal == 'two':
                             replicate_table('Under_weight2', name)
+                            replicate_table('Under_weight2_Grocery', grocery)
                         elif meal == 'three':
                             replicate_table('Under_weight3', name)
+                            replicate_table('Under_weight3_Grocery', grocery)
                 meal = get_meal_from_db(name)
                 return render_template("meal.html", meal=meal)
 
@@ -141,24 +163,32 @@ def meal():
                     if allergies == "Yes":
                         if meal == 'two':
                             replicate_table('Allegies_NW2', name)
+                            replicate_table('Allegies_NW2_Grocery', grocery)
                         elif meal == 'three':
                             replicate_table('Allegies_NW3', name)
+                            replicate_table('Allegies_NW3_Grocery', grocery)
                     elif allergies == "No":
                         if meal == 'two':
                             replicate_table('Vegetarian_NW2', name)
+                            replicate_table('Vegetarian_NW2_Grocery', grocery)
                         elif meal == 'three':
                             replicate_table('Vegetarian_NW3', name)
+                            replicate_table('Vegetarian_NW3_Grocery', grocery)
                 elif vegetarian == 'No':
                     if allergies == "Yes":
                         if meal == 'two':
                             replicate_table('Allegies_NW2', name)
+                            replicate_table('Allegies_NW2_Grocery', grocery)
                         elif meal == 'three':
                             replicate_table('Allegies_NW3', name)
+                            replicate_table('Allegies_NW3_Grocery', grocery)
                     elif allergies == "No":
                         if meal == 'two':
                             replicate_table('Normal_weight2', name)
+                            replicate_table('Normal_weight2_Grocery', grocery)
                         elif meal == 'three':
                             replicate_table('Normal_weight3', name)
+                            replicate_table('Normal_weight3_Grocery', grocery)
                 meal = get_meal_from_db(name)
                 return render_template("meal.html", meal=meal)
                 
@@ -167,31 +197,54 @@ def meal():
                     if allergies == "Yes":
                         if meal == 'two':
                             replicate_table('Allegies_OW2', name)
+                            replicate_table('Allegies_OW2_Grocery', grocery)
                         elif meal == 'three':
                             replicate_table('Allegies_OW3', name)
+                            replicate_table('Allegies_0W3_Grocery', grocery)
                     elif allergies == "No":
                         if meal == 'two':
                             replicate_table('Vegetarian_OW2', name)
+                            replicate_table('Vegetarian_OW2_Grocery', grocery)
                         elif meal == 'three':
                             replicate_table('Vegetarian_OW3', name)
+                            replicate_table('Vegetarian_OW3_Grocery', grocery)
                 elif vegetarian == 'No':
                     if allergies == "Yes":
                         if meal == 'two':
                             replicate_table('Allegies_OW2', name)
+                            replicate_table('Allegies_OW2_Grocery', grocery)
                         elif meal == 'three':
                             replicate_table('Allegies_OW3', name)
+                            replicate_table('Allegies_OW3_Grocery', grocery)
                     elif allergies == "No":
                         if meal == 'two':
                             replicate_table('Over_weight2', name)
+                            replicate_table('Over_weight2_Grocery', grocery)
                         elif meal == 'three':
                             replicate_table('Over_weight3', name)
+                            replicate_table('Over_weight3_Grocery', grocery)
+                groceries = get_meal_from_db(grocery)
                 meal = get_meal_from_db(name)
-                return render_template("meal.html", meal=meal)
+                return render_template("meal.html", meal=meal, groceries=groceries)
         elif request.method == "GET":
             name = session.get('name')
-            print(name)
+            grocery = name + '1'
+            groceries = get_meal_from_db(grocery)
             meal = get_meal_from_db(name)
-            return render_template("meal.html", meal=meal)
+            return render_template("meal.html", meal=meal, groceries=groceries)
+        
+        
+@app.route('/grocery')
+def grocery():
+    name = session.get('name')
+    grocery = name + '1'
+    groceries = get_meal_from_db(grocery)
+    data = []
+    for row in groceries:
+        data.append({'Date': row[0], 'Item': row[1]})
+    return jsonify(data)
+
+
 
 
 if __name__ == '__main__':
