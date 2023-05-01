@@ -241,7 +241,7 @@ def grocery():
     groceries = get_meal_from_db(grocery)
     data = []
     for row in groceries:
-        data.append({'id': row[0], 'Item': row[1]})
+        data.append({'Date': row[0], 'Item': row[1]})
     return jsonify(data)
 
 
