@@ -39,7 +39,7 @@ def check_password(password, password_hash):
 def get_user(user_id):
     conn = sqlite3.connect('users.db')
     c = conn.cursor()
-    c.execute("SELECT id, email, first_name, last_name, username, gender, university_name, password FROM users WHERE id = ?", (user_id,))
+    c.execute("SELECT id, email, first_name, last_name, username, gender, university_name, password_hash FROM users WHERE id = ?", (user_id,))
     row = c.fetchone()
     conn.close()
     return {'id': row[0], 'email': row[1], 'first_name': row[2], 'last_name': row[3], 'username': row[4], 'gender': row[5], 'university_name': row[6], 'password': row[7]}
@@ -348,7 +348,7 @@ def signin():
         if check_password(password, password_hash):
             # Password is correct, store user ID in session
             session['user_id'] = row[0]
-            return redirect(url_for('home'))
+            return redirect('/')
         else:
             # Password is incorrect
             error = 'Invalid email or password'
