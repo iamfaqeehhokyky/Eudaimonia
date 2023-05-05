@@ -522,7 +522,8 @@ section {
     padding: 100px 0 60px 0;
   }
 
-  .hero .hero-img {
+  .hero .hero-img,
+  .hero .this {
     text-align: center;
     margin-top: 80px;
   }
