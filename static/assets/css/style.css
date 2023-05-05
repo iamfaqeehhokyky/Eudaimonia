@@ -25,7 +25,8 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+label {
   font-family: "Nunito", sans-serif;
 }
 
@@ -506,7 +507,7 @@ section {
 }
 
 .hero .hero-img {
-  text-align: right;
+  text-align: left;
 }
 
 @media (min-width: 1024px) {
@@ -1634,7 +1635,8 @@ section {
   margin-bottom: 0;
 }
 
-.contact .php-email-form {
+.contact .php-email-form,
+.contact .my-email-form {
   background: #fafbff;
   padding: 30px;
   height: 100%;
@@ -1681,6 +1683,7 @@ section {
 }
 
 .contact .php-email-form input,
+.contact .my-email-form select,
 .contact .php-email-form textarea {
   border-radius: 0;
   box-shadow: none;
@@ -1693,7 +1696,8 @@ section {
   border-color: #4154f1;
 }
 
-.contact .php-email-form input {
+.contact .php-email-form input,
+.contact .my-email-form select {
   padding: 10px 15px;
 }
 
@@ -1701,7 +1705,8 @@ section {
   padding: 12px 15px;
 }
 
-.contact .php-email-form button[type=submit] {
+.contact .php-email-form button[type=submit],
+.contact .my-email-form button[type=submit] {
   background: #4154f1;
   border: 0;
   padding: 10px 30px;
@@ -1710,7 +1715,8 @@ section {
   border-radius: 4px;
 }
 
-.contact .php-email-form button[type=submit]:hover {
+.contact .php-email-form button[type=submit]:hover,
+.contact .my-email-form button[type=submit]:hover {
   background: #5969f3;
 }
 
