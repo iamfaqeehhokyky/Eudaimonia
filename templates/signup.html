@@ -1,3 +1,127 @@
+{% extends 'base.html' %} {% block content %}
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="hero d-flex align-items-center contact">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 d-flex flex-column justify-content-center">
+        <h1 data-aos="fade-up">Welcome,<br />to EUDAIMONIA!</h1>
+        <h2 data-aos="fade-up" data-aos-delay="400">
+          Healthy Campus, Healthy You!
+        </h2>
+        <!-- <div data-aos="fade-up" data-aos-delay="600">
+          <div class="text-center text-lg-start">
+            <a
+              href="#about"
+              class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center"
+            >
+              <span>Get Started</span>
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div> -->
+      </div>
+
+      <!-- <div class="container col-lg-6 hero-img"> -->
+      <div class="col-lg-6 hero-img">
+        <div class="col-lg-12">
+          <h1>Sign up</h1>
+          {% if error %}
+          <p>{{ error }}</p>
+          {% endif %}
+          <form
+            action="{{ url_for('signup') }}"
+            method="post"
+            class="my-email-form"
+          >
+            <div class="row gy-4">
+              <!-- <label>Email address:</label> -->
+              <div class="col-md-12">
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  placeholder="Your Email"
+                  required
+                />
+              </div>
+
+              <!-- <label>First Name:</label> -->
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  name="first_name"
+                  class="form-control"
+                  placeholder="First Name"
+                  required
+                />
+              </div>
+
+              <!-- <label>Last Name:</label> -->
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  name="last_name"
+                  class="form-control"
+                  placeholder="Last Name"
+                  required
+                />
+              </div>
+
+              <!-- <label>Username:</label> -->
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  name="username"
+                  class="form-control"
+                  placeholder="Username"
+                  required
+                />
+              </div>
+
+              <!-- <label>Gender:</label> -->
+              <div class="col-md-6">
+                <select name="gender" required>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <!-- <label>University Name:</label> -->
+              <div class="col-md-12">
+                <input
+                  type="text"
+                  name="university_name"
+                  class="form-control"
+                  placeholder="University Name"
+                  required
+                />
+              </div>
+
+              <!-- <label>Password:</label> -->
+              <div class="col-md-12">
+                <input
+                  type="password"
+                  class="form-control"
+                  name="password"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+
+              <div class="col-md-12 text-center">
+                <button type="submit">Sign up</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Hero -->
+{% endblock %}
+
 <h1>Sign up</h1>
 {% if error %}
 <p>{{ error }}</p>
