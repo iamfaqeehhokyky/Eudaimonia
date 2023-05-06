@@ -164,6 +164,8 @@ def update():
 # this directs users to the database were they fill the form were a table can be made for them base on their nutrional requirements
 @app.route('/input')
 def input():
+    if g.user is None:
+        return redirect(url_for('signin'))
     return render_template('input.html')
 
 

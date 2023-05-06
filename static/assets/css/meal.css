@@ -3,24 +3,30 @@ table {
     text-align: center;
     border-collapse: collapse;
     width: 100%;
-    background: linear-gradient(to bottom right, #0077b3, #0083c3, #008fce, #0096db, #00a3e6);
+    background: linear-gradient(to bottom right, #54666e, #84caee, #0b1418, #bcc5c9, #5ca5c2);
   }
   
-  th, td {
+  td {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 10px solid #ccc;
     color: #fff;
   }
   
   th {
-    background-color: #333333;
+    background-color: #73738f;
+    padding: 10px;
+    border: 10px solid #ccc;
+    color: #fff;
   }
   
 body{
-    background-color: #999;
+    background-color: #73738f;
+    color: #fff;
 }
 
 button{
+    position: absolute;
+    right:0;
     
     background-color: #5e5e5e;
     color: #fff;
