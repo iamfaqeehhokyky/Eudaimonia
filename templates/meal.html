@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meal Page</title>
+    <!-- Template meal CSS File -->
+    <link
+      href="{{ url_for('static', filename='assets/css/meal.css') }}"
+      rel="stylesheet"
+    />
 </head>
 <body>
     <h1>Meal</h1>
@@ -43,69 +48,9 @@
 
 <!-- using javascript to save the edited table and send it to the database and used AJAX to send 
   the updated data if outside the table is cliked to '/update' for processing to the database -->
-<script>
 
 
-
-document.getElementById('grocery').addEventListener('click', function() {
-  var table = document.getElementById('gtable');
-  if (table.style.display === 'none') {
-    // This set the table to be hidden, to show it
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/grocery', true);
-    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-        var data = JSON.parse(xhr.responseText);
-        // This remove the table body when the outside of the page is clicked
-        var tbody = table.getElementsByTagName('tbody')[0];
-        tbody.innerHTML = '';
-        // this get the data from the 'grocery' route and inserts it into the table
-        for (var i = 0; i < data.length; i++) {
-          var row = tbody.insertRow();
-          var DateCell = row.insertCell();
-          var ItemCell = row.insertCell();
-          DateCell.appendChild(document.createTextNode(data[i].Date));
-          ItemCell.appendChild(document.createTextNode(data[i].Item));
-        }
-        // this Shows the table when the button for grocery is clicked
-        table.style.display = 'block';
-      }
-    };
-    xhr.send();
-  } else {
-    // this makes the table hidden when outside of the table is clicked
-    table.style.display = 'none';
-  }
-});
-
-
-// This is specifical for the update of the table contents
-  function update(food) {
-      var Date = food.cells[0].textContent;
-      var BreakFast = food.cells[1].textContent;
-      var Lunch = food.cells[2].textContent;
-      var Dinner = food.cells[3].textContent;
-
-    // this sends the updated data to the server
-    var xhr = new XMLHttpRequest();
-      xhr.open('POST', '/update', true);
-      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-      xhr.send(JSON.stringify({
-        'Date': Date,
-        'BreakFast': BreakFast,
-        'Lunch': Lunch,
-        'Dinner': Dinner
-      }));
-  }
-
-  document.addEventListener('blur', function(e) {
-    if (e.target.matches('td[contenteditable]')) {
-      update(e.target.parentElement);
-    }
-  }, true);
-</script>
-
-
+  <!-- Template meal JS File -->
+  <script src="{{url_for('static', filename='assets/js/meal.js')}}"></script>
 </body>
 </html>

@@ -289,7 +289,7 @@ def signin():
         if check_password(password, password_hash):
             # Password is correct, store user ID in session
             session['user_id'] = row[0]
-            return redirect('/meal')
+            return redirect('/input')
         else:
             # Password is incorrect
             error = 'Invalid email or password'

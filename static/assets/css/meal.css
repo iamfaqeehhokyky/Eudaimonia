@@ -1,0 +1,18 @@
+table {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    border-collapse: collapse;
+    width: 100%;
+    background: linear-gradient(to bottom right, #0077b3, #0083c3, #008fce, #0096db, #00a3e6);
+  }
+  
+  th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    color: #fff;
+  }
+  
+  th {
+    background-color: #333333;
+  }
+  
