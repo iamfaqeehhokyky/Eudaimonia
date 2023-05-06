@@ -26,8 +26,9 @@ body{
 
 button{
     position: absolute;
-    right:0;
-    
-    background-color: #5e5e5e;
+    right: 0.5em;
+    width: 5cm;
+    height: 2cm;
+    background-color: #4f4e7a;
     color: #fff;
 }
