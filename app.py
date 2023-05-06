@@ -151,7 +151,7 @@ def get_meal_from_db(table_name):
 # edit made to the table is sent here where it is being sent to the databse for an update
 @app.route('/update', methods=['POST'])
 def update():
-    name = session.get('name')
+    name = g.user['username']# get the username provided in the sign up page
     data = request.json
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
@@ -171,8 +171,10 @@ def input():
 #this takes in the submitted form can provides a table for the users base on their names
 @app.route('/meal', methods=["GET", "POST"])
 def meal():
+    if g.user is None:
+        return redirect(url_for('signin'))
     if request.method == "POST":
-        name = request.form['name']
+        name = g.user['username']# get the username provided in the sign up page
         session['name'] = name
         vegetarian = request.form['Vegetarian']
         allergies = request.form['Allergies']
@@ -216,7 +218,7 @@ def meal():
         return render_template("meal.html", meal=meal, groceries=groceries)
 
     elif request.method == "GET":
-        name = session.get('name')
+        name = g.user['username']# get the username provided in the sign up page
         grocery = name + '1'
         groceries = get_meal_from_db(grocery)
         meal = get_meal_from_db(name)
@@ -225,7 +227,7 @@ def meal():
 #this provides a table for the grocery list
 @app.route('/grocery')
 def grocery():
-    name = session.get('name')
+    name = g.user['username']# get the username provided in the sign up page
     grocery = name + '1'
     groceries = get_meal_from_db(grocery)
     data = []
@@ -287,7 +289,7 @@ def signin():
         if check_password(password, password_hash):
             # Password is correct, store user ID in session
             session['user_id'] = row[0]
-            return redirect('/input')
+            return redirect('/meal')
         else:
             # Password is incorrect
             error = 'Invalid email or password'
