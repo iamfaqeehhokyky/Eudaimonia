@@ -17,9 +17,11 @@ table {
   }
   
 body{
-    background-color: #9bb2bd;
+    background-color: #999;
 }
 
 button{
-    background-color: #0096db;
+    
+    background-color: #5e5e5e;
+    color: #fff;
 }
