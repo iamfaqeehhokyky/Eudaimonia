@@ -1707,7 +1707,9 @@ section {
 }
 
 .contact .php-email-form button[type=submit],
-.contact .my-email-form button[type=submit] {
+.contact .my-email-form button[type=submit],
+.contact .my-email-form input[type=submit],
+.contact .my-email-form input[type=reset] {
   background: #4154f1;
   border: 0;
   padding: 10px 30px;
@@ -1717,7 +1719,9 @@ section {
 }
 
 .contact .php-email-form button[type=submit]:hover,
-.contact .my-email-form button[type=submit]:hover {
+.contact .my-email-form button[type=submit]:hover,
+.contact .my-email-form input[type=submit]:hover
+.contact .my-email-form input[type=reset]:hover {
   background: #5969f3;
 }
 
@@ -1731,6 +1735,11 @@ section {
   }
 }
 
+@media (max-width: 768px) {
+  .col-md-6 {
+    margin-bottom: 10px;
+  }
+}
 /*--------------------------------------------------------------
 # Blog
 --------------------------------------------------------------*/
