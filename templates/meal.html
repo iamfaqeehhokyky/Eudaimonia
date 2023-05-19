@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,51 +6,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meal Page</title>
     <!-- Template meal CSS File -->
-    <link
+<!-- <link
       href="{{ url_for('static', filename='assets/css/meal.css') }}"
       rel="stylesheet"
     />
-</head>
-<body>
-    <h1>Meal</h1>
+</head> -->
+<!-- <body> -->
+{% extends 'user_base.html' %} {% block title %}Eudaimonia - Meal Plan{%
+endblock %} {%block content %}
+<section id="contact" class="contact d-flex align-items-center contact">
+  <div class="container">
+    <header class="col-lg-12 hero-img section-header">
+      <div id="about" class="about">
+        <div class="content">
+          <h3>Welcome, {{ first_name }} 👋</h3>
+          <h2>Meal Plan Dashboard</h2>
+        </div>
+      </div>
+    </header>
 
-<!-- <p>Find your student t in the table below.</p> -->
+    <!-- <p>Find your student t in the table below.</p> -->
 
-<table id="table">
-  <tr>
-    <th>Date</th>
-    <th>BreakFast</th>
-    <th>Lunch</th>
-    <th>Dinner</th>
-  </tr>
-  {% for food in meal %}
-  <tr>
-    <td contenteditable>{{ food['Date'] }}</td>
-    <td contenteditable>{{ food['BreakFast'] }}</td>
-    <td contenteditable>{{ food['Lunch'] }}</td>
-    <td contenteditable>{{ food['Dinner'] }}</td>
-  </tr>
-  {% endfor %}
-</table>
+    <div class="container">
+      <div class="row justify-content-center">
+        <table id="table">
+          <tr>
+            <th>Date</th>
+            <th>BreakFast</th>
+            <th>Lunch</th>
+            <th>Dinner</th>
+          </tr>
+          {% for food in meal %}
+          <tr>
+            <td contenteditable>{{ food['Date'] }}</td>
+            <td contenteditable>{{ food['BreakFast'] }}</td>
+            <td contenteditable>{{ food['Lunch'] }}</td>
+            <td contenteditable>{{ food['Dinner'] }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
 
-<button id="grocery">Grocery Lists</button>
+      <button id="grocery" class="grocery">Grocery Lists</button>
 
-<table id="gtable" hidden>
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Item</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
-
+      <table id="gtable" hidden>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Item</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
 
 <!-- using javascript to save the edited table and send it to the database and used AJAX to send 
   the updated data if outside the table is cliked to '/update' for processing to the database -->
 
-
-  <!-- Template meal JS File -->
-  <script src="{{url_for('static', filename='assets/js/meal.js')}}"></script>
-</body>
-</html>
+{% endblock %}
