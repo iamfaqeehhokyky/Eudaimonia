@@ -26,8 +26,39 @@ h3,
 h4,
 h5,
 h6,
-label {
+label,
+table {
   font-family: "Nunito", sans-serif;
+}
+
+table {
+  text-align: center;
+  border-collapse: collapse;
+  width: 100%;
+  background: #f6f9ff;
+}
+
+td {
+  padding: 10px;
+  border: 5px solid #5969f3;
+  color: #444444;
+}
+
+th {
+  background-color: rgba(1, 22, 61, 0.9);
+  padding: 10px;
+  border: 5px solid #5969f3;
+  color: #fff;
+}
+
+.grocery {
+  position: absolute;
+  right: 0.5em;
+  width: 5cm;
+  height: 2cm;
+  background-color: #4154f1;
+  border: 5px solid #5969f3;
+  color: #fff;
 }
 
 /*--------------------------------------------------------------
