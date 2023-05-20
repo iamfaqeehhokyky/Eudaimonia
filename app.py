@@ -296,7 +296,7 @@ def signin():
         if check_password(password, password_hash):
             # Password is correct, store user ID in session
             session['user_id'] = row[0]
-            return redirect('/meal')
+            return redirect('/home')
         else:
             # Password is incorrect
             error = 'Invalid email or password'
@@ -316,6 +316,11 @@ def signout():
 def logout():
     session.clear()
     return redirect(url_for('signin'))
+
+@app.route('/home')
+def home():
+    return render_template('home.html', user=g.user)
+
 
 @app.route('/api')
 def api():
