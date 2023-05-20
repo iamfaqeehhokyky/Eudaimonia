@@ -324,16 +324,20 @@ def home():
 
 @app.route('/api')
 def api():
-    url = "https://i-m-all-ears.p.rapidapi.com/"
+    url = "https://workoutdb1.p.rapidapi.com/user/update"
 
-    querystring = {"id":""}
-
+    payload = {
+        "lastName": "DOE",
+        "firstName": "JOHN"
+    }
     headers = {
+        "content-type": "application/json",
+        "id-token": "{{idToken}}",
         "X-RapidAPI-Key": "040d644d14mshd1a90104a210a66p1edfabjsnc25e68304e4b",
-        "X-RapidAPI-Host": "i-m-all-ears.p.rapidapi.com"
+        "X-RapidAPI-Host": "workoutdb1.p.rapidapi.com"
     }
 
-    response = requests.get(url, headers=headers, params=querystring)
+    response = requests.patch(url, json=payload, headers=headers)
 
     a = (response.json())
     return render_template('api.html', a=a)
