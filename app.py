@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 import sqlite3
 import hashlib
 import os
+import requests
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -47,7 +48,6 @@ def get_user(user_id):
 
 @app.before_request
 def load_user():
-    """Loads the user from the database and stores it in the global `g.user` variable."""
     user_id = session.get('user_id')
     if user_id is not None:
         g.user = get_user(user_id)
@@ -55,13 +55,9 @@ def load_user():
         g.user = None
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
-    if g.user is not None:
-        first_name = g.user["first_name"]
-        return render_template('index.html', first_name=first_name)
-    else:
-        return render_template('index.html')
+    return render_template('index.html', user=g.user)
 
 # Route to the  blog page
 
@@ -169,11 +165,10 @@ def update():
 # this directs users to the database were they fill the form were a table can be made for them base on their nutrional requirements
 @app.route('/input')
 def input():
-    if g.user is not None:
-        first_name = g.user["first_name"]
-        return render_template('input.html', first_name=first_name)
-    else:
+    if g.user is None:
         return redirect(url_for('signin'))
+    return render_template('input.html')
+
 
 
 #this takes in the submitted form can provides a table for the users base on their names
@@ -223,19 +218,18 @@ def meal():
 
         groceries = get_meal_from_db(grocery)
         meal = get_meal_from_db(name)
-        # Display the user's first name on the client side
-        first_name = g.user['first_name']
-        return render_template("meal.html", meal=meal, groceries=groceries, first_name=first_name)
+        return render_template("meal.html", meal=meal, groceries=groceries)
 
     elif request.method == "GET":
-        name = g.user['username']# get the username provided in the sign up page
-        grocery = name + '1'
-        groceries = get_meal_from_db(grocery)
-        meal = get_meal_from_db(name)
+        try:
+            name = g.user['username']# get the username provided in the sign up page
+            grocery = name + '1'
+            groceries = get_meal_from_db(grocery)
+            meal = get_meal_from_db(name)
+            return render_template("meal.html", meal=meal, groceries=groceries)
         
-        # Display the user's first name on the client side
-        first_name = g.user['first_name']
-        return render_template("meal.html", meal=meal, groceries=groceries, first_name=first_name)
+        except sqlite3.OperationalError:
+                return render_template('input.html')
 
 #this provides a table for the grocery list
 @app.route('/grocery')
@@ -273,7 +267,7 @@ def signup():
         conn.close()
 
         # Redirect to sign-in page
-        return redirect(url_for('signin'))
+        return redirect('/input')
 
     # Render sign-up page
     return render_template('signup.html')
@@ -302,7 +296,7 @@ def signin():
         if check_password(password, password_hash):
             # Password is correct, store user ID in session
             session['user_id'] = row[0]
-            return redirect('/input')
+            return redirect('/meal')
         else:
             # Password is incorrect
             error = 'Invalid email or password'
@@ -323,6 +317,21 @@ def logout():
     session.clear()
     return redirect(url_for('signin'))
 
+@app.route('/api')
+def api():
+    url = "https://i-m-all-ears.p.rapidapi.com/"
+
+    querystring = {"id":""}
+
+    headers = {
+        "X-RapidAPI-Key": "040d644d14mshd1a90104a210a66p1edfabjsnc25e68304e4b",
+        "X-RapidAPI-Host": "i-m-all-ears.p.rapidapi.com"
+    }
+
+    response = requests.get(url, headers=headers, params=querystring)
+
+    a = (response.json())
+    return render_template('api.html', a=a)
 
 if __name__ == '__main__':
     app.run(debug=True)
