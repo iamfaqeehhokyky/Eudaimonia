@@ -7,7 +7,7 @@ import os
 import requests
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.secret_key = os.urandom(16)
 
 # initialize the app with the extension
@@ -218,7 +218,9 @@ def meal():
 
         groceries = get_meal_from_db(grocery)
         meal = get_meal_from_db(name)
-        return render_template("meal.html", meal=meal, groceries=groceries)
+        # Display the user's first name on the client side
+        first_name = g.user["first_name"]
+        return render_template("meal.html", meal=meal, groceries=groceries, first_name=first_name)
 
     elif request.method == "GET":
         try:
@@ -242,6 +244,75 @@ def grocery():
         data.append({'Date': row[0], 'Item': row[1]})
     return jsonify(data)
 
+
+############# THE STRESS MANAGEMENT RESOURSE #########################
+
+class StressManagementResource(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    
+    def __init__(self, title, decsription):
+        self.title = title
+        self.description = decsription
+    
+    def __repr__(self):
+        return f"StressManagementResource(id={self.id}, title='{self.title}')"
+    
+# API endpoint to get all stress management resources
+@app.route('/resources', methods=['GET'])
+def get_stress_management_resources():
+    resources = StressManagementResource.query.all()
+    output = []
+    for resource in resources:
+        resource_data = {
+            'id': resource.id,
+            'title': resource.title,
+            'description': resource.description
+        }
+        output.append(resource_data)
+    return jsonify({'resources': output})
+
+@app.route('/resources/<int:id>')
+def get_stress_management_resource(id):
+    resource = StressManagementResource.query.get(id)
+    if resource is None:
+        return 404
+    return jsonify({'resource': resource})
+
+#API endpoint to create a new stress management resouce
+@app.route('/resources', methods=['POST'])
+def create_stress_management_resources():
+    data = request.get_json()
+    new_resource = StressManagementResource(title=data['title'], description=data['description'])
+    db.session.add(new_resource)
+    db.session.commit()
+    # return jsonify({'message': 'Resource created successfully'})
+    return 201, {'resource': new_resource}
+
+
+@app.route('/resources/<int:id>', methods=['PUT'])
+def update_stress_management_resource(id):
+    data = request.get_json()
+    resource = StressManagementResource.query.get(id)
+    if resource is None:
+        return 404
+    resource.title = data['title']
+    resource.description = data['description']
+    db.session.commit()
+    return 200, {'resource': resource}
+
+
+@app.route('/resources/<int:id>', methods=['DELETE'])
+def delete_stress_management_resource(id):
+    resource = StressManagementResource.query.get(id)
+    if resource is None:
+        return 404
+    db.session.delete(resource)
+    db.session.commit()
+    return 204
+
+#################### STRESS MANAGEMENT RESOURCE END ###########################
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
