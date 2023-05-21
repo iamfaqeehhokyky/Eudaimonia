@@ -267,7 +267,7 @@ def signup():
         conn.close()
 
         # Redirect to sign-in page
-        return redirect('/input')
+        return redirect(url_for('signin'))
 
     # Render sign-up page
     return render_template('signup.html')
