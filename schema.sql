@@ -262,3 +262,23 @@ CREATE TABLE IF NOT EXISTS Allegies_OW2_Grocery (
   Date TEXT Not NULL,
   Item TEXT
 );
+
+
+
+
+
+
+
+
+
+
+
+-- ####################################################################################################
+-- ##################### STRESS MANAGEMENT RESOURCES ####################################################
+
+-- create stress management resources table 
+CREATE TABLE IF NOT EXISTS stress_management_resources (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL
+);
