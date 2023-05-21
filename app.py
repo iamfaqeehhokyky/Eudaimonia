@@ -224,7 +224,7 @@ def meal():
         groceries = get_meal_from_db(grocery)
         meal = get_meal_from_db(name)
         # Display the user's first name on the client side
-        first_name = g.user['first_name']
+        first_name = g.user["first_name"]
         return render_template("meal.html", meal=meal, groceries=groceries, first_name=first_name)
 
     elif request.method == "GET":
