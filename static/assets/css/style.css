@@ -2462,14 +2462,14 @@ section {
 
 /* mental health style */
 
-.video-item {
+.videos {
   display: inline-block;
   margin: 10px;
   position: relative;
   cursor: pointer;
 }
 
-.video-preview {
+.video_play {
   position: absolute;
   top: 0;
   left: 0;
@@ -2484,6 +2484,6 @@ section {
   transition: opacity 0.3s;
 }
 
-.video-item:hover .video-preview {
+.videos:hover .video_play {
   opacity: 1;
 }

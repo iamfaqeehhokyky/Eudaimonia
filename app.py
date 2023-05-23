@@ -401,7 +401,7 @@ def home():
 def video_list():
     med_files = [ 'm1.mp4', 'm2.mp4', 'm3.mp4', 'm4.mp4', 'm5.mp4', 'm6.mp4', 'm7.mp4', 'm8.mp4', 'm9.mp4', 'm10.mp4', 'm11.mp4']
     pers_files = [ 'p1.mp4', 'p2.mp4', 'p3.mp4', 'p4.mp4', 'p5.mp4']
-    relax_files = [ 'r1.mp4', 'r2.mp4', 'r3.mp4', 'r4.mp4', 'r5.mp4', 'r6.mp4', 'r7.mp4', 'r8.mp4', 'r9.mp4', 'r10.mp4']
+    relax_files = [ 'r1.mp4', 'r2.mp4', 'r3.p4', 'r4.mp4', 'r5.mp4', 'r6.mp4', 'r7.mp4', 'r8.mp4', 'r9.mp4', 'r10.mp4']
     return render_template('mental.html', meditations=med_files, personalize=pers_files, relax=relax_files)
 
 if __name__ == '__main__':9

@@ -295,7 +295,6 @@
 })();
 
 // mental health javascript code
-
 function playOrPauseVideo(element, videoUrl) {
   var videoElement = element.querySelector('video');
 

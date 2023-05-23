@@ -72,7 +72,7 @@
         <nav id="navbar" class="navbar">
           <ul>
             <li>
-                <a class="home scrollto" href="/home">home</a>
+                <a class="home scrollto" href="/home">Home</a>
             </li>
             <li><a class="nav-link scrollto active" href="#med">Meditations</a></li>
             <li><a class="nav-link scrollto" href="#relax">Relaxation</a></li>
@@ -104,11 +104,11 @@
             
         <div>
           {% for video in meditations %}
-            <div class="video-item" onclick="playOrPauseVideo(this, '{{ url_for('static',  filename='video/meditation/' + video) }}')">
+            <div class="videos" onclick="playOrPauseVideo(this, '{{ url_for('static',  filename='video/meditation/' + video) }}')">
                 <video width="300" height="200" preload="metadata">
                     <source src="{{ url_for('static', filename='video/meditation/' + video) }}" type="video/mp4">
                 </video>
-                <div class="video-preview">
+                <div class="video_play">
                     <span>Click to Play</span>
                 </div>
             </div>
@@ -132,11 +132,11 @@
              
             <div>
                 {% for video in relax %}
-                    <div class="video-item" onclick="playOrPauseVideo(this, '{{ url_for('static',  filename='video/relax/' + video) }}')">
+                    <div class="videos" onclick="playOrPauseVideo(this, '{{ url_for('static',  filename='video/relax/' + video) }}')">
                         <video width="300" height="200" preload="metadata">
                             <source src="{{ url_for('static', filename='video/relax/' + video) }}" type="video/mp4">
                         </video>
-                        <div class="video-preview">
+                        <div class="video_play">
                             <span>Click to Play</span>
                         </div>
                     </div>
@@ -162,11 +162,11 @@
                
               <div>
                 {% for video in personalize %}
-                    <div class="video-item" onclick="playOrPauseVideo(this, '{{ url_for('static',  filename='video/personalize/' + video) }}')">
+                    <div class="videos" onclick="playOrPauseVideo(this, '{{ url_for('static',  filename='video/personalize/' + video) }}')">
                         <video width="300" height="200" preload="metadata">
                             <source src="{{ url_for('static', filename='video/personalize/' + video) }}" type="video/mp4">
                         </video>
-                        <div class="video-preview">
+                        <div class="video_play">
                             <span>Click to Play</span>
                         </div>
                     </div>
