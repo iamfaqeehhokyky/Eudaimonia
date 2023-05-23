@@ -5,10 +5,15 @@ from flask_migrate import Migrate
 import sqlite3
 import hashlib
 import os
+import warnings
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.secret_key = os.urandom(16)
+
+# i kept on getting a warning about flask future upadate so i
+# Ignored the FSADeprecationWarning
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 # initialize the app with the extension
 db.init_app(app)
@@ -48,7 +53,6 @@ def get_user(user_id):
 
 @app.before_request
 def load_user():
-    """Loads the user from the database and stores it in the global `g.user` variable."""
     user_id = session.get('user_id')
     if user_id is not None:
         g.user = get_user(user_id)
@@ -56,13 +60,9 @@ def load_user():
         g.user = None
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
-    if g.user is not None:
-        first_name = g.user["first_name"]
-        return render_template('index.html', first_name=first_name)
-    else:
-        return render_template('index.html')
+    return render_template('index.html', user=g.user)
 
 # Route to the  blog page
 
@@ -170,11 +170,10 @@ def update():
 # this directs users to the database were they fill the form were a table can be made for them base on their nutrional requirements
 @app.route('/input')
 def input():
-    if g.user is not None:
-        first_name = g.user["first_name"]
-        return render_template('input.html', first_name=first_name)
-    else:
+    if g.user is None:
         return redirect(url_for('signin'))
+    return render_template('input.html')
+
 
 
 #this takes in the submitted form can provides a table for the users base on their names
@@ -229,14 +228,15 @@ def meal():
         return render_template("meal.html", meal=meal, groceries=groceries, first_name=first_name)
 
     elif request.method == "GET":
-        name = g.user['username']# get the username provided in the sign up page
-        grocery = name + '1'
-        groceries = get_meal_from_db(grocery)
-        meal = get_meal_from_db(name)
+        try:
+            name = g.user['username']# get the username provided in the sign up page
+            grocery = name + '1'
+            groceries = get_meal_from_db(grocery)
+            meal = get_meal_from_db(name)
+            return render_template("meal.html", meal=meal, groceries=groceries)
         
-        # Display the user's first name on the client side
-        first_name = g.user['first_name']
-        return render_template("meal.html", meal=meal, groceries=groceries, first_name=first_name)
+        except sqlite3.OperationalError:
+                return render_template('input.html')
 
 #this provides a table for the grocery list
 @app.route('/grocery')
@@ -391,7 +391,7 @@ def signin():
         if check_password(password, password_hash):
             # Password is correct, store user ID in session
             session['user_id'] = row[0]
-            return redirect('/input')
+            return redirect('/home')
         else:
             # Password is incorrect
             error = 'Invalid email or password'
@@ -412,6 +412,16 @@ def logout():
     session.clear()
     return redirect(url_for('signin'))
 
+@app.route('/home')
+def home():
+    return render_template('home.html', user=g.user)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+@app.route('/stress')
+def video_list():
+    med_files = [ 'm1.mp4', 'm2.mp4', 'm3.mp4', 'm4.mp4', 'm5.mp4', 'm6.mp4', 'm7.mp4', 'm8.mp4', 'm9.mp4', 'm10.mp4', 'm11.mp4']
+    pers_files = [ 'p1.mp4', 'p2.mp4', 'p3.mp4', 'p4.mp4', 'p5.mp4']
+    relax_files = [ 'r1.mp4', 'r2.mp4', 'r3.p4', 'r4.mp4', 'r5.mp4', 'r6.mp4', 'r7.mp4', 'r8.mp4', 'r9.mp4', 'r10.mp4']
+    return render_template('mental.html', meditations=med_files, personalize=pers_files, relax=relax_files)
+
+if __name__ == '__main__':9

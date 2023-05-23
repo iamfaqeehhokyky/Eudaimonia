@@ -293,3 +293,16 @@
   new PureCounter();
 
 })();
+
+// mental health javascript code
+function playOrPauseVideo(element, videoUrl) {
+  var videoElement = element.querySelector('video');
+
+  if (videoElement.paused) {
+      videoElement.play();
+      element.classList.add('playing');
+  } else {
+      videoElement.pause();
+      element.classList.remove('playing');
+  }
+}

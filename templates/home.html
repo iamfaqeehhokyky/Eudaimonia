@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Eudaimonia - Landing Page</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <link
+      href="{{ url_for('static', filename='img/favicon.png') }}"
+      rel="icon"
+    />
+    <link
+      href="{{ url_for('static', filename='img/favicon.png') }}"
+      rel="apple-touch-icon"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS Files -->
+    <link
+      href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='assets/vendor/glightbox/css/glightbox.min.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='assets/vendor/remixicon/remixicon.css') }}"
+      rel="stylesheet"
+    />
+
+    <link
+      href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}"
+      rel="stylesheet"
+    />
+
+    <!-- Template Main CSS File -->
+    <link
+      href="{{ url_for('static', filename='assets/css/style.css') }}"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top">
+      <div
+        class="container-fluid container-xl d-flex align-items-center justify-content-between"
+      >
+        <a href="/" class="logo d-flex align-items-center">
+          <img src="{{url_for('static', filename='img/emblem.png')}}" alt="" />
+          <span>Eudaimonia</span>
+        </a>
+
+        <nav id="navbar" class="navbar">
+          <ul>
+            <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+            <li><a class="nav-link scrollto" href="#about">About</a></li>
+            <li><a class="nav-link scrollto" href="#services">Services</a></li>
+            <li><a class="nav-link scrollto" href="#testimonials">Testimonials</a></li>
+            <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li>
+              <a class="signout scrollto" href="/signout">Sign Out</a>
+            </li>
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+        <!-- .navbar -->
+      </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="hero d-flex align-items-center">
+      <div class="container">
+        <div class="row">
+          <div
+            class="col-lg-6 hero-img"
+            data-aos="zoom-out"
+            data-aos-delay="200"
+          >
+            <img
+              src="{{url_for('static', filename='img/studies.png')}}"
+              class="img-fluid"
+              alt=""
+            />
+          </div>
+
+          <div class="col-lg-6 d-flex flex-column justify-content-center this">
+            <h1 data-aos="fade-up">HEALTHY CAMPUS,<br />HEALTHY YOU!</h1>
+            <h2 data-aos="fade-up" data-aos-delay="400">
+              Stress from balancing academics and other extracurricular
+              activities can impact your overall health. Take action today to
+              prioritize your health as a busy university student.
+            </h2>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Hero -->
+
+    <main id="main">
+      <!-- ======= About Section ======= -->
+      <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
+          <div class="row gx-0">
+            <div
+              class="col-lg-6 d-flex flex-column justify-content-center"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+              <div class="content">
+                <h3>Who We Are</h3>
+                <h2>About EUDAIMONIA</h2>
+                <p>
+                  Eudaimonia is an all-in-one wellness platform that combines fitness, nutrition, and mental health tools to help students achieve optimal physical and mental well-being.</br>
+                  <br>According to recent studies, many university students experience stress related to academic demands and financial pressures which can have a negative impact on their physical, emotional, and social health. Eudaimonia is designed to help students overcome these challenges by providing them with the tools and resources they need to live healthier, more balanced lives.</br>
+                  <br>We're excited to offer university students a convenient and affordable way to prioritize their health and well-being. With Eudaimonia, students can achieve their goals and live their best lives.
+                </p>
+                <div class="text-center text-lg-start">
+                  <a
+                    href="#"
+                    class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center"
+                  >
+                    <span>Read More</span>
+                    <i class="bi bi-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="col-lg-6 d-flex align-items-center"
+              data-aos="zoom-out"
+              data-aos-delay="200"
+            >
+              <img src="{{url_for('static', filename='img/studentLearning.png')}}" class="img-fluid" alt="" />
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End About Section -->
+
+      <!-- ======= Values Section ======= -->
+      <section id="services" class="values">
+
+      <div class="container" data-aos="fade-up">
+
+        <header class="section-header">
+          <h2>Our Values</h2>
+          <p>Why EUDAIMONIA?</p>
+        </header>
+
+        <div class="row">
+
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="box">
+              <a href="/api"><img src="{{url_for('static', filename='assets/img/values-1.png')}}" class="img-fluid" alt=""></a>
+              <h3>Fitness</h3>
+              <p>Eudaimonia's personalized workout routines. Choose from a variety of options that fit your schedule and fitness goals. Prioritize your health today.</p>
+              <div class="text-center text-lg-start">
+                  <a href="/api" class="read-more"><span></span> <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="400">
+            <div class="box">
+              <a href="/meal"><img src="{{url_for('static', filename='assets/img/values-2.png')}}" class="img-fluid" alt=""></a>
+              <h3>Nutrition</h3>
+              <p>Eudaimonia's personalized nutrition feature, you can make healthier food choices to achieve your health goals. click here for your meal plan</p>
+              <div class="text-center text-lg-start">
+                  <a href="/meal" class="read-more"><span></span> <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="600">
+            <div class="box">
+              <a href="/stress"><img src="{{url_for('static', filename='assets/img/values-3.png')}}" class="img-fluid" alt=""></a>
+              <h3>Mental health</h3>
+              <p>Take control of your mental health with Eudaimonia's personalized stress management tools. Sign up today to prioritize your well-being and live your best life!</p>
+              <div class="text-center text-lg-start">
+                  <a href="/stress" class="read-more"><span></span> <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      </section>
+      <!-- End Values Section -->
+
+      <!-- ======= Testimonials Section ======= -->
+    <section id="testimonials" class="testimonials">
+
+      <div class="container" data-aos="fade-up">
+
+        <header class="section-header">
+          <h2>Testimonials</h2>
+          <p>What our users are saying about us</p>
+        </header>
+
+        <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="200">
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                </p>
+                <div class="profile mt-auto">
+                  <img src="{{url_for('static', filename='assets/img/testimonials/testimonials-1.jpg')}}" class="testimonial-img" alt="">
+                  <h3>Sulaimon Olanrewaju</h3>
+                  <h4>Kibo School of Technology</h4>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
+                </p>
+                <div class="profile mt-auto">
+                  <img src="{{url_for('static', filename='assets/img/testimonials/testimonials-2.jpg')}}" class="testimonial-img" alt="">
+                  <h3>Enoch Epekipolu</h3>
+                  <h4>Kibo School of Technology</h4>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
+                </p>
+                <div class="profile mt-auto">
+                  <img src="{{url_for('static', filename='assets/img/testimonials/testimonials-3.jpg')}}" class="testimonial-img" alt="">
+                  <h3>Quawiyyah Abdulhameed</h3>
+                  <h4>Kibo School of Technology</h4>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
+                </p>
+                <div class="profile mt-auto">
+                  <img src="{{url_for('static', filename='assets/img/testimonials/testimonials-4.jpg')}}" class="testimonial-img" alt="">
+                  <h3>Sulaimon Olanrewaju</h3>
+                  <h4>Kibo School of Technology</h4>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
+                </p>
+                <div class="profile mt-auto">
+                  <img src="{{url_for('static', filename='assets/img/testimonials/testimonials-5.jpg')}}" class="testimonial-img" alt="">
+                  <h3>Enoch Epekipolu</h3>
+                  <h4>Kibo School of Technology</h4>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
+                </p>
+                <div class="profile mt-auto">
+                  <img src="{{url_for('static', filename='assets/img/testimonials/testimonials-1.jpg')}}" class="testimonial-img" alt="">
+                  <h3>Quawiyyah Abdulhameed</h3>
+                  <h4>Kibo School of Technology</h4>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+
+    </section><!-- End Testimonials Section -->
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container" data-aos="fade-up">
+        <header class="section-header">
+          <h2>Send us a message</h2>
+          <p>SUGGEST A FEATURE!</p>
+        </header>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <form
+                  action="forms/contact.php"
+                  method="post"
+                  class="php-email-form"
+                >
+                  <div class="row gy-4">
+                    <div class="col-md-6">
+                      <input
+                        type="text"
+                        name="name"
+                        class="form-control"
+                        placeholder="First Name"
+                        required
+                      />
+                    </div>
+
+                    <div class="col-md-6">
+                      <input
+                        type="text"
+                        name="name"
+                        class="form-control"
+                        placeholder="Last Name"
+                        required
+                      />
+                    </div>
+
+                    <div class="col-md-12">
+                      <input
+                        type="email"
+                        class="form-control"
+                        name="email"
+                        placeholder="Your Email"
+                        required
+                      />
+                    </div>
+
+                    <div class="col-md-12">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="university"
+                        placeholder="University Name"
+                        required
+                      />
+                    </div>
+
+                    <div class="col-md-6">
+                      <input
+                        type="text"
+                        name="faculty"
+                        class="form-control"
+                        placeholder="Faculty Name"
+                        required
+                      />
+                    </div>
+
+                    <div class="col-md-6">
+                      <input
+                        type="text"
+                        name="department"
+                        class="form-control"
+                        placeholder="Department Name"
+                        required
+                      />
+                    </div>
+
+                    <div class="col-md-12">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="subject"
+                        placeholder="Subject"
+                        required
+                      />
+                    </div>
+
+                    <div class="col-md-12">
+                      <textarea
+                        class="form-control"
+                        name="message"
+                        rows="6"
+                        placeholder="Message"
+                        required
+                      ></textarea>
+                    </div>
+
+                    <div class="col-md-12 text-center">
+                      <div class="loading">Loading</div>
+                      <div class="error-message"></div>
+                      <div class="sent-message">
+                        Your message has been sent. Thank you!
+                      </div>
+
+                      <button type="submit">Send Message</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+          </div>
+        </div>
+      </div>
+      </section>
+      <!-- End Contact Section -->
+    </main>
+    <!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+      <div class="footer-top">
+        <div class="container">
+          <div class="row gy-4">
+            <div class="col-lg-5 col-md-12 footer-info">
+              <a href="/" class="logo d-flex align-items-center">
+                <img
+                  src="{{url_for('static', filename='img/emblem.png')}}"
+                  alt=""
+                />
+                <span>Eudaimonia</span>
+              </a>
+              <p>
+                Helping busy university students to live healthier lives. We
+                offer personalized meal plans, stress management tools, and
+                mental health resources to help users achieve their health
+                goals.
+              </p>
+              <div class="social-links mt-3">
+                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="instagram"
+                  ><i class="bi bi-instagram"></i
+                ></a>
+                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+              </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 footer-links">
+              <h4>Navigation Links</h4>
+              <ul>
+                <li>
+                  <i class="bi bi-chevron-right"></i> <a href="/#hero">Home</a>
+                </li>
+                <li>
+                  <i class="bi bi-chevron-right"></i> <a href="#about">About us</a>
+                </li>
+                <li>
+                  <i class="bi bi-chevron-right"></i> <a href="#services">Services</a>
+                </li>
+                <li>
+                  <i class="bi bi-chevron-right"></i>
+                  <a href="#">Terms of service</a>
+                </li>
+                <li>
+                  <i class="bi bi-chevron-right"></i>
+                  <a href="#">Privacy policy</a>
+                </li>
+              </ul>
+            </div>
+
+            <div
+              class="col-lg-4 col-md-6 footer-contact text-center text-md-start"
+            >
+              <h4>Contact Us</h4>
+              <p>
+                Kibo School of Technology <br />
+                New York, NY <br />
+                United States <br /><br />
+                <strong>Phone:</strong> +1 833 984 1991 <br />
+                <strong>Email:</strong> hello@kibo.school<br />
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="copyright">
+          &copy; Copyright <strong><span>Eudaimonia</span> 2023</strong>. All
+          right reserved
+        </div>
+      </div>
+    </footer>
+    <!-- End Footer -->
+
+    <a
+      href="#"
+      class="back-to-top d-flex align-items-center justify-content-center"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
+
+    <!-- Vendor JS Files -->
+    <script src="{{url_for('static', filename='assets/vendor/purecounter/purecounter_vanilla.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/aos/aos.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/php-email-form/validate.js')}}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{url_for('static', filename='assets/js/main.js')}}"></script>
+  </body>
+</html>
