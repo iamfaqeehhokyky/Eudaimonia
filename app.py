@@ -155,9 +155,11 @@ def get_meal_from_db(table_name):
         return None
 
 # edit made to the table is sent here where it is being sent to the databse for an update
+
+
 @app.route('/update', methods=['POST'])
 def update():
-    name = g.user['username']# get the username provided in the sign up page
+    name = g.user['username']  # get the username provided in the sign up page
     data = request.json
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
@@ -168,21 +170,24 @@ def update():
     return '/meal'
 
 # this directs users to the database were they fill the form were a table can be made for them base on their nutrional requirements
+
+
 @app.route('/input')
 def input():
-    if g.user is None:
-        return redirect(url_for('signin'))
-    return render_template('input.html')
+    if g.user is not None:
+        first_name = g.user["first_name"]
+        return render_template('input.html', first_name=first_name)
+    return redirect(url_for('signin'))
 
 
-
-#this takes in the submitted form can provides a table for the users base on their names
+# this takes in the submitted form can provides a table for the users base on their names
 @app.route('/meal', methods=["GET", "POST"])
 def meal():
     if g.user is None:
         return redirect(url_for('signin'))
     if request.method == "POST":
-        name = g.user['username']# get the username provided in the sign up page
+        # get the username provided in the sign up page
+        name = g.user['username']
         session['name'] = name
         vegetarian = request.form['Vegetarian']
         allergies = request.form['Allergies']
@@ -229,19 +234,24 @@ def meal():
 
     elif request.method == "GET":
         try:
-            name = g.user['username']# get the username provided in the sign up page
+            # get the username provided in the sign up page
+            name = g.user['username']
             grocery = name + '1'
             groceries = get_meal_from_db(grocery)
             meal = get_meal_from_db(name)
-            return render_template("meal.html", meal=meal, groceries=groceries)
-        
-        except sqlite3.OperationalError:
-                return render_template('input.html')
+            # Display the user's first name on the client side
+            first_name = g.user["first_name"]
+            return render_template("meal.html", meal=meal, groceries=groceries, first_name=first_name)
 
-#this provides a table for the grocery list
+        except sqlite3.OperationalError:
+            return render_template('input.html')
+
+# this provides a table for the grocery list
+
+
 @app.route('/grocery')
 def grocery():
-    name = g.user['username']# get the username provided in the sign up page
+    name = g.user['username']  # get the username provided in the sign up page
     grocery = name + '1'
     groceries = get_meal_from_db(grocery)
     data = []
@@ -266,7 +276,7 @@ class StressManagementResource(db.Model):
 
     def __repr__(self):
         return f"StressManagementResource(id={self.id}, title='{self.title}', link='{self.link}')"
-    
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -302,10 +312,12 @@ def get_stress_management_resource(id):
 
 # API endpoint to create a new stress management resouce
 
+
 @app.route('/resources', methods=['POST'])
 def create_stress_management_resources():
     data = request.get_json()
-    new_resource = StressManagementResource(title=data['title'], description=data['description'], link=data['link'])
+    new_resource = StressManagementResource(
+        title=data['title'], description=data['description'], link=data['link'])
     db.session.add(new_resource)
     db.session.commit()
     # return jsonify({'message': 'Resource created successfully'})
@@ -368,6 +380,7 @@ def signup():
 
 ###################### STRESSS MNAGEMENT RESOURCES END ##################################
 
+
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
     if request.method == 'POST':
@@ -412,6 +425,7 @@ def logout():
     session.clear()
     return redirect(url_for('signin'))
 
+
 @app.route('/home')
 def home():
     return render_template('home.html', user=g.user)
@@ -419,9 +433,13 @@ def home():
 
 @app.route('/stress')
 def video_list():
-    med_files = [ 'm1.mp4', 'm2.mp4', 'm3.mp4', 'm4.mp4', 'm5.mp4', 'm6.mp4', 'm7.mp4', 'm8.mp4', 'm9.mp4', 'm10.mp4', 'm11.mp4']
-    pers_files = [ 'p1.mp4', 'p2.mp4', 'p3.mp4', 'p4.mp4', 'p5.mp4']
-    relax_files = [ 'r1.mp4', 'r2.mp4', 'r3.p4', 'r4.mp4', 'r5.mp4', 'r6.mp4', 'r7.mp4', 'r8.mp4', 'r9.mp4', 'r10.mp4']
+    med_files = ['m1.mp4', 'm2.mp4', 'm3.mp4', 'm4.mp4', 'm5.mp4',
+                 'm6.mp4', 'm7.mp4', 'm8.mp4', 'm9.mp4', 'm10.mp4', 'm11.mp4']
+    pers_files = ['p1.mp4', 'p2.mp4', 'p3.mp4', 'p4.mp4', 'p5.mp4']
+    relax_files = ['r1.mp4', 'r2.mp4', 'r3.p4', 'r4.mp4',
+                   'r5.mp4', 'r6.mp4', 'r7.mp4', 'r8.mp4', 'r9.mp4', 'r10.mp4']
     return render_template('mental.html', meditations=med_files, personalize=pers_files, relax=relax_files)
 
-if __name__ == '__main__':9
+
+if __name__ == '__main__':
+    app.run(debug=True)
