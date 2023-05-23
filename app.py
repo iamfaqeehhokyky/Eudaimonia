@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, g, session, jsonify, url_for, redirect
 from models import db
+from stress_management_resources import stress_management_resources
 from flask_migrate import Migrate
 import sqlite3
 import hashlib
@@ -249,33 +250,48 @@ def grocery():
     return jsonify(data)
 
 
-############# THE STRESS MANAGEMENT RESOURSE #########################
+############# THE STRESS MANAGEMENT RESOURSE ROUTE #########################
+
 
 class StressManagementResource(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=False)
-    
-    def __init__(self, title, decsription):
+    link = db.Column(db.String(255), nullable=True)
+
+    def __init__(self, title, description, link):
         self.title = title
-        self.description = decsription
-    
+        self.description = description
+        self.link = link
+
     def __repr__(self):
-        return f"StressManagementResource(id={self.id}, title='{self.title}')"
+        return f"StressManagementResource(id={self.id}, title='{self.title}', link='{self.link}')"
     
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'description': self.description,
+            'link': self.link
+        }
+
 # API endpoint to get all stress management resources
+
+
 @app.route('/resources', methods=['GET'])
 def get_stress_management_resources():
-    resources = StressManagementResource.query.all()
-    output = []
-    for resource in resources:
-        resource_data = {
-            'id': resource.id,
-            'title': resource.title,
-            'description': resource.description
-        }
-        output.append(resource_data)
-    return jsonify({'resources': output})
+    resources = []
+    for resource in stress_management_resources:
+        new_resource = StressManagementResource(
+            title=resource["title"],
+            description=resource["description"],
+            link=resource["link"]
+        )
+        db.session.add(new_resource)
+        db.session.commit()
+        resources.append(new_resource.to_dict())
+    return jsonify({'resources': resources})
+
 
 @app.route('/resources/<int:id>')
 def get_stress_management_resource(id):
@@ -284,15 +300,16 @@ def get_stress_management_resource(id):
         return 404
     return jsonify({'resource': resource})
 
-#API endpoint to create a new stress management resouce
+# API endpoint to create a new stress management resouce
+
 @app.route('/resources', methods=['POST'])
 def create_stress_management_resources():
     data = request.get_json()
-    new_resource = StressManagementResource(title=data['title'], description=data['description'])
+    new_resource = StressManagementResource(title=data['title'], description=data['description'], link=data['link'])
     db.session.add(new_resource)
     db.session.commit()
     # return jsonify({'message': 'Resource created successfully'})
-    return 201, {'resource': new_resource}
+    return jsonify({'resource': new_resource}), 201
 
 
 @app.route('/resources/<int:id>', methods=['PUT'])
@@ -303,6 +320,7 @@ def update_stress_management_resource(id):
         return 404
     resource.title = data['title']
     resource.description = data['description']
+    resource.link = data['link']
     db.session.commit()
     return 200, {'resource': resource}
 
@@ -316,7 +334,8 @@ def delete_stress_management_resource(id):
     db.session.commit()
     return 204
 
-#################### STRESS MANAGEMENT RESOURCE END ###########################
+############################# STRESS MANAGEMENT RESOUCE END ##########################
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -347,6 +366,7 @@ def signup():
     # Render sign-up page
     return render_template('signup.html')
 
+###################### STRESSS MNAGEMENT RESOURCES END ##################################
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():

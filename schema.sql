@@ -280,5 +280,6 @@ CREATE TABLE IF NOT EXISTS Allegies_OW2_Grocery (
 CREATE TABLE IF NOT EXISTS stress_management_resources (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   title TEXT NOT NULL,
-  description TEXT NOT NULL
+  description TEXT NOT NULL,
+  link TEXT NOT NULL
 );
