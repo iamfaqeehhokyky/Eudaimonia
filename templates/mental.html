@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Eudaimonia - Landing Page</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <link
+      href="{{ url_for('static', filename='img/favicon.png') }}"
+      rel="icon"
+    />
+    <link
+      href="{{ url_for('static', filename='img/favicon.png') }}"
+      rel="apple-touch-icon"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS Files -->
+    <link
+      href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='assets/vendor/glightbox/css/glightbox.min.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='assets/vendor/remixicon/remixicon.css') }}"
+      rel="stylesheet"
+    />
+
+    <link
+      href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}"
+      rel="stylesheet"
+    />
+
+    <!-- Template Main CSS File -->
+    <link
+      href="{{ url_for('static', filename='assets/css/style.css') }}"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top">
+      <div
+        class="container-fluid container-xl d-flex align-items-center justify-content-between"
+      >
+        <a href="/" class="logo d-flex align-items-center">
+          <img src="{{url_for('static', filename='img/emblem.png')}}" alt="" />
+          <span>Eudaimonia</span>
+        </a>
+
+        <nav id="navbar" class="navbar">
+          <ul>
+            <li>
+                <a class="home scrollto" href="/home">home</a>
+            </li>
+            <li><a class="nav-link scrollto active" href="#med">Meditations</a></li>
+            <li><a class="nav-link scrollto" href="#relax">Relaxation</a></li>
+            <li><a class="nav-link scrollto" href="#pers">Personalized</a></li>
+            <li>
+              <a class="signout scrollto" href="/signout">Sign Out</a>
+            </li>
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+        <!-- .navbar -->
+      </div>
+    </header>
+    <!-- End Header -->
+
+
+  <br><br><br><br>
+            
+    <!-- ======= Meditation Section ======= -->
+    <section id="med" class="hero d-flex align-items-center">
+      <div class="container">
+        <div class="row gx-0">
+            <div
+              class="col-lg-6 d-flex flex-column justify-content-center"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+            
+            
+        <div>
+          {% for video in meditations %}
+            <div class="video-item" onclick="playOrPauseVideo(this, '{{ url_for('static',  filename='video/meditation/' + video) }}')">
+                <video width="300" height="200" preload="metadata">
+                    <source src="{{ url_for('static', filename='video/meditation/' + video) }}" type="video/mp4">
+                </video>
+                <div class="video-preview">
+                    <span>Click to Play</span>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+        </div>
+      </div>
+    </section>
+    <!-- End med -->
+
+    <main id="main">
+      <!-- ======= Relaxation Section ======= -->
+      <section id="relax" class="about">
+        <div class="container" data-aos="fade-up">
+          <div class="row gx-0">
+            <div
+              class="col-lg-6 d-flex flex-column justify-content-center"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+             
+            <div>
+                {% for video in relax %}
+                    <div class="video-item" onclick="playOrPauseVideo(this, '{{ url_for('static',  filename='video/relax/' + video) }}')">
+                        <video width="300" height="200" preload="metadata">
+                            <source src="{{ url_for('static', filename='video/relax/' + video) }}" type="video/mp4">
+                        </video>
+                        <div class="video-preview">
+                            <span>Click to Play</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+          </div>
+        </div>
+      </section>
+      <!-- End relax Section -->
+
+      <!-- ======= Personalized Section ======= -->
+
+    <section id="pers" class="testimonials">
+
+        <div class="container" data-aos="fade-up">
+            <div class="row gx-0">
+              <div
+                class="col-lg-6 d-flex flex-column justify-content-center"
+                data-aos="fade-up"
+                data-aos-delay="200"
+              >
+               
+              <div>
+                {% for video in personalize %}
+                    <div class="video-item" onclick="playOrPauseVideo(this, '{{ url_for('static',  filename='video/personalize/' + video) }}')">
+                        <video width="300" height="200" preload="metadata">
+                            <source src="{{ url_for('static', filename='video/personalize/' + video) }}" type="video/mp4">
+                        </video>
+                        <div class="video-preview">
+                            <span>Click to Play</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+    </section><!-- End Testimonials Section -->
+
+    
+
+    <!-- Vendor JS Files -->
+    <script src="{{url_for('static', filename='assets/vendor/purecounter/purecounter_vanilla.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/aos/aos.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/php-email-form/validate.js')}}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{url_for('static', filename='assets/js/main.js')}}"></script>
+
+  </body>
+</html>
