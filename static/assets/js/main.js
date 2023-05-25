@@ -306,3 +306,13 @@ function playOrPauseVideo(element, videoUrl) {
       element.classList.remove('playing');
   }
 }
+
+// password show and hide function
+function myFunction() {
+  var x = document.getElementById("myPassword");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
