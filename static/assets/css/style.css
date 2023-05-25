@@ -276,7 +276,9 @@ section {
 }
 
 .navbar .getstarted,
-.navbar .getstarted:focus {
+.navbar .getstarted:focus,
+.navbar .signout,
+.navbar .signout:focus {
   background: #4154f1;
   padding: 8px 20px;
   margin-left: 30px;
@@ -285,7 +287,9 @@ section {
 }
 
 .navbar .getstarted:hover,
-.navbar .getstarted:focus:hover {
+.navbar .getstarted:focus:hover,
+.navbar .signout:hover,
+.navbar .signout:focus:hover{
   color: #fff;
   background: #5969f3;
 }
@@ -427,7 +431,9 @@ section {
 }
 
 .navbar-mobile .getstarted,
-.navbar-mobile .getstarted:focus {
+.navbar-mobile .getstarted:focus,
+.navbar-mobile .signout,
+.navbar-mobile .signout:focus {
   margin: 15px;
 }
 
@@ -671,6 +677,21 @@ section {
 
 .values .box:hover img {
   transform: scale(1);
+}
+
+.values .val-box .sign {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 8px 20px;
+}
+
+.values .val-box .sign i {
+  line-height: 0;
+  margin-left: 5px;
+  font-size: 18px;
 }
 
 /*--------------------------------------------------------------
