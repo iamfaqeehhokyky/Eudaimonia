@@ -4,10 +4,19 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-6 hero-img">
-        <h1 data-aos="fade-up">Welcome,<br />to EUDAIMONIA!</h1>
-        <h2 data-aos="fade-up" data-aos-delay="400">
-          Healthy Campus, Healthy You!
-        </h2>
+        <div>
+          <h1 data-aos="fade-up">Welcome,<br />to EUDAIMONIA!</h1>
+          <h2 data-aos="fade-up" data-aos-delay="400">
+            Healthy Campus, Healthy You!
+          </h2>
+        </div>
+        <br /><br /><br />
+
+        <div>
+          <h2 data-aos="fade-up" data-aos-delay="400">
+            Already have an account? <a href="/signin">Log in</a>
+          </h2>
+        </div>
         <!-- <div data-aos="fade-up" data-aos-delay="600">
           <div class="text-center text-lg-start">
             <a
@@ -101,12 +110,14 @@
               <!-- <label>Password:</label> -->
               <div class="col-md-12">
                 <input
+                  id="myPassword"
                   type="password"
                   class="form-control"
                   name="password"
                   placeholder="Password"
                   required
-                />
+                /><br /><br />
+                <input type="checkbox" onclick="myFunction()" />Show Password
               </div>
 
               <div class="col-md-12 text-center">
