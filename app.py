@@ -32,8 +32,6 @@ def hash_password(password):
     return salt + password_hash
 
 # Function handling the password checker for correctness and tallying
-
-
 def check_password(password, password_hash):
     salt = password_hash[:16]
     stored_password_hash = password_hash[16:]
@@ -43,12 +41,13 @@ def check_password(password, password_hash):
 
 
 def get_user(user_id):
-    conn = sqlite3.connect('users.db')
-    c = conn.cursor()
-    c.execute("SELECT id, email, first_name, last_name, username, gender, university_name, password_hash FROM users WHERE id = ?", (user_id,))
-    row = c.fetchone()
-    conn.close()
-    return {'id': row[0], 'email': row[1], 'first_name': row[2], 'last_name': row[3], 'username': row[4], 'gender': row[5], 'university_name': row[6], 'password': row[7]}
+    query = "SELECT id, email, first_name, last_name, username, gender, university_name, password_hash FROM users WHERE id = ?"
+    args = (user_id,)
+    row = db_query(query, args)
+
+    if not row:
+        return None
+    return {'id': row[0][0], 'email': row[0][1], 'first_name': row[0][2], 'last_name': row[0][3], 'username': row[0][4], 'gender': row[0][5], 'university_name': row[0][6], 'password': row[0][7]}
 
 
 @app.before_request
@@ -65,8 +64,6 @@ def index():
     return render_template('index.html', user=g.user)
 
 # Route to the  blog page
-
-
 @app.route('/blog')
 def blog():
     return render_template('blog.html')
@@ -75,8 +72,6 @@ def blog():
 # Usuage based on mySQLite
 
 # Get a useable connection to the database
-
-
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
@@ -85,8 +80,6 @@ def get_db():
     return db
 
 # Close the database connection when the app shuts down
-
-
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
@@ -94,22 +87,19 @@ def close_connection(exception):
         db.close()
 
 # return the results from a database query
-
-
-def db_query(query, args=()):
-    cur = get_db().execute(query, args)
+def db_query(query, args=None):
+    cur = get_db().execute(query, args or ())
     rv = cur.fetchall()
     cur.close()
     return rv
 
 # execute a database query
-
-
-def db_execute(script, args=()):
+def db_execute(query, args=()):
     conn = get_db()
-    conn.execute(script, args)
+    conn.execute(query, args)
     conn.commit()
     return True
+
 
 
 def replicate_table(table_name, new_table_name):
@@ -228,9 +218,7 @@ def meal():
 
         groceries = get_meal_from_db(grocery)
         meal = get_meal_from_db(name)
-        # Display the user's first name on the client side
-        first_name = g.user["first_name"]
-        return render_template("meal.html", meal=meal, groceries=groceries, first_name=first_name)
+        return render_template("meal.html", meal=meal, groceries=groceries, first_name=name)
 
     elif request.method == "GET":
         try:
@@ -239,9 +227,7 @@ def meal():
             grocery = name + '1'
             groceries = get_meal_from_db(grocery)
             meal = get_meal_from_db(name)
-            # Display the user's first name on the client side
-            first_name = g.user["first_name"]
-            return render_template("meal.html", meal=meal, groceries=groceries, first_name=first_name)
+            return render_template("meal.html", meal=meal, groceries=groceries, first_name=name)
 
         except sqlite3.OperationalError:
             return render_template('input.html')
@@ -260,7 +246,7 @@ def grocery():
     return jsonify(data)
 
 
-############# THE STRESS MANAGEMENT RESOURSE ROUTE #########################
+############# THE STRESS MANAGEMENT RESOUCEs ROUTE #########################
 
 
 class StressManagementResource(db.Model):
@@ -365,20 +351,21 @@ def signup():
         password_hash = hash_password(password)
 
         # Insert user into database
-        conn = sqlite3.connect('users.db')
-        c = conn.cursor()
-        c.execute("INSERT INTO users (email, first_name, last_name, username, gender, university_name, password_hash) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                  (email, first_name, last_name, username, gender, university_name, password_hash))
-        conn.commit()
-        conn.close()
+        query = "INSERT INTO users (email, first_name, last_name, username, gender, university_name, password_hash) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        args = (email, first_name, last_name, username, gender, university_name, password_hash)
+
+        db_connection = get_db()
+        cur = db_connection.cursor()
+        cur.execute(query, args)
+        db_connection.commit()
 
         # Redirect to sign-in page
         return redirect(url_for('signin'))
-
+    
     # Render sign-up page
     return render_template('signup.html')
 
-###################### STRESSS MNAGEMENT RESOURCES END ##################################
+
 
 
 @app.route('/signin', methods=['GET', 'POST'])
@@ -389,21 +376,20 @@ def signin():
         password = request.form['password']
 
         # Check if user exists in database
-        conn = sqlite3.connect('users.db')
-        c = conn.cursor()
-        c.execute("SELECT id, password_hash FROM users WHERE email = ?", (email,))
-        row = c.fetchone()
+        query = "SELECT id, password_hash FROM users WHERE email = ?"
+        args = (email,)
+        row = db_query(query, args)
 
-        if row is None:
+        if not row:  # Check if row is empty
             # User not found
             error = 'Invalid email or password'
             return render_template('signin.html', error=error)
 
         # Check password
-        password_hash = row[1]
+        password_hash = row[0][1]  # Access the first row's second element
         if check_password(password, password_hash):
             # Password is correct, store user ID in session
-            session['user_id'] = row[0]
+            session['user_id'] = row[0][0]  # Access the first row's first element
             return redirect('/home')
         else:
             # Password is incorrect
@@ -412,6 +398,8 @@ def signin():
 
     # Render sign-in page
     return render_template('signin.html')
+
+
 
 
 @app.route('/signout')

@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 # Initializing an instance of the SQLAlchemy class
 db = SQLAlchemy()
 
-conn = sqlite3.connect('users.db')
+conn = sqlite3.connect('database.db')
 c = conn.cursor()
 
 # c.execute('''CREATE TABLE users
