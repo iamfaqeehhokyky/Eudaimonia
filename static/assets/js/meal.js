@@ -55,3 +55,14 @@ document.getElementById('grocery').addEventListener('click', function() {
         update(e.target.parentElement);
       }
     }, true);
+
+
+    function show() {
+      var table = document.getElementById("gtabe");
+      if (table.style.display === "none") {
+        table.style.display = "table";
+      } else {
+        table.style.display = "none";
+      }
+    }
+    
