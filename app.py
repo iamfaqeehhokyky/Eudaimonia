@@ -416,11 +416,15 @@ def logout():
 
 @app.route('/home')
 def home():
+    if g.user is None:
+        return redirect(url_for('signin'))
     return render_template('home.html', user=g.user)
 
 
 @app.route('/stress')
 def video_list():
+    if g.user is None:
+        return redirect(url_for('signin'))
     med_files = ['m1.mp4', 'm2.mp4', 'm3.mp4', 'm4.mp4', 'm5.mp4',
                  'm6.mp4', 'm7.mp4', 'm8.mp4', 'm9.mp4', 'm10.mp4', 'm11.mp4']
     pers_files = ['p1.mp4', 'p2.mp4', 'p3.mp4', 'p4.mp4', 'p5.mp4']
