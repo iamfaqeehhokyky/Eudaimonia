@@ -56,3 +56,7 @@ soupsieve==2.3.2.post1
 SQLAlchemy==2.0.3
 sqlparse==0.4.3
 urllib3==1.26.14
+gspread
+google-api-python-client 
+google-auth-httplib2 
+google-auth-oauthlib

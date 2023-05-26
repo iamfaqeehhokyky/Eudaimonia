@@ -2,10 +2,7 @@ from flask import Flask, render_template, request, g, session, jsonify, url_for,
 from models import db
 from stress_management_resources import stress_management_resources
 from flask_migrate import Migrate
-import sqlite3
-import hashlib
-import os
-import warnings
+import sqlite3, requests, hashlib, os, warnings
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -431,6 +428,19 @@ def video_list():
     relax_files = ['r1.mp4', 'r2.mp4', 'r3.p4', 'r4.mp4',
                    'r5.mp4', 'r6.mp4', 'r7.mp4', 'r8.mp4', 'r9.mp4', 'r10.mp4']
     return render_template('mental.html', meditations=med_files, personalize=pers_files, relax=relax_files)
+
+@app.route('/contact', methods=['POST'])
+def contact():
+    form_data = request.form
+    requests.post('https://forms.gle/QSyxYV5Yb93g56TG9', data=form_data)
+    return 'Thank you for your submission!'
+
+@app.route('/pcontact', methods=['POST'])
+def pcontact():
+    form_data = request.form
+    requests.post('https://forms.gle/6esAqa2cdQm6BDv16', data=form_data)
+    return 'Thank you for your submission!'
+
 
 
 if __name__ == '__main__':

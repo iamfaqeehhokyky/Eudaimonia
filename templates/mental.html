@@ -77,6 +77,7 @@
             <li><a class="nav-link scrollto active" href="#med">Meditations</a></li>
             <li><a class="nav-link scrollto" href="#relax">Relaxation</a></li>
             <li><a class="nav-link scrollto" href="#pers">Personalized</a></li>
+            <li><a class="nav-link scrollto" href="#contact">Professional</a></li>
             <li>
               <a class="signout scrollto" href="/signout">Sign Out</a>
             </li>
@@ -174,6 +175,79 @@
             </div>
 
     </section><!-- End Testimonials Section -->
+
+     <!-- ======= Contact Section ======= -->
+     <section id="contact" class="contact">
+      <div class="container" data-aos="fade-up">
+        <header class="section-header">
+          <p>Talk to a Professional!</p>
+        </header>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <form
+                  action="/pcontact"
+                  method="POST"
+                  class="php-email-form"
+                >
+                  <div class="row gy-4">
+                    <div class="col-md-6">
+                      <input
+                        type="text"
+                        name="name"
+                        class="form-control"
+                        placeholder="A name you will like to be called"
+                        required
+                      />
+                    </div>
+
+                    <div class="col-md-12">
+                      <input
+                        type="email"
+                        class="form-control"
+                        name="email"
+                        placeholder="Your Email"
+                        required
+                      />
+                    </div>
+
+                    <div class="col-md-12">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="university"
+                        placeholder="University Name"
+                        required
+                      />
+                    </div>
+
+                    <div class="col-md-12">
+                      <textarea
+                        class="form-control"
+                        name="message"
+                        rows="6"
+                        placeholder="Message"
+                        required
+                      ></textarea>
+                    </div>
+
+                    <div class="col-md-12 text-center">
+                      <div class="loading">Loading</div>
+                      <div class="error-message"></div>
+                      <div class="sent-message">
+                        Your message has been sent. We will get in touch in few hours
+                      </div>
+
+                      <button type="submit">Send Message</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+          </div>
+        </div>
+      </div>
+      </section>
+      <!-- End Contact Section -->
 
     
 
