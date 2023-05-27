@@ -3,6 +3,10 @@ from models import db
 from stress_management_resources import stress_management_resources
 from flask_migrate import Migrate
 import sqlite3, requests, hashlib, os, warnings
+import google.auth
+from google.auth.transport.requests import Request
+from google.oauth2 import service_account
+import googleapiclient.discovery
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -429,19 +433,67 @@ def video_list():
                    'r5.mp4', 'r6.mp4', 'r7.mp4', 'r8.mp4', 'r9.mp4', 'r10.mp4']
     return render_template('mental.html', meditations=med_files, personalize=pers_files, relax=relax_files)
 
+
+
+####################################################################################
+###############################################################################
+    
 @app.route('/contact', methods=['POST'])
 def contact():
-    form_data = request.form
-    requests.post('https://forms.gle/QSyxYV5Yb93g56TG9', data=form_data)
-    return 'Thank you for your submission!'
+    fname = request.form['fname']
+    lname = request.form['lname']
+    email = request.form['email']
+    university = request.form['university']
+    faculty = request.form['faculty']
+    department = request.form['department']
+    subject = request.form['subject']
+    message = request.form['message']
 
+    # Send the data to the Google Form
+    form_url = 'https://docs.google.com/forms/d/e/1FAIpQLSfODqZMG50ZYtMaSO6FCCh0-EE5LCanZ7NHDehrcEbDRfIm9Q/viewform?usp=sf_link'
+    payload = {
+        'entry.2005620554': fname,
+        'entry.671259306':lname,
+        'entry.1045781291': email,
+        'entry.839337160':  university,
+        'entry.2041432957': faculty,
+        'entry.1767634513': department,
+        'entry.317707165': subject,
+        'entry.908352806': message
+        }
+    response = requests.post(form_url, data=payload)
+
+    if response.status_code == 200:
+        # Form submission successful
+        return "Thank you for your submission!"
+    else:
+        # Form submission failed
+        return "Oops! Something went wrong."
+    
 @app.route('/pcontact', methods=['POST'])
 def pcontact():
-    form_data = request.form
-    requests.post('https://forms.gle/6esAqa2cdQm6BDv16', data=form_data)
-    return 'Thank you for your submission!'
+    name = request.form['name']
+    email = request.form['email']
+    university = request.form['university']
+    message = request.form['message']
 
+    # Send the data to the Google Form
+    form_url = 'https://docs.google.com/forms/d/e/1FAIpQLSfODqZMG50ZYtMaSO6FCCh0-EE5LCanZ7NHDehrcEbDRfIm9Q/viewform?usp=sf_link'
+    payload = {
+        'entry.2005620554': name,
+        'entry.1045781291': email,
+        'entry.839337160':  university,
+        'entry.908352806': message
+        }
+    response = requests.post(form_url, data=payload)
 
-
+    if response.status_code == 200:
+        # Form submission successful
+        return "Thank you for your submission!"
+    else:
+        # Form submission failed
+        return "Oops! Something went wrong."
+    
+    
 if __name__ == '__main__':
     app.run(debug=True)
