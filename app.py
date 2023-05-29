@@ -7,6 +7,9 @@ import google.auth
 from google.auth.transport.requests import Request
 from google.oauth2 import service_account
 import googleapiclient.discovery
+from googleapiclient.discovery import build
+import requests
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -440,38 +443,42 @@ def video_list():
     
 @app.route('/contact', methods=['POST'])
 def contact():
-    fname = request.form['fname']
-    lname = request.form['lname']
-    email = request.form['email']
-    university = request.form['university']
-    faculty = request.form['faculty']
-    department = request.form['department']
-    subject = request.form['subject']
-    message = request.form['message']
-
-    # Send the data to the Google Form
-    form_url = 'https://docs.google.com/forms/d/e/1FAIpQLSfODqZMG50ZYtMaSO6FCCh0-EE5LCanZ7NHDehrcEbDRfIm9Q/viewform?usp=sf_link'
+    form_data = request.form
+    # Extract form fields
+    firstName = form_data.get('fname')
+    lastName = form_data.get('lname')
+    email = form_data.get('email')
+    university = form_data.get('university')
+    faculty = form_data.get('faculty')
+    department = form_data.get('department')
+    subject = form_data.get('subject')
+    message = form_data.get('message')
+    
+    # Creates the payload to send to the Apps Script deployment
     payload = {
-        'entry.2005620554': fname,
-        'entry.671259306':lname,
-        'entry.1045781291': email,
-        'entry.839337160':  university,
-        'entry.2041432957': faculty,
-        'entry.1767634513': department,
-        'entry.317707165': subject,
-        'entry.908352806': message
-        }
-    response = requests.post(form_url, data=payload)
-
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+	    'university': university,
+        'faculty': faculty,
+        'department': department,
+        'subject': subject,
+        'message': message
+    }
+    
+    # Makes a POST request to the Apps Script deployment URL
+    script_url = 'https://script.google.com/macros/s/AKfycbzoGqDmsAWGOaVk0wDOXu3wfl1G1brlboPcVEUVoF6qdaVZjWkEadgDspqBZN1rCr4YUw/exec'
+    response = requests.post(script_url, json=payload)
+    
     if response.status_code == 200:
-        # Form submission successful
-        return "Thank you for your submission!"
+        # Successful response from Apps Script
+        return 'Form submitted successfully!'
     else:
-        # Form submission failed
-        return "Oops! Something went wrong."
+        # Error occurred in Apps Script
+        return 'Oops! Something went wrong.'
     
 @app.route('/pcontact', methods=['POST'])
-def pcontact():
+def submit_form():
     name = request.form['name']
     email = request.form['email']
     university = request.form['university']
