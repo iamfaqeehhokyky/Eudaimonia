@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+</head>
+<body>
+    <h1>Calendar</h1>
+    <h2>Goals</h2>
+    <ul>
+        {% for goal in goals %}
+            <li>{{ goal.title }} - {{ goal.description }}</li>
+            <ul>
+                {% for milestone in goal.milestones %}
+                    <li {% if milestone.completed %}class="completed"{% endif %}>
+                        {{ milestone.description }}
+                        <form action="/update_progress/{{ milestone.id }}" method="POST" style="display:inline;">
+                            <input type="checkbox" name="completed" {% if milestone.completed %}checked{% endif %} onchange="this.form.submit()">
+                        </form>
+                    </li>
+                {% endfor %}
+                <li><a href="/create_milestone/{{ goal.id }}">Create Milestone</a></li>
+            </ul>
+        {% endfor %}
+    </ul>
+
+    <style>
+        .completed {
+            text-decoration: line-through;
+        }
+    </style>
+</body>
+</html>

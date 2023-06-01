@@ -8,7 +8,7 @@ from google.auth.transport.requests import Request
 from google.oauth2 import service_account
 import googleapiclient.discovery
 from googleapiclient.discovery import build
-import requests
+import requests, datetime
 
 
 app = Flask(__name__)
@@ -179,7 +179,14 @@ def input():
 def meal():
     if g.user is None:
         return redirect(url_for('signin'))
+    
+    visited = "checked your Meal"    
+    user_id = session['user_id']
+    record_usage_history(user_id, visited)
+
+   
     if request.method == "POST":
+
         # get the username provided in the sign up page
         name = g.user['username']
         session['name'] = name
@@ -226,6 +233,7 @@ def meal():
 
     elif request.method == "GET":
         try:
+
             # get the username provided in the sign up page
             name = g.user['username']
             grocery = name + '1'
@@ -350,6 +358,7 @@ def signup():
         gender = request.form['gender']
         university_name = request.form['university_name']
         password = request.form['password']
+        session['username'] = username
 
         # Hash password
         password_hash = hash_password(password)
@@ -408,6 +417,10 @@ def signin():
 
 @app.route('/signout')
 def signout():
+    visited = "Sign out"    
+    user_id = session['user_id']
+    record_usage_history(user_id, visited)
+
     session.pop('user_id', None)
     return redirect(url_for('index'))
 
@@ -422,6 +435,12 @@ def logout():
 def home():
     if g.user is None:
         return redirect(url_for('signin'))
+    
+    visited = "new sign in"    
+    user_id = session['user_id']
+    record_usage_history(user_id, visited)
+
+
     return render_template('home.html', user=g.user)
 
 
@@ -429,6 +448,12 @@ def home():
 def video_list():
     if g.user is None:
         return redirect(url_for('signin'))
+    
+    visited = "used the relaxation page"    
+    user_id = session['user_id']
+    record_usage_history(user_id, visited)
+
+
     med_files = ['m1.mp4', 'm2.mp4', 'm3.mp4', 'm4.mp4', 'm5.mp4',
                  'm6.mp4', 'm7.mp4', 'm8.mp4', 'm9.mp4', 'm10.mp4', 'm11.mp4']
     pers_files = ['p1.mp4', 'p2.mp4', 'p3.mp4', 'p4.mp4', 'p5.mp4']
@@ -437,69 +462,167 @@ def video_list():
     return render_template('mental.html', meditations=med_files, personalize=pers_files, relax=relax_files)
 
 
+# User settings
+@app.route('/settings', methods=['GET', 'POST'])
+def settings():
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect('/signin')
 
-####################################################################################
-###############################################################################
+    user = get_user(user_id)
+    if g.user is None:
+        return redirect(url_for('signin'))
     
-@app.route('/contact', methods=['POST'])
-def contact():
-    form_data = request.form
-    # Extract form fields
-    firstName = form_data.get('fname')
-    lastName = form_data.get('lname')
-    email = form_data.get('email')
-    university = form_data.get('university')
-    faculty = form_data.get('faculty')
-    department = form_data.get('department')
-    subject = form_data.get('subject')
-    message = form_data.get('message')
-    
-    # Creates the payload to send to the Apps Script deployment
-    payload = {
-        'firstName': firstName,
-        'lastName': lastName,
-        'email': email,
-	    'university': university,
-        'faculty': faculty,
-        'department': department,
-        'subject': subject,
-        'message': message
-    }
-    
-    # Makes a POST request to the Apps Script deployment URL
-    script_url = 'https://script.google.com/macros/s/AKfycbzoGqDmsAWGOaVk0wDOXu3wfl1G1brlboPcVEUVoF6qdaVZjWkEadgDspqBZN1rCr4YUw/exec'
-    response = requests.post(script_url, json=payload)
-    
-    if response.status_code == 200:
-        # Successful response from Apps Script
-        return 'Form submitted successfully!'
-    else:
-        # Error occurred in Apps Script
-        return 'Oops! Something went wrong.'
-    
-@app.route('/pcontact', methods=['POST'])
-def submit_form():
-    name = request.form['name']
-    email = request.form['email']
-    university = request.form['university']
-    message = request.form['message']
+    visited = "Updated your settings"    
+    user_id = session['user_id']
+    record_usage_history(user_id, visited)
 
-    # Send the data to the Google Form
-    form_url = 'https://docs.google.com/forms/d/e/1FAIpQLSfODqZMG50ZYtMaSO6FCCh0-EE5LCanZ7NHDehrcEbDRfIm9Q/viewform?usp=sf_link'
-    payload = {
-        'entry.2005620554': name,
-        'entry.1045781291': email,
-        'entry.839337160':  university,
-        'entry.908352806': message
-        }
-    response = requests.post(form_url, data=payload)
 
-    if response.status_code == 200:
-        # Form submission successful
-        return "Thank you for your submission!"
-    else:
-        # Form submission failed
-        return "Oops! Something went wrong."
+    # Default values for notification_enabled and privacy_enabled
+    notification_enabled = 0
+    privacy_enabled = 0
+
+    if request.method == 'POST':
+        notification_enabled = bool(request.form.get('notification_enabled'))
+        privacy_enabled = bool(request.form.get('privacy_enabled'))
+
+        query = "UPDATE users SET notification_enabled = ?, privacy_enabled = ? WHERE id = ?"
+        args = (notification_enabled, privacy_enabled, user['id'])
+        db_connection = get_db()
+        cur = db_connection.cursor()
+        cur.execute(query, args)
+        db_connection.commit()
+
+        return redirect('/settings')
+
+    return render_template('settings.html', user=user, notification_enabled=notification_enabled, privacy_enabled=privacy_enabled)
+
+# Record user usage history
+
+def record_usage_history(user_id, route):
+    timestamp = datetime.datetime.now()
+
+    query = "INSERT INTO usage_history (user_id, route, timestamp) VALUES (?, ?, ?)"
+    args = (user_id, route, timestamp)
+    db_connection = get_db()
+    cur = db_connection.cursor()
+    cur.execute(query, args)
+    db_connection.commit()
+
+# Usage history route
+@app.route('/history')
+def usage_history():
+    if g.user is None:
+        return redirect(url_for('signin')) 
+
+    visited = "viewed history in your calendar"    
+    user_id = session['user_id']
+    record_usage_history(user_id, visited)
+
+
+    query = "SELECT * FROM usage_history WHERE user_id = ? ORDER BY timestamp DESC"
+    args = (user_id,)
+    usage_records = db_query(query, args)
+
+    return render_template('history.html', usage_records=usage_records)
+
+@app.route('/create_goal', methods=['GET', 'POST'])
+def create_goal():
+    if g.user is None:
+        return redirect(url_for('signin')) 
+    
+    visited = "created goal in your calendar"    
+    user_id = session['user_id']
+    record_usage_history(user_id, visited)
+
+
+    if request.method == 'POST':
+        title = request.form['title']
+        description = request.form['description']
+
+        query = "INSERT INTO goals (user_id, title, description, completed) VALUES (?, ?, ?, ?)"
+        args = (session['user_id'], title, description, False)
+        db_connection = get_db()
+        cur = db_connection.cursor()
+        cur.execute(query, args)
+        db_connection.commit()
+
+        return redirect('/calendar')
+
+    return render_template('goal.html')
+
+# Create a milestone for a goal
+@app.route('/create_milestone/<int:goal_id>', methods=['GET', 'POST'])
+def create_milestone(goal_id):
+    if g.user is None:
+        return redirect(url_for('signin')) 
+    
+    visited = "create milestone in your calendar"    
+    user_id = session['user_id']
+    record_usage_history(user_id, visited)
+
+    if request.method == 'POST':
+        description = request.form['description']
+
+        query = "INSERT INTO milestones (goal_id, description, completed) VALUES (?, ?, ?)"
+        args = (goal_id, description, False)
+        db_connection = get_db()
+        cur = db_connection.cursor()
+        cur.execute(query, args)
+        db_connection.commit()
+
+        # Fetch the updated list of goals
+        query = "SELECT * FROM goals WHERE user_id = ?"
+        args = (session['user_id'],)
+        goals = db_query(query, args)
+
+        return render_template('calendar.html', goals=goals)
+
+    return render_template('milestone.html', goal_id=goal_id)
+
+
+# Update milestone progress
+@app.route('/update_progress/<int:milestone_id>', methods=['POST'])
+def update_progress(milestone_id):
+    if g.user is None:
+        return redirect(url_for('signin')) 
+    
+    visited = "updated milestone in your calendar"    
+    user_id = session['user_id']
+    record_usage_history(user_id, visited)
+
+
+    query = "SELECT * FROM milestones WHERE id = ?"
+    args = (milestone_id,)
+    milestone = db_query(query, args)
+    if milestone:
+        new_completed = not milestone['completed']
+        query = "UPDATE milestones SET completed = ? WHERE id = ?"
+        args = (new_completed, milestone_id)
+        db_connection = get_db()
+        cur = db_connection.cursor()
+        cur.execute(query, args)
+        db_connection.commit()
+
+    return redirect('/calendar')
+
+# Calendar route
+@app.route('/calendar')
+def calendar():
+    if g.user is None:
+        return redirect(url_for('signin')) 
+    
+    visited = "checked your calendar"    
+    user_id = session['user_id']
+    record_usage_history(user_id, visited)
+
+    query = "SELECT * FROM goals WHERE user_id = ?" 
+    args = (session['user_id'],)
+    goals = db_query(query, args)
+
+    return render_template('calendar.html', goals=goals)
+
+
     
     
 if __name__ == '__main__':

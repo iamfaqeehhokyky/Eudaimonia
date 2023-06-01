@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Settings</title>
+</head>
+<body>
+    <h1>User Settings</h1>
+    <h2>Welcome, {{ user.username }}</h2>
+    <form action="/settings" method="POST">
+        <label>
+            <input type="checkbox" name="notification_enabled" {% if user.notification_enabled %}checked{% endif %}>
+            Enable Notifications
+        </label><br>
+        <label>
+            <input type="checkbox" name="privacy_enabled" {% if user.privacy_enabled %}checked{% endif %}>
+            Enable Privacy
+        </label><br>
+        <input type="submit" value="Save Settings">
+    </form>
+</body>
+</html>

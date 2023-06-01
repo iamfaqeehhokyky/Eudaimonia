@@ -17,10 +17,12 @@ c = conn.cursor()
 #               username TEXT UNIQUE,
 #               gender TEXT,
 #               university_name TEXT,
+#               notification_enabled INTEGER,
+#               privacy_enabled INTEGER,
 #               password_hash TEXT)''')
 
-conn.commit()
-conn.close()
+# conn.commit()
+# conn.close()
 
 
 # class User(db.Model):
