@@ -327,3 +327,77 @@ CREATE TABLE IF NOT EXISTS community_chat (
   notification_enabled INTEGER,
   timestamp DATETIME
 );
+
+-- ################################################################################################
+-- create usage_history  table 
+CREATE TABLE IF NOT EXISTS usage_history (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER,
+  route TEXT,
+  timestamp DATETIME
+);
+
+
+-- create goal table
+CREATE TABLE IF NOT EXISTS goals (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER,
+  title TEXT,
+  description TEXT,
+  notification_enabled INTEGER,
+  completed INTEGER
+);
+
+-- create milestones table
+CREATE TABLE IF NOT EXISTS milestones (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  goal_id INTEGER,
+  user_id INTEGER,
+  title TEXT,
+  description TEXT,
+  notification_enabled INTEGER,
+  completed INTEGER,
+  FOREIGN KEY (goal_id) REFERENCES goals(id)
+);
+
+
+
+
+-- create community group chat table
+CREATE TABLE IF NOT EXISTS community_chat (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  sender_id INTEGER,
+  content TEXT,
+  notification_enabled INTEGER,
+  timestamp DATETIME
+);
+
+
+-- ####################################################################################################
+-- ##################### STRESS MANAGEMENT RESOURCES ####################################################
+
+-- create table name for contact us on the landing page 
+CREATE TABLE IF NOT EXISTS contact_us (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  email TEXT UNIQUE,
+  university_name TEXT NOT NULL,
+  faculty_name TEXT,
+  department_name TEXT,
+  subject TEXT NOT NULL,
+  message TEXT NOT NULL
+);
+
+-- create table name for contact us on the landing page 
+CREATE TABLE IF NOT EXISTS feature_suggestion (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  email TEXT UNIQUE,
+  university_name TEXT NOT NULL,
+  faculty_name TEXT,
+  department_name TEXT,
+  subject TEXT NOT NULL,
+  message TEXT NOT NULL
+);
