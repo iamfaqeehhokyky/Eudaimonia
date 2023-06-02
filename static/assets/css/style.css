@@ -1695,7 +1695,8 @@ section {
   height: 100%;
 }
 
-.contact .php-email-form .error-message {
+.contact .php-email-form .error-message,
+.contact .my-email-form .error-message {
   display: none;
   color: #fff;
   background: #ed3c0d;
@@ -1705,7 +1706,8 @@ section {
   font-weight: 600;
 }
 
-.contact .php-email-form .sent-message {
+.contact .php-email-form .sent-message,
+.contact .my-email-form .sent-message {
   display: none;
   color: #fff;
   background: #18d26e;
@@ -1715,7 +1717,8 @@ section {
   font-weight: 600;
 }
 
-.contact .php-email-form .loading {
+.contact .php-email-form .loading,
+.contact .my-email-form .loading {
   display: none;
   background: #fff;
   text-align: center;
@@ -1723,7 +1726,8 @@ section {
   margin-bottom: 24px;
 }
 
-.contact .php-email-form .loading:before {
+.contact .php-email-form .loading:before,
+.contact .my-email-form .loading:before {
   content: "";
   display: inline-block;
   border-radius: 50%;
