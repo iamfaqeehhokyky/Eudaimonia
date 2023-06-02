@@ -11,13 +11,14 @@
     <h2>Goals</h2>
     <ul>
         {% for goal in goals %}
-            <li>{{ goal.title }} - {{ goal.description }}</li>
+            <li>{{ goal['title'] }} - {{ goal['description'] }}</li>
             <ul>
-                {% for milestone in goal.milestones %}
-                    <li {% if milestone.completed %}class="completed"{% endif %}>
-                        {{ milestone.description }}
-                        <form action="/update_progress/{{ milestone.id }}" method="POST" style="display:inline;">
-                            <input type="checkbox" name="completed" {% if milestone.completed %}checked{% endif %} onchange="this.form.submit()">
+                {% set milestones = get_milestones(goal['id']) %}
+                {% for milestone in milestones %}
+                    <li {% if milestone['completed'] %}class="completed"{% endif %}>
+                        {{ milestone['description'] }}
+                        <form action="/update_progress/{{ milestone['id'] }}" method="POST" style="display:inline;">
+                            <input type="checkbox" name="completed" {% if milestone['completed'] %}checked{% endif %} onchange="this.form.submit()">
                         </form>
                     </li>
                 {% endfor %}

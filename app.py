@@ -477,10 +477,23 @@ def settings():
     user_id = session['user_id']
     record_usage_history(user_id, visited)
 
+    # selecting notification
+    query = "SELECT notification_enabled FROM users WHERE id = ?"
+    args = (user_id,)
+    notification = db_query(query, args)
+    if notification is None:
+        notification = 0
+
+    # selecting Privacy
+    query = "SELECT notification_enabled FROM users WHERE id = ?"
+    args = (user_id,)
+    privacy = db_query(query, args)
+    if privacy is None:
+        privacy = 0
 
     # Default values for notification_enabled and privacy_enabled
-    notification_enabled = 0
-    privacy_enabled = 0
+    notification_enabled = notification
+    privacy_enabled = privacy
 
     if request.method == 'POST':
         notification_enabled = bool(request.form.get('notification_enabled'))
@@ -497,8 +510,7 @@ def settings():
 
     return render_template('settings.html', user=user, notification_enabled=notification_enabled, privacy_enabled=privacy_enabled)
 
-# Record user usage history
-
+# Records user usage history
 def record_usage_history(user_id, route):
     timestamp = datetime.datetime.now()
 
@@ -526,6 +538,7 @@ def usage_history():
 
     return render_template('history.html', usage_records=usage_records)
 
+#this creates the goal
 @app.route('/create_goal', methods=['GET', 'POST'])
 def create_goal():
     if g.user is None:
@@ -571,14 +584,12 @@ def create_milestone(goal_id):
         cur.execute(query, args)
         db_connection.commit()
 
-        # Fetch the updated list of goals
-        query = "SELECT * FROM goals WHERE user_id = ?"
-        args = (session['user_id'],)
-        goals = db_query(query, args)
+    # Fetches the updated list of goals with their associated milestones
+    query = "SELECT g.id, g.title, g.description, g.completed, m.id AS milestone_id, m.description AS milestone_description, m.completed AS milestone_completed FROM goals g LEFT JOIN milestones m ON g.id = m.goal_id WHERE g.user_id = ?"
+    args = (session['user_id'],)
+    goals = db_query(query, args)
 
-        return render_template('calendar.html', goals=goals)
-
-    return render_template('milestone.html', goal_id=goal_id)
+    return render_template('calendar.html', goals=goals)
 
 
 # Update milestone progress
@@ -596,7 +607,7 @@ def update_progress(milestone_id):
     args = (milestone_id,)
     milestone = db_query(query, args)
     if milestone:
-        new_completed = not milestone['completed']
+        new_completed = not milestone[0]['completed']
         query = "UPDATE milestones SET completed = ? WHERE id = ?"
         args = (new_completed, milestone_id)
         db_connection = get_db()
@@ -605,6 +616,15 @@ def update_progress(milestone_id):
         db_connection.commit()
 
     return redirect('/calendar')
+
+#This gets the milestone from the db, so it can be accesed with goal using foreign keys
+@app.template_global()
+def get_milestones(goal_id):
+    query = "SELECT * FROM milestones WHERE goal_id = ?"
+    args = (goal_id,)
+    milestones = db_query(query, args)
+    return milestones
+
 
 # Calendar route
 @app.route('/calendar')
