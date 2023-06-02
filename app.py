@@ -45,13 +45,16 @@ def check_password(password, password_hash):
 
 
 def get_user(user_id):
-    query = "SELECT id, email, first_name, last_name, username, gender, university_name, password_hash FROM users WHERE id = ?"
+    query = "SELECT id, email, first_name, last_name, username, gender, university_name, password_hash, notification_enabled, privacy_enabled FROM users WHERE id = ?"
     args = (user_id,)
     row = db_query(query, args)
 
     if not row:
         return None
-    return {'id': row[0][0], 'email': row[0][1], 'first_name': row[0][2], 'last_name': row[0][3], 'username': row[0][4], 'gender': row[0][5], 'university_name': row[0][6], 'password': row[0][7]}
+
+    return {
+        'id': row[0][0], 'email': row[0][1], 'first_name': row[0][2], 'last_name': row[0][3], 'username': row[0][4], 'gender': row[0][5], 'university_name': row[0][6], 'password': row[0][7], 'notification_enabled': bool(row[0][8]), 'privacy_enabled': bool(row[0][9])
+        }
 
 
 @app.before_request
@@ -481,15 +484,11 @@ def settings():
     query = "SELECT notification_enabled FROM users WHERE id = ?"
     args = (user_id,)
     notification = db_query(query, args)
-    if notification is None:
-        notification = 0
 
     # selecting Privacy
     query = "SELECT notification_enabled FROM users WHERE id = ?"
     args = (user_id,)
     privacy = db_query(query, args)
-    if privacy is None:
-        privacy = 0
 
     # Default values for notification_enabled and privacy_enabled
     notification_enabled = notification
@@ -507,7 +506,7 @@ def settings():
         db_connection.commit()
 
         return redirect('/settings')
-
+    print(notification_enabled, privacy_enabled)
     return render_template('settings.html', user=user, notification_enabled=notification_enabled, privacy_enabled=privacy_enabled)
 
 # Records user usage history
@@ -584,12 +583,13 @@ def create_milestone(goal_id):
         cur.execute(query, args)
         db_connection.commit()
 
-    # Fetches the updated list of goals with their associated milestones
-    query = "SELECT g.id, g.title, g.description, g.completed, m.id AS milestone_id, m.description AS milestone_description, m.completed AS milestone_completed FROM goals g LEFT JOIN milestones m ON g.id = m.goal_id WHERE g.user_id = ?"
-    args = (session['user_id'],)
-    goals = db_query(query, args)
+        # Fetches the updated list of goals with their associated milestones
+        query = "SELECT g.id, g.title, g.description, g.completed, m.id AS milestone_id, m.description AS milestone_description, m.completed AS milestone_completed FROM goals g LEFT JOIN milestones m ON g.id = m.goal_id WHERE g.user_id = ?"
+        args = (session['user_id'],)
+        goals = db_query(query, args)
 
-    return render_template('calendar.html', goals=goals)
+        return render_template('calendar.html', goals=goals)
+    return render_template('milestone.html', goal_id=goal_id)
 
 
 # Update milestone progress
