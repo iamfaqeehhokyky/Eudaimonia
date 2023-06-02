@@ -1,14 +1,19 @@
-from flask import Flask, render_template, request, g, session, jsonify, url_for, redirect
+from flask import Flask, render_template, request, g, session, jsonify, url_for, redirect, flash
 from models import db
 from stress_management_resources import stress_management_resources
 from flask_migrate import Migrate
-import sqlite3, requests, hashlib, os, warnings
+import sqlite3
+import requests
+import hashlib
+import os
+import warnings
 import google.auth
 from google.auth.transport.requests import Request
 from google.oauth2 import service_account
 import googleapiclient.discovery
 from googleapiclient.discovery import build
-import requests, datetime
+import requests
+import datetime
 
 
 app = Flask(__name__)
@@ -36,6 +41,8 @@ def hash_password(password):
     return salt + password_hash
 
 # Function handling the password checker for correctness and tallying
+
+
 def check_password(password, password_hash):
     salt = password_hash[:16]
     stored_password_hash = password_hash[16:]
@@ -54,7 +61,7 @@ def get_user(user_id):
 
     return {
         'id': row[0][0], 'email': row[0][1], 'first_name': row[0][2], 'last_name': row[0][3], 'username': row[0][4], 'gender': row[0][5], 'university_name': row[0][6], 'password': row[0][7], 'notification_enabled': bool(row[0][8]), 'privacy_enabled': bool(row[0][9])
-        }
+    }
 
 
 @app.before_request
@@ -66,11 +73,39 @@ def load_user():
         g.user = None
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html', user=g.user)
+    if request.method == 'POST':
+        # Get form data
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        email = request.form['email']
+        university_name = request.form['university_name']
+        faculty_name = request.form['faculty_name']
+        department_name = request.form['department_name']
+        subject = request.form['subject']
+        message = request.form['message']
+
+        try:
+            # Insert user into database
+            conn = sqlite3.connect('database.db')
+            c = conn.cursor()
+            c.execute("INSERT INTO contact_us (first_name, last_name, email, university_name, faculty_name, department_name, subject, message) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                      (first_name, last_name, email, university_name, faculty_name, department_name, subject, message))
+            conn.commit()
+            conn.close()
+            flash('Form submitted successfully!', 'success')
+            # return redirect('/')
+        except:
+            flash(
+                'An error occurred while submitting the form. Please try again later.', 'error')
+
+    # Render home page
+    return render_template('index.html')
 
 # Route to the  blog page
+
+
 @app.route('/blog')
 def blog():
     return render_template('blog.html')
@@ -87,6 +122,8 @@ def get_db():
     return db
 
 # Close the database connection when the app shuts down
+
+
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
@@ -94,6 +131,8 @@ def close_connection(exception):
         db.close()
 
 # return the results from a database query
+
+
 def db_query(query, args=None):
     cur = get_db().execute(query, args or ())
     rv = cur.fetchall()
@@ -101,12 +140,13 @@ def db_query(query, args=None):
     return rv
 
 # execute a database query
+
+
 def db_execute(query, args=()):
     conn = get_db()
     conn.execute(query, args)
     conn.commit()
     return True
-
 
 
 def replicate_table(table_name, new_table_name):
@@ -167,6 +207,8 @@ def update():
     return '/meal'
 
 # this directs users to the database were they fill the form were a table can be made for them base on their nutrional requirements
+
+
 @app.route('/input')
 def input():
     if g.user is not None:
@@ -180,12 +222,11 @@ def input():
 def meal():
     if g.user is None:
         return redirect(url_for('signin'))
-    
-    visited = "checked your Meal"    
+
+    visited = "checked your Meal"
     user_id = session['user_id']
     record_usage_history(user_id, visited)
 
-   
     if request.method == "POST":
 
         # get the username provided in the sign up page
@@ -366,7 +407,8 @@ def signup():
 
         # Insert user into database
         query = "INSERT INTO users (email, first_name, last_name, username, gender, university_name, password_hash) VALUES (?, ?, ?, ?, ?, ?, ?)"
-        args = (email, first_name, last_name, username, gender, university_name, password_hash)
+        args = (email, first_name, last_name, username,
+                gender, university_name, password_hash)
 
         db_connection = get_db()
         cur = db_connection.cursor()
@@ -375,11 +417,9 @@ def signup():
 
         # Redirect to sign-in page
         return redirect(url_for('signin'))
-    
+
     # Render sign-up page
     return render_template('signup.html')
-
-
 
 
 @app.route('/signin', methods=['GET', 'POST'])
@@ -403,7 +443,8 @@ def signin():
         password_hash = row[0][1]  # Access the first row's second element
         if check_password(password, password_hash):
             # Password is correct, store user ID in session
-            session['user_id'] = row[0][0]  # Access the first row's first element
+            # Access the first row's first element
+            session['user_id'] = row[0][0]
             return redirect('/home')
         else:
             # Password is incorrect
@@ -414,11 +455,9 @@ def signin():
     return render_template('signin.html')
 
 
-
-
 @app.route('/signout')
 def signout():
-    visited = "Sign out"    
+    visited = "Sign out"
     user_id = session['user_id']
     record_usage_history(user_id, visited)
 
@@ -436,11 +475,10 @@ def logout():
 def home():
     if g.user is None:
         return redirect(url_for('signin'))
-    
-    visited = "new sign in"    
+
+    visited = "new sign in"
     user_id = session['user_id']
     record_usage_history(user_id, visited)
-
 
     return render_template('home.html', user=g.user)
 
@@ -449,11 +487,10 @@ def home():
 def video_list():
     if g.user is None:
         return redirect(url_for('signin'))
-    
-    visited = "used the relaxation page"    
+
+    visited = "used the relaxation page"
     user_id = session['user_id']
     record_usage_history(user_id, visited)
-
 
     med_files = ['m1.mp4', 'm2.mp4', 'm3.mp4', 'm4.mp4', 'm5.mp4',
                  'm6.mp4', 'm7.mp4', 'm8.mp4', 'm9.mp4', 'm10.mp4', 'm11.mp4']
@@ -473,8 +510,8 @@ def settings():
     user = get_user(user_id)
     if g.user is None:
         return redirect(url_for('signin'))
-    
-    visited = "Updated your settings"    
+
+    visited = "Updated your settings"
     user_id = session['user_id']
     record_usage_history(user_id, visited)
 
@@ -508,6 +545,8 @@ def settings():
     return render_template('settings.html', user=user, notification_enabled=notification_enabled, privacy_enabled=privacy_enabled)
 
 # Records user usage history
+
+
 def record_usage_history(user_id, route):
     timestamp = datetime.datetime.now()
 
@@ -519,15 +558,16 @@ def record_usage_history(user_id, route):
     db_connection.commit()
 
 # Usage history route
+
+
 @app.route('/history')
 def usage_history():
     if g.user is None:
-        return redirect(url_for('signin')) 
+        return redirect(url_for('signin'))
 
-    visited = "viewed history in your calendar"    
+    visited = "viewed history in your calendar"
     user_id = session['user_id']
     record_usage_history(user_id, visited)
-
 
     query = "SELECT * FROM usage_history WHERE user_id = ? ORDER BY timestamp DESC"
     args = (user_id,)
@@ -535,16 +575,17 @@ def usage_history():
 
     return render_template('history.html', usage_records=usage_records)
 
-#this creates the goal
+# this creates the goal
+
+
 @app.route('/create_goal', methods=['GET', 'POST'])
 def create_goal():
     if g.user is None:
-        return redirect(url_for('signin')) 
-    
-    visited = "created goal in your calendar"    
+        return redirect(url_for('signin'))
+
+    visited = "created goal in your calendar"
     user_id = session['user_id']
     record_usage_history(user_id, visited)
-
 
     if request.method == 'POST':
         title = request.form['title']
@@ -562,12 +603,14 @@ def create_goal():
     return render_template('goal.html')
 
 # Create a milestone for a goal
+
+
 @app.route('/create_milestone/<int:goal_id>', methods=['GET', 'POST'])
 def create_milestone(goal_id):
     if g.user is None:
-        return redirect(url_for('signin')) 
-    
-    visited = "create milestone in your calendar"    
+        return redirect(url_for('signin'))
+
+    visited = "create milestone in your calendar"
     user_id = session['user_id']
     record_usage_history(user_id, visited)
 
@@ -594,12 +637,11 @@ def create_milestone(goal_id):
 @app.route('/update_progress/<int:milestone_id>', methods=['POST'])
 def update_progress(milestone_id):
     if g.user is None:
-        return redirect(url_for('signin')) 
-    
-    visited = "updated milestone in your calendar"    
+        return redirect(url_for('signin'))
+
+    visited = "updated milestone in your calendar"
     user_id = session['user_id']
     record_usage_history(user_id, visited)
-
 
     query = "SELECT * FROM milestones WHERE id = ?"
     args = (milestone_id,)
@@ -615,7 +657,9 @@ def update_progress(milestone_id):
 
     return redirect('/calendar')
 
-#This gets the milestone from the db, so it can be accesed with goal using foreign keys
+# This gets the milestone from the db, so it can be accesed with goal using foreign keys
+
+
 @app.template_global()
 def get_milestones(goal_id):
     query = "SELECT * FROM milestones WHERE goal_id = ?"
@@ -628,47 +672,53 @@ def get_milestones(goal_id):
 @app.route('/calendar')
 def calendar():
     if g.user is None:
-        return redirect(url_for('signin')) 
-    
-    visited = "checked your calendar"    
+        return redirect(url_for('signin'))
+
+    visited = "checked your calendar"
     user_id = session['user_id']
     record_usage_history(user_id, visited)
 
-    query = "SELECT * FROM goals WHERE user_id = ?" 
+    query = "SELECT * FROM goals WHERE user_id = ?"
     args = (session['user_id'],)
     goals = db_query(query, args)
 
     return render_template('calendar.html', goals=goals)
 
 # Dashboard route
+
+
 @app.route('/dashboard')
 def dashboard():
     if g.user is None:
         return redirect(url_for('signin'))
-    visited = "You visited the  dashboard"    
+    visited = "You visited the  dashboard"
     user_id = session['user_id']
     record_usage_history(user_id, visited)
     return render_template('dashboard.html')
 
 # profile route
+
+
 @app.route('/profile')
 def profile():
     if g.user is None:
-        return redirect(url_for('signin')) 
-    
-    visited = "You checked your profile"    
+        return redirect(url_for('signin'))
+
+    visited = "You checked your profile"
     user_id = session['user_id']
     record_usage_history(user_id, visited)
     user = get_user(user_id)
     return render_template('profile.html', user=user)
 
-#profile update
 # profile update
+# profile update
+
+
 @app.route('/profile_update', methods=['GET', 'POST'])
 def profile_update():
     if g.user is None:
-        return redirect(url_for('signin')) 
-    
+        return redirect(url_for('signin'))
+
     user_id = session['user_id']
     user = get_user(user_id)
     if user is None:
@@ -684,8 +734,9 @@ def profile_update():
         email = request.form.get('email')
         university_name = request.form.get('university_name')
 
-        query = "UPDATE users SET first_name = ?, last_name = ?, username = ?, email = ?, university_name = ? WHERE id = ?" 
-        args = (first_name, last_name, username, email, university_name, user_id)
+        query = "UPDATE users SET first_name = ?, last_name = ?, username = ?, email = ?, university_name = ? WHERE id = ?"
+        args = (first_name, last_name, username,
+                email, university_name, user_id)
         db_connection = get_db()
         cur = db_connection.cursor()
         cur.execute(query, args)
@@ -696,11 +747,13 @@ def profile_update():
     return render_template('profile.html', user=user)
 
 # community route
+
+
 @app.route('/community', methods=['GET', 'POST'])
 def group_chat():
     if g.user is None:
-        return redirect(url_for('signin')) 
-    
+        return redirect(url_for('signin'))
+
     user_id = session['user_id']
     user = get_user(user_id)
     if user is None:
@@ -720,15 +773,11 @@ def group_chat():
         cur.execute(query, args)
         db_connection.commit()
 
-
     query = "SELECT * FROM community_chat"
     messages = db_query(query, ())
 
     return render_template('community.html', messages=messages)
 
 
-
-    
-    
 if __name__ == '__main__':
     app.run(debug=True)
