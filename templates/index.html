@@ -343,17 +343,136 @@
     <section id="contact" class="contact">
       <div class="container" data-aos="fade-up">
         <header class="section-header">
-          <p>SUGGEST A FEATURE!</p>
+          <h2>Contact us</h2>
+          <p>SEND US A MESSAGE!</p>
         </header>
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-10">
+                <form
+                  action="{{ url_for('index') }}"
+                  method="post"
+                  class="my-email-form"
+                >
+                  <div class="row gy-4">
+                    <div class="col-md-6">
+                      <input
+                        type="text"
+                        name="first_name"
+                        class="form-control"
+                        placeholder="First Name"
+                        required
+                      />
+                    </div>
+
+                    <div class="col-md-6">
+                      <input
+                        type="text"
+                        name="last_name"
+                        class="form-control"
+                        placeholder="Last Name"
+                        required
+                      />
+                    </div>
+
+                    <div class="col-md-12">
+                      <input
+                        type="email"
+                        class="form-control"
+                        name="email"
+                        placeholder="Your Email"
+                        required
+                      />
+                    </div>
+
+                    <div class="col-md-12">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="university_name"
+                        placeholder="University Name"
+                        required
+                      />
+                    </div>
+
+                    <div class="col-md-6">
+                      <input
+                        type="text"
+                        name="faculty_name"
+                        class="form-control"
+                        placeholder="Faculty Name"
+                        required
+                      />
+                    </div>
+
+                    <div class="col-md-6">
+                      <input
+                        type="text"
+                        name="department_name"
+                        class="form-control"
+                        placeholder="Department Name"
+                        required
+                      />
+                    </div>
+
+                    <div class="col-md-12">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="subject"
+                        placeholder="Subject"
+                        required
+                      />
+                    </div>
+
+                    <div class="col-md-12">
+                      <textarea
+                        class="form-control"
+                        name="message"
+                        rows="6"
+                        placeholder="Message"
+                        required
+                      ></textarea>
+                    </div>
+
+                    <div class="col-md-12 text-center">
+                      <div class="loading">Loading...</div>
+                      <!-- Sent message Notification -->
+                      <div class="sent-message">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                          {% if messages %}
+                            {% for category, message in messages %}
+                              {% if category == 'success' %}
+                                {{ message }}
+                              {% endif %}
+                            {% endfor %}
+                          {% endif %}
+                        {% endwith %}
+                      </div>
+                      
+                      <!-- Error message Notification -->
+                      <div class="error-message">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                          {% if messages %}
+                            {% for category, message in messages %}
+                              {% if category == 'error' %}
+                                {{ message }}
+                              {% endif %}
+                            {% endfor %}
+                          {% endif %}
+                        {% endwith %}
+                      </div>
+                    
+                      <button type="submit">Send Message</button>
+                    </div>
+                  </div>
+                </form>
               <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfODqZMG50ZYtMaSO6FCCh0-EE5LCanZ7NHDehrcEbDRfIm9Q/viewform?embedded=true" width="640" height="1388" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
               </div>
           </div>
         </div>
       </div>
-      </section>
+    </section>
       <!-- End Contact Section -->
     </main>
     <!-- End #main -->
