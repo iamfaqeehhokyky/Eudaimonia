@@ -695,6 +695,37 @@ def profile_update():
 
     return render_template('profile.html', user=user)
 
+# community route
+@app.route('/community', methods=['GET', 'POST'])
+def group_chat():
+    if g.user is None:
+        return redirect(url_for('signin')) 
+    
+    user_id = session['user_id']
+    user = get_user(user_id)
+    if user is None:
+        return redirect(url_for('signin'))
+
+    visited = "You visited the community group chat"
+    record_usage_history(user_id, visited)
+
+    if request.method == 'POST':
+        message = request.form['message']
+        sender_id = session['user_id']
+
+        query = "INSERT INTO messages (sender_id, content) VALUES (?, ?)"
+        args = (sender_id, message)
+        db_connection = get_db()
+        cur = db_connection.cursor()
+        cur.execute(query, args)
+        db_connection.commit()
+
+
+    query = "SELECT * FROM community_chat"
+    messages = db_query(query, ())
+
+    return render_template('community.html', messages=messages)
+
 
 
     

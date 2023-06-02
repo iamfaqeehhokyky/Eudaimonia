@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Chat</title>
+</head>
+<body>
+    <h1>Group Chat</h1>
+
+    <div id="chat-messages"></div>
+
+    <form id="chat-form">
+        <input type="text" id="message-input" required>
+        <input type="submit" value="Send">
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Function to fetch and display chat messages
+            function fetchMessages() {
+                $.ajax({
+                    url: '/fetch_messages', // Route to fetch messages from the server
+                    method: 'GET',
+                    success: function(response) {
+                        $('#chat-messages').html(response);
+                    }
+                });
+            }
+
+            // Polling to periodically fetch new messages
+            setInterval(fetchMessages, 2000); // Adjust the interval as needed
+
+            // Submit form and send message
+            $('#chat-form').submit(function(event) {
+                event.preventDefault();
+
+                var message = $('#message-input').val();
+                $.ajax({
+                    url: '/send_message', // Route to send the message to the server
+                    method: 'POST',
+                    data: { message: message },
+                    success: function(response) {
+                        $('#message-input').val('');
+                        fetchMessages(); // Refresh messages after sending a new one
+                    }
+                });
+            });
+        });
+    </script>    
+</body>
+</html>

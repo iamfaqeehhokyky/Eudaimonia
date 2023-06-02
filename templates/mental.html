@@ -101,20 +101,19 @@
               data-aos="fade-up"
               data-aos-delay="200"
             >
-            
-            
-        <div>
-          {% for video in meditations %}
-            <div class="videos" onclick="playOrPauseVideo(this, '{{ url_for('static',  filename='video/meditation/' + video) }}')">
-                <video width="300" height="200" preload="metadata">
+         
+            <div id="video-container">
+              {% for video in meditations %}
+                <div class="videos">
+                  <video id="video-{{ loop.index }}" width="300" height="200" preload="metadata">
                     <source src="{{ url_for('static', filename='video/meditation/' + video) }}" type="video/mp4">
-                </video>
-                <div class="video_play">
+                  </video>
+                  <div class="video_play">
                     <span>Click to Play</span>
+                  </div>
                 </div>
+              {% endfor %}
             </div>
-        {% endfor %}
-        </div>
         </div>
       </div>
     </section>
@@ -131,17 +130,17 @@
               data-aos-delay="200"
             >
              
-            <div>
-                {% for video in relax %}
-                    <div class="videos" onclick="playOrPauseVideo(this, '{{ url_for('static',  filename='video/relax/' + video) }}')">
-                        <video width="300" height="200" preload="metadata">
-                            <source src="{{ url_for('static', filename='video/relax/' + video) }}" type="video/mp4">
-                        </video>
-                        <div class="video_play">
-                            <span>Click to Play</span>
-                        </div>
-                    </div>
-                {% endfor %}
+            <div id="video-container">
+              {% for video in relax %}
+                <div class="videos">
+                  <video id="video-{{ loop.index }}" width="300" height="200" preload="metadata">
+                    <source src="{{ url_for('static', filename='video/relax/' + video) }}" type="video/mp4">
+                  </video>
+                  <div class="video_play">
+                    <span>Click to Play</span>
+                  </div>
+                </div>
+              {% endfor %}
             </div>
             
           </div>
@@ -161,18 +160,18 @@
                 data-aos-delay="200"
               >
                
-              <div>
+              <div id="video-container">
                 {% for video in personalize %}
-                    <div class="videos" onclick="playOrPauseVideo(this, '{{ url_for('static',  filename='video/personalize/' + video) }}')">
-                        <video width="300" height="200" preload="metadata">
-                            <source src="{{ url_for('static', filename='video/personalize/' + video) }}" type="video/mp4">
-                        </video>
-                        <div class="video_play">
-                            <span>Click to Play</span>
-                        </div>
+                  <div class="videos">
+                    <video id="video-{{ loop.index }}" width="300" height="200" preload="metadata">
+                      <source src="{{ url_for('static', filename='video/personalize/' + video) }}" type="video/mp4">
+                    </video>
+                    <div class="video_play">
+                      <span>Click to Play</span>
                     </div>
+                  </div>
                 {% endfor %}
-            </div>
+              </div>
 
     </section><!-- End Testimonials Section -->
 
@@ -206,6 +205,30 @@
 
     <!-- Template Main JS File -->
     <script src="{{url_for('static', filename='assets/js/main.js')}}"></script>
+
+    <script>
+      // Get all video elements and play overlays
+      const videos = document.querySelectorAll('.videos');
+      const videoElements = document.querySelectorAll('video');
+      const playOverlays = document.querySelectorAll('.video_play');
+    
+      // Add click event listeners to each video container
+      videos.forEach((video, index) => {
+        video.addEventListener('click', function() {
+          const videoElement = videoElements[index];
+          const playOverlay = playOverlays[index];
+    
+          // Play or pause the video
+          if (videoElement.paused) {
+            videoElement.play();
+            playOverlay.style.display = 'none';
+          } else {
+            videoElement.pause();
+            playOverlay.style.display = 'block';
+          }
+        });
+      });
+    </script>
 
   </body>
 </html>
