@@ -76,6 +76,15 @@
             <li><a class="nav-link scrollto" href="#services">Services</a></li>
             <li><a class="nav-link scrollto" href="#testimonials">Testimonials</a></li>
             <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+            <li><ul class="settings">
+              <li>
+                <a href="#">Settings</a>
+                <ul class="sub_settings">
+                  <li><a href="/history">Usage History</a></li>
+                  <li><a href="/settings">Privacy Settings</a></li>
+                </ul>
+              </li>
+            </ul></li>
             <li><a href="/blog">Blog</a></li>
             <li>
               <a class="signout scrollto" href="/signout">Sign Out</a>
@@ -174,33 +183,33 @@
 
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
             <div class="box val-box">
-              <a href="/api"><img src="{{url_for('static', filename='assets/img/values-1.png')}}" class="img-fluid" alt=""></a>
-              <h3>Fitness</h3>
-              <p>Eudaimonia's personalized workout routines. Choose from a variety of options that fit your schedule and fitness goals. Prioritize your health today.</p>
+              <a href="/dashboard"><img src="{{url_for('static', filename='assets/img/values-1.png')}}" class="img-fluid" alt=""></a>
+              <h3>Dashboard</h3>
+              <p>Check, edit your Eudaimonia's profile and set your personalized meal plan </p>
               <div class="text-center text-lg-start">
-                  <a href="/api" class="sign"><span>Check Here</span> <i class="bi bi-arrow-right"></i></a>
+                  <a href="/dashboard" class="sign"><span>Check Here</span> <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
           </div>
 
           <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="400">
             <div class="box val-box">
-              <a href="/meal"><img src="{{url_for('static', filename='assets/img/values-2.png')}}" class="img-fluid" alt=""></a>
-              <h3>Nutrition</h3>
-              <p>Eudaimonia's personalized nutrition feature, you can make healthier food choices to achieve your health goals. click here for your meal plan</p>
+              <a href="/community"><img src="{{url_for('static', filename='assets/img/values-2.png')}}" class="img-fluid" alt=""></a>
+              <h3>Community</h3>
+              <p>Connect with different people and share your experiences while using Eudaimonia </p>
               <div class="text-center text-lg-start">
-                  <a href="/meal" class="sign"><span>Check Here</span> <i class="bi bi-arrow-right"></i></a>
+                  <a href="/community" class="sign"><span>Check Here</span> <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
           </div>
 
           <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="600">
             <div class="box val-box">
-              <a href="/stress"><img src="{{url_for('static', filename='assets/img/values-3.png')}}" class="img-fluid" alt=""></a>
-              <h3>Mental health</h3>
-              <p>Take control of your mental health with Eudaimonia's personalized stress management tools. Sign up today to prioritize your well-being and live your best life!</p>
+              <a href="/calendar"><img src="{{url_for('static', filename='assets/img/values-3.png')}}" class="img-fluid" alt=""></a>
+              <h3>Goals and Milestone</h3>
+              <p>Create Smart Goals and set a Milestone</p>
               <div class="text-center text-lg-start">
-                  <a href="/stress" class="sign"><span>Check Here</span> <i class="bi bi-arrow-right"></i></a>
+                  <a href="/create_goal" class="sign"><span>Check Here</span> <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
           </div>

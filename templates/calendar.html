@@ -9,6 +9,7 @@
 <body>
     <h1>Calendar</h1>
     <h2>Goals</h2>
+    <a href="/create_goal" class="sign"><span>Create Goals</span> <i class="bi bi-arrow-right"></i></a>
     <ul>
         {% for goal in goals %}
             <li>{{ goal['title'] }} - {{ goal['description'] }}</li>

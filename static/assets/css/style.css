@@ -2508,3 +2508,39 @@ section {
 .videos:hover .video_play {
   opacity: 1;
 }
+
+/* for settings */
+.settings {
+  position: relative;
+  display: inline-block;
+}
+
+.settings .sub_settings {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #f9f9f9;
+  padding: 10px;
+}
+
+.settings:hover .sub_settings {
+  display: block;
+}
+
+.settings li {
+  list-style: none;
+}
+
+.dropdown li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.settings li a:hover {
+  color: #555;
+}
+
+
+
+

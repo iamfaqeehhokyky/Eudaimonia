@@ -167,8 +167,6 @@ def update():
     return '/meal'
 
 # this directs users to the database were they fill the form were a table can be made for them base on their nutrional requirements
-
-
 @app.route('/input')
 def input():
     if g.user is not None:
@@ -641,6 +639,62 @@ def calendar():
     goals = db_query(query, args)
 
     return render_template('calendar.html', goals=goals)
+
+# Dashboard route
+@app.route('/dashboard')
+def dashboard():
+    if g.user is None:
+        return redirect(url_for('signin'))
+    visited = "You visited the  dashboard"    
+    user_id = session['user_id']
+    record_usage_history(user_id, visited)
+    return render_template('dashboard.html')
+
+# profile route
+@app.route('/profile')
+def profile():
+    if g.user is None:
+        return redirect(url_for('signin')) 
+    
+    visited = "You checked your profile"    
+    user_id = session['user_id']
+    record_usage_history(user_id, visited)
+    user = get_user(user_id)
+    return render_template('profile.html', user=user)
+
+#profile update
+# profile update
+@app.route('/profile_update', methods=['GET', 'POST'])
+def profile_update():
+    if g.user is None:
+        return redirect(url_for('signin')) 
+    
+    user_id = session['user_id']
+    user = get_user(user_id)
+    if user is None:
+        return redirect(url_for('signin'))
+
+    visited = "You updated your profile"
+    record_usage_history(user_id, visited)
+
+    if request.method == 'POST':
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        username = request.form.get('username')
+        email = request.form.get('email')
+        university_name = request.form.get('university_name')
+
+        query = "UPDATE users SET first_name = ?, last_name = ?, username = ?, email = ?, university_name = ? WHERE id = ?" 
+        args = (first_name, last_name, username, email, university_name, user_id)
+        db_connection = get_db()
+        cur = db_connection.cursor()
+        cur.execute(query, args)
+        db_connection.commit()
+
+        return redirect('/profile')
+
+    return render_template('profile.html', user=user)
+
 
 
     

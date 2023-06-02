@@ -1,0 +1,111 @@
+{% extends 'user_base.html' %} {% block title %}Eudaimonia - Meal Plan{%
+    endblock %} {%block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eudaimonia</title>
+    <!-- Favicons -->
+    <link
+      href="{{ url_for('static', filename='img/favicon.png') }}"
+      rel="icon"
+    />
+    <link
+      href="{{ url_for('static', filename='img/favicon.png') }}"
+      rel="apple-touch-icon"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS Files -->
+    <link
+      href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='assets/vendor/glightbox/css/glightbox.min.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='assets/vendor/remixicon/remixicon.css') }}"
+      rel="stylesheet"
+    />
+
+    <link
+      href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}"
+      rel="stylesheet"
+    />
+
+    <!-- Template Main CSS File -->
+    <link
+      href="{{ url_for('static', filename='assets/css/style.css') }}"
+      rel="stylesheet"
+    />
+</head>
+<body>
+  <br><br><br>
+  <main id="main">
+    <!-- ======= profile Section ======= -->
+    <section id="services" class="values">
+
+      <div class="container" data-aos="fade-up">
+
+        <div class="row gy4">
+
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="box val-box">
+              <a href="/profile"><img src="{{url_for('static', filename='assets/img/studentLearning.png')}}" class="img-fluid" alt=""></a>
+              <h3>Profile</h3>
+              <p>Manage your profile details and set preferences </p>
+              <div class="text-center text-lg-start">
+                  <a href="/profile" class="sign"><span>Check Here</span> <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="400">
+            <div class="box val-box">
+              <a href="/meal"><img src="{{url_for('static', filename='assets/img/meal.png')}}" class="img-fluid" alt=""></a>
+              <h3>Nutrition</h3>
+              <p>Eudaimonia's personalized nutrition feature, you can make healthier food choices to achieve your health goals. click here for your meal plan</p>
+              <div class="text-center text-lg-start">
+                  <a href="/meal" class="sign"><span>Check Here</span> <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="600">
+            <div class="box val-box">
+              <a href="/stress"><img src="{{url_for('static', filename='assets/img/mental health.png')}}" class="img-fluid" alt=""></a>
+              <h3>Mental health</h3>
+              <p>Take control of your mental health with Eudaimonia's personalized stress management tools. Sign up today to prioritize your well-being and live your best life!</p>
+              <div class="text-center text-lg-start">
+                  <a href="/stress" class="sign"><span>Check Here</span> <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      </section>
+      <!-- End Values Section -->
+    </main>
+</body>
+</html>
+{% endblock %}
