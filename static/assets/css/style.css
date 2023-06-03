@@ -319,6 +319,7 @@ section {
   font-size: 15px;
   text-transform: none;
   font-weight: 600;
+  color: #012970;
 }
 
 .navbar .dropdown ul a i {
@@ -607,6 +608,12 @@ section {
   font-weight: 700;
   color: #4154f1;
   text-transform: uppercase;
+}
+
+.about h1 {
+  font-size: 30px;
+  font-weight: 700;
+  color: #4154f1;
 }
 
 .about h2 {
