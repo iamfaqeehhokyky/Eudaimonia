@@ -1,4 +1,4 @@
-
+<!-- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,43 +13,46 @@
     <div id="chat-messages"></div>
 
     <form id="chat-form">
-        <input type="text" id="message-input" required>
+        <input type="text" id="message-input" name="message" required>
         <input type="submit" value="Send">
     </form>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            // Function to fetch and display chat messages
-            function fetchMessages() {
-                $.ajax({
-                    url: '/fetch_messages', // Route to fetch messages from the server
-                    method: 'GET',
-                    success: function(response) {
-                        $('#chat-messages').html(response);
-                    }
-                });
-            }
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // display all messages from the community route as get method
+        function fetchMessages() {
+            $.ajax({
+                url: '/community', 
+                method: 'GET',
+                success: function(response) {
+                    $('#chat-messages').html(response);
+                }
+            });
+        }
 
-            // Polling to periodically fetch new messages
-            setInterval(fetchMessages, 2000); // Adjust the interval as needed
+        // Using Polling to periodically fetch new messages
+        // Adjust the interval as needed
+        setInterval(fetchMessages, 2000); 
 
-            // Submit form and send message
-            $('#chat-form').submit(function(event) {
-                event.preventDefault();
+        // Submit form and send message
+        $('#chat-form').submit(function(event) {
+            event.preventDefault();
 
-                var message = $('#message-input').val();
-                $.ajax({
-                    url: '/send_message', // Route to send the message to the server
-                    method: 'POST',
-                    data: { message: message },
-                    success: function(response) {
-                        $('#message-input').val('');
-                        fetchMessages(); // Refresh messages after sending a new one
-                    }
-                });
+             // sends the message to the community post route
+            var message = $('#message-input').val();
+            $.ajax({
+                url: '/community',
+                method: 'POST',
+                data: { message: message },
+                success: function(response) {
+                    $('#message-input').val('');
+                    // Refresh messages after sending a new one
+                    fetchMessages(); 
+                }
             });
         });
-    </script>    
+    });
+</script>    
 </body>
-</html>
+</html> -->

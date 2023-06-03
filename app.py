@@ -247,8 +247,8 @@ def allergies():
 #implementation for replacing whaet in the meals
 def wheat(meal):
     substituted_meal = []
-
-    query = "SELECT Date, BreakFast, Lunch, Dinner FROM Allegies_UW3 WHERE BreakFast LIKE %s OR Lunch LIKE %s OR Dinner LIKE %s"
+    name = g.user['username']
+    query = "SELECT Date, BreakFast, Lunch, Dinner FROM {} WHERE BreakFast LIKE %s OR Lunch LIKE %s OR Dinner LIKE %s.".format(name)
     args = ('%wheat%', '%wheat%', '%wheat%')
     meals_with_wheat = db_query(query, args)
 
@@ -274,7 +274,95 @@ def wheat(meal):
 
     return substituted_meal
 
+#implementation for replacing oat in the meals
+def oat(meal):
+    substituted_meal = []
+    name = g.user['username']
+    query = "SELECT Date, BreakFast, Lunch, Dinner FROM {} WHERE BreakFast LIKE %s OR Lunch LIKE %s OR Dinner LIKE %s.".format(name)
+    args = ('%Oatmeal%', '%Oatmeal%', '%Oatmeal%')
+    meals_with_wheat = db_query(query, args)
 
+    # Substitute wheat meals with suitable alternatives
+    for row in meals_with_wheat:
+        date = row[0]
+        breakfast = row[1]
+        lunch = row[2]
+        dinner = row[3]
+
+        # Perform substitution logic, replace wheat meals with suitable alternatives
+        substituted_breakfast = breakfast.replace('Oatmeal', 'drink')
+        substituted_lunch = lunch.replace('Oatmeal', 'drink')
+        substituted_dinner = dinner.replace('Oatmeal', 'drink')
+
+        # Update the substituted meals in the substituted meal plan
+        substituted_meal.append({
+            'Date': date,
+            'BreakFast': substituted_breakfast,
+            'Lunch': substituted_lunch,
+            'Dinner': substituted_dinner
+        })
+
+    return substituted_meal
+
+#implementation for replacing egg in the meals
+def egg(meal):
+    substituted_meal = []
+    name = g.user['username']
+    query = "SELECT Date, BreakFast, Lunch, Dinner FROM {} WHERE BreakFast LIKE %s OR Lunch LIKE %s OR Dinner LIKE %s.".format(name)
+    args = ('%egg%', '%egg%', '%Oatmeal%')
+    meals_with_wheat = db_query(query, args)
+
+    # Substitute wheat meals with suitable alternatives
+    for row in meals_with_wheat:
+        date = row[0]
+        breakfast = row[1]
+        lunch = row[2]
+        dinner = row[3]
+
+        # Perform substitution logic, replace wheat meals with suitable alternatives
+        substituted_breakfast = breakfast.replace('egg', 'meat stew')
+        substituted_lunch = lunch.replace('egg', 'meat stew')
+        substituted_dinner = dinner.replace('egg', 'meat stew')
+
+        # Update the substituted meals in the substituted meal plan
+        substituted_meal.append({
+            'Date': date,
+            'BreakFast': substituted_breakfast,
+            'Lunch': substituted_lunch,
+            'Dinner': substituted_dinner
+        })
+
+    return substituted_meal
+
+#implementation for replacing oil in the meals
+def oil(meal):
+    substituted_meal = []
+    name = g.user['username']
+    query = "SELECT Date, BreakFast, Lunch, Dinner FROM {} WHERE BreakFast LIKE %s OR Lunch LIKE %s OR Dinner LIKE %s.".format(name)
+    args = ('%groundnut oil%', '%groundnut oil%', '%groundnut oil%')
+    meals_with_wheat = db_query(query, args)
+
+    # Substitute wheat meals with suitable alternatives
+    for row in meals_with_wheat:
+        date = row[0]
+        breakfast = row[1]
+        lunch = row[2]
+        dinner = row[3]
+
+        # Perform substitution logic, replace wheat meals with suitable alternatives
+        substituted_breakfast = breakfast.replace('groundnut oil', 'vegetable')
+        substituted_lunch = lunch.replace('groundnut oil', 'vegetable')
+        substituted_dinner = dinner.replace('groundnut oil', 'vegetable')
+
+        # Update the substituted meals in the substituted meal plan
+        substituted_meal.append({
+            'Date': date,
+            'BreakFast': substituted_breakfast,
+            'Lunch': substituted_lunch,
+            'Dinner': substituted_dinner
+        })
+
+    return substituted_meal
 
 # this performs the replacing of the food items, based on the allegies chosen
 def allergy_meals(meal, allergies):
@@ -282,10 +370,10 @@ def allergy_meals(meal, allergies):
         allergy = wheat(meal)
     if 'Oil' in allergies:
         allergy = oil(meal)
-    if 'Corn' in allergies:
-        allergy = corn(meal)
-    if 'Milk' in allergies:
-        allergy = milk(meal)
+    if 'Oat' in allergies:
+        allergy = oat(meal)
+    if 'Egg' in allergies:
+        allergy = egg(meal)
 
     return allergy
 
@@ -345,9 +433,9 @@ def meal():
         groceries = get_meal_from_db(grocery)
         meal = get_meal_from_db(name)
 
-        #  # This changes the selected food a user have allergies for
-        # if allergies == 'Yes':
-        #     meal = allergy_meals(meal, allergies)
+         # This changes the selected food a user have allergies for
+        if allergies == 'Yes':
+            meal = allergy_meals(meal, allergies)
             
         return render_template("meal.html", meal=meal, groceries=groceries, first_name=name)
 
@@ -814,34 +902,38 @@ def profile_update():
 # community route
 
 
-@app.route('/community', methods=['GET', 'POST'])
-def group_chat():
-    if g.user is None:
-        return redirect(url_for('signin'))
+# @app.route('/community', methods=['GET', 'POST'])
+# def group_chat():
+#     if g.user is None:
+#         return redirect(url_for('signin'))
 
-    user_id = session['user_id']
-    user = get_user(user_id)
-    if user is None:
-        return redirect(url_for('signin'))
+#     user_id = session['user_id']
+#     user = get_user(user_id)
+#     if user is None:
+#         return redirect(url_for('signin'))
 
-    visited = "You visited the community group chat"
-    record_usage_history(user_id, visited)
+#     visited = "You visited the community group chat"
+#     record_usage_history(user_id, visited)
 
-    if request.method == 'POST':
-        message = request.form['message']
-        sender_id = session['user_id']
+#     if request.method == 'POST':
+#         message = request.form['message']
+#         print(request.form)  # Print the entire form data
+#         print(request.form['message'])  # Print the value of 'message' key
 
-        query = "INSERT INTO messages (sender_id, content) VALUES (?, ?)"
-        args = (sender_id, message)
-        db_connection = get_db()
-        cur = db_connection.cursor()
-        cur.execute(query, args)
-        db_connection.commit()
+#         sender_id = session['user_id']
 
-    query = "SELECT * FROM community_chat"
-    messages = db_query(query, ())
+#         query = "INSERT INTO community_chat (sender_id, content) VALUES (?, ?)"
+#         args = (sender_id, message)
+#         db_connection = get_db()
+#         cur = db_connection.cursor()
+#         cur.execute(query, args)
+#         db_connection.commit()
 
-    return render_template('community.html', messages=messages)
+
+#     query = "SELECT * FROM community_chat"
+#     messages = db_query(query, ())
+
+#     return render_template('community.html', messages=messages)
 
 
 if __name__ == '__main__':
