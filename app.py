@@ -243,6 +243,51 @@ def allergies():
             return render_template('input.html', first_name=first_name)
         if allergies == 'No':
             return render_template('input.html', first_name=first_name)
+        
+#implementation for replacing whaet in the meals
+def wheat(meal):
+    substituted_meal = []
+
+    query = "SELECT Date, BreakFast, Lunch, Dinner FROM Allegies_UW3 WHERE BreakFast LIKE %s OR Lunch LIKE %s OR Dinner LIKE %s"
+    args = ('%wheat%', '%wheat%', '%wheat%')
+    meals_with_wheat = db_query(query, args)
+
+    # Substitute wheat meals with suitable alternatives
+    for row in meals_with_wheat:
+        date = row[0]
+        breakfast = row[1]
+        lunch = row[2]
+        dinner = row[3]
+
+        # Perform substitution logic, replace wheat meals with suitable alternatives
+        substituted_breakfast = breakfast.replace('wheat', 'Garri')
+        substituted_lunch = lunch.replace('wheat', 'Garri')
+        substituted_dinner = dinner.replace('wheat', 'Garri')
+
+        # Update the substituted meals in the substituted meal plan
+        substituted_meal.append({
+            'Date': date,
+            'BreakFast': substituted_breakfast,
+            'Lunch': substituted_lunch,
+            'Dinner': substituted_dinner
+        })
+
+    return substituted_meal
+
+
+
+# this performs the replacing of the food items, based on the allegies chosen
+def allergy_meals(meal, allergies):
+    if 'Wheat' in allergies:
+        allergy = wheat(meal)
+    if 'Oil' in allergies:
+        allergy = oil(meal)
+    if 'Corn' in allergies:
+        allergy = corn(meal)
+    if 'Milk' in allergies:
+        allergy = milk(meal)
+
+    return allergy
 
 
 # this takes in the submitted form can provides a table for the users base on their names
@@ -299,6 +344,11 @@ def meal():
 
         groceries = get_meal_from_db(grocery)
         meal = get_meal_from_db(name)
+
+        #  # This changes the selected food a user have allergies for
+        # if allergies == 'Yes':
+        #     meal = allergy_meals(meal, allergies)
+            
         return render_template("meal.html", meal=meal, groceries=groceries, first_name=name)
 
     elif request.method == "GET":
