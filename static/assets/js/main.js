@@ -316,3 +316,25 @@ function myFunction() {
     x.type = "password";
   }
 }
+
+  // Get all video elements and play overlays
+  const videos = document.querySelectorAll('.videos');
+  const videoElements = document.querySelectorAll('video');
+  const playOverlays = document.querySelectorAll('.video_play');
+
+  // Add click event listeners to each video container
+  videos.forEach((video, index) => {
+    video.addEventListener('click', function() {
+      const videoElement = videoElements[index];
+      const playOverlay = playOverlays[index];
+
+      // Play or pause the video
+      if (videoElement.paused) {
+        videoElement.play();
+        playOverlay.style.display = 'none';
+      } else {
+        videoElement.pause();
+        playOverlay.style.display = 'block';
+      }
+    });
+  });

@@ -1,0 +1,70 @@
+{% extends 'user_base.html' %} {% block title %}Eudaimonia - Welcome{% endblock
+    %} {%block content %}
+    
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact d-flex align-items-center contact">
+      <div class="container">
+        <header class="col-lg-12 hero-img section-header">
+          <div id="about" class="about">
+            <div class="content">
+              <h3>WELCOME TO EUDAIMONIA</h3>
+              <h2>Hi, {{ first_name }} 👋</h2>
+            </div>
+          </div>
+        </header>
+    
+        <div class="container">
+                                                                                                                                                                                                                                                                                                                                                
+            <div class="col-lg-12">
+              <h4>
+                Fill the form below to inform us of any food limitations
+              </h4>
+              <form action="/allergies" method="POST" class="my-email-form">
+                <div class="row gy-4">
+                  <div>
+                    <label for="Allergies">Do you have Allergies?</label>
+                    <br />
+                    <label for="Allergies">Yes</label>
+                    <input type="radio" id="A" name="Allergies" value="Yes" {% if Allergies == 'Yes' %}checked{% endif %} onchange="showAllergyOptions();" />
+                    <label for="Allergies">NO</label>
+                    <input type="radio" id="B" name="Allergies" value="No" {% if Allergies == 'No' %}checked{% endif %} onchange="hideAllergyOptions();" />
+                  </div>
+                  <div id="allergyOptions" style="display: none;">
+                    <label for="AllergyType">What type of allergies do you have:</label>
+                    <select id="AllergyType" name="AllergyType">
+                      <option value="eggs">Eggs</option>
+                      <option value="wheat">wheat</option>
+                      <option value="oil">Oil</option>
+                      <option value="corn">Corn</option>
+                    </select>
+                  </div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-6 text-center">
+                        <input type="reset" />
+                      </div>
+                      <div class="col-md-6 text-center">
+                        <input type="submit" value="Continue" />
+                      </div>
+                </div>
+              </form>
+              
+              <script>
+                function showAllergyOptions() {
+                  document.getElementById("allergyOptions").style.display = "block";
+                }
+              
+                function hideAllergyOptions() {
+                  document.getElementById("allergyOptions").style.display = "none";
+                }
+              </script>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Contact Section -->
+    
+    {% endblock %}
+    

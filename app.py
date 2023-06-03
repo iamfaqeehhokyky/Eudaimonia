@@ -207,7 +207,12 @@ def update():
     return '/meal'
 
 # this directs users to the database were they fill the form were a table can be made for them base on their nutrional requirements
-
+@app.route('/first_input')
+def first_input():
+    if g.user is not None:
+        first_name = g.user["first_name"]
+        return render_template('allergies.html', first_name=first_name)
+    return redirect(url_for('signin'))
 
 @app.route('/input')
 def input():
@@ -215,6 +220,22 @@ def input():
         first_name = g.user["first_name"]
         return render_template('input.html', first_name=first_name)
     return redirect(url_for('signin'))
+
+#This process the first submitted form for allegies 
+@app.route('/allergies', methods=["GET", "POST"])
+def allergies():
+    if g.user is None:
+        return redirect(url_for('signin'))
+    first_name = g.user["first_name"]
+
+    if request.method == "POST":
+        # get the information provided in the sign up page
+        allergies = request.form['Allergies']
+        session['allergies'] = allergies
+        if allergies == 'Yes':
+            return render_template('input.html', first_name=first_name)
+        if allergies == 'No':
+            return render_template('input.html', first_name=first_name)
 
 
 # this takes in the submitted form can provides a table for the users base on their names
@@ -233,7 +254,7 @@ def meal():
         name = g.user['username']
         session['name'] = name
         vegetarian = request.form['Vegetarian']
-        allergies = request.form['Allergies']
+        allergies = session.get('allergies')
         height = float(request.form['height'])
         weight = float(request.form['weight'])
         meal = request.form['meal']
@@ -284,7 +305,7 @@ def meal():
             return render_template("meal.html", meal=meal, groceries=groceries, first_name=name)
 
         except sqlite3.OperationalError:
-            return render_template('input.html')
+            return render_template('allergies.html')
 
 # this provides a table for the grocery list
 
@@ -326,8 +347,6 @@ class StressManagementResource(db.Model):
         }
 
 # API endpoint to get all stress management resources
-
-
 @app.route('/resources', methods=['GET'])
 def get_stress_management_resources():
     resources = []
@@ -495,7 +514,7 @@ def video_list():
     med_files = ['m1.mp4', 'm2.mp4', 'm3.mp4', 'm4.mp4', 'm5.mp4',
                  'm6.mp4', 'm7.mp4', 'm8.mp4', 'm9.mp4', 'm10.mp4', 'm11.mp4']
     pers_files = ['p1.mp4', 'p2.mp4', 'p3.mp4', 'p4.mp4', 'p5.mp4']
-    relax_files = ['r1.mp4', 'r2.mp4', 'r3.p4', 'r4.mp4',
+    relax_files = ['r1.mp4', 'r2.mp4', 'r3.mp4', 'r4.mp4',
                    'r5.mp4', 'r6.mp4', 'r7.mp4', 'r8.mp4', 'r9.mp4', 'r10.mp4']
     return render_template('mental.html', meditations=med_files, personalize=pers_files, relax=relax_files)
 
@@ -603,8 +622,6 @@ def create_goal():
     return render_template('goal.html')
 
 # Create a milestone for a goal
-
-
 @app.route('/create_milestone/<int:goal_id>', methods=['GET', 'POST'])
 def create_milestone(goal_id):
     if g.user is None:
@@ -658,8 +675,6 @@ def update_progress(milestone_id):
     return redirect('/calendar')
 
 # This gets the milestone from the db, so it can be accesed with goal using foreign keys
-
-
 @app.template_global()
 def get_milestones(goal_id):
     query = "SELECT * FROM milestones WHERE goal_id = ?"
@@ -685,8 +700,6 @@ def calendar():
     return render_template('calendar.html', goals=goals)
 
 # Dashboard route
-
-
 @app.route('/dashboard')
 def dashboard():
     if g.user is None:
@@ -697,8 +710,6 @@ def dashboard():
     return render_template('dashboard.html')
 
 # profile route
-
-
 @app.route('/profile')
 def profile():
     if g.user is None:
@@ -711,9 +722,6 @@ def profile():
     return render_template('profile.html', user=user)
 
 # profile update
-# profile update
-
-
 @app.route('/profile_update', methods=['GET', 'POST'])
 def profile_update():
     if g.user is None:
