@@ -103,12 +103,19 @@ def index():
     # Render home page
     return render_template('index.html')
 
-# Route to the  blog page
+# Route to the blog page
 
 
 @app.route('/blog')
 def blog():
     return render_template('blog.html')
+
+# Route to the home blog page
+
+
+@app.route('/homeblog')
+def homeblog():
+    return render_template('homeblog.html')
 
 
 # Usuage based on mySQLite
