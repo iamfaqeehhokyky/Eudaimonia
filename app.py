@@ -368,14 +368,19 @@ def oil(meal):
 def allergy_meals(meal, allergies):
     if 'Wheat' in allergies:
         allergy = wheat(meal)
+        return allergy
+    
     if 'Oil' in allergies:
         allergy = oil(meal)
+        return allergy
+
     if 'Oat' in allergies:
         allergy = oat(meal)
+        return allergy
+
     if 'Egg' in allergies:
         allergy = egg(meal)
-
-    return allergy
+        return allergy
 
 
 # this takes in the submitted form can provides a table for the users base on their names
@@ -436,6 +441,8 @@ def meal():
          # This changes the selected food a user have allergies for
         if allergies == 'Yes':
             meal = allergy_meals(meal, allergies)
+            meal_data = get_meal_from_db(name)
+            meal = list(meal_data)
             
         return render_template("meal.html", meal=meal, groceries=groceries, first_name=name)
 
@@ -902,38 +909,36 @@ def profile_update():
 # community route
 
 
-# @app.route('/community', methods=['GET', 'POST'])
-# def group_chat():
-#     if g.user is None:
-#         return redirect(url_for('signin'))
+@app.route('/community', methods=['GET', 'POST'])
+def group_chat():
+    if g.user is None:
+        return redirect(url_for('signin'))
 
-#     user_id = session['user_id']
-#     user = get_user(user_id)
-#     if user is None:
-#         return redirect(url_for('signin'))
+    user_id = session['user_id']
+    user = get_user(user_id)
+    if user is None:
+        return redirect(url_for('signin'))
 
-#     visited = "You visited the community group chat"
-#     record_usage_history(user_id, visited)
+    visited = "You visited the community group chat"
+    record_usage_history(user_id, visited)
 
-#     if request.method == 'POST':
-#         message = request.form['message']
-#         print(request.form)  # Print the entire form data
-#         print(request.form['message'])  # Print the value of 'message' key
+    if request.method == 'POST':
+        message = request.form['message']
 
-#         sender_id = session['user_id']
+        sender_id = session['user_id']
 
-#         query = "INSERT INTO community_chat (sender_id, content) VALUES (?, ?)"
-#         args = (sender_id, message)
-#         db_connection = get_db()
-#         cur = db_connection.cursor()
-#         cur.execute(query, args)
-#         db_connection.commit()
+        query = "INSERT INTO community_chat (sender_id, content) VALUES (?, ?)"
+        args = (sender_id, message)
+        db_connection = get_db()
+        cur = db_connection.cursor()
+        cur.execute(query, args)
+        db_connection.commit()
 
 
-#     query = "SELECT * FROM community_chat"
-#     messages = db_query(query, ())
+    query = "SELECT * FROM community_chat"
+    messages = db_query(query, ())
 
-#     return render_template('community.html', messages=messages)
+    return render_template('community.html', messages=messages)
 
 
 if __name__ == '__main__':

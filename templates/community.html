@@ -1,4 +1,4 @@
-<!-- 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,12 +12,12 @@
 
     <div id="chat-messages"></div>
 
-    <form id="chat-form">
-        <input type="text" id="message-input" name="message" required>
+    <form id="chat-form" action="/community" method="POST">
+        <textarea id="message-input" name="message" required></textarea>
         <input type="submit" value="Send">
     </form>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
     $(document).ready(function() {
         // display all messages from the community route as get method
@@ -55,4 +55,4 @@
     });
 </script>    
 </body>
-</html> -->
+</html>

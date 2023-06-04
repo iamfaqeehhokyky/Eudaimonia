@@ -52,7 +52,7 @@ INSERT INTO Over_weight3 (Date, BreakFast, Lunch, Dinner) VALUES
   ('Saturday', 'Healthy Body Fast', 'Cucumber(Fruit intakes)', 'Rice and Beans with Beaf Stew');
 
 -- Create Grocery List
-INSERT INTO Over_weight2_Grocery (Date, Item) VALUES 
+INSERT INTO Over_weight3_Grocery (Date, Item) VALUES 
   ('Sunday', 'Grounded beans ,  Fruits, Meat, Rice, Tomatoes, Pepper, Maggi ,  Salt'),
   ('Monday', 'Yam, Garden Egg, Spaghetti, Wheat flour, Vegetable Leaf  Pepper, Maggi, Salt '),
   ('Tueday', 'Apple, beans, Rice, Tomatoes, Pepper, Maggi, eat'),
@@ -335,21 +335,21 @@ INSERT INTO Vegetarian_OW2_Grocery (Date, Item) VALUES
 
 -- Create Timetable for Under_weight
 INSERT INTO Allegies_UW2 (Date, BreakFast, Lunch, Dinner) VALUES 
-  ('Sunday', 'Bread and tea', 'Jollof rice and Tofu', 'Eba and Vegetable soup'),
-  ('Monday', 'Tofu Lettuce Wraps', 'Beans', 'Pasta(White)'),
-  ('Tueday', 'Akara(beans cake)', 'Rice and Beef Stew', 'Tofu'),
-  ('Wenesday', 'Bread and tea', 'Beans and Pap', 'Amala and Egusi Soup'),
+  ('Sunday', '', 'Jollof rice and Tofu', 'Eba and Vegetable soup'),
+  ('Monday', 'Tofu Lettuce Wraps', '', 'Pasta(White)'),
+  ('Tueday', 'Akara(beans cake)', 'Rice and Beef Stew', ''),
+  ('Wenesday', '', 'Beans and Pap', 'Amala and Egusi Soup'),
   ('Thursday', 'Fried Potatoes ', 'Watermellon', 'Rice and Tomatoe Stew'),
-  ('Friday', 'Breadand tea', 'Jollof Spaghetti', 'Eba and Edikang Ikang soup'),
-  ('Saturday', 'Beans cake(Akara)', 'Pasta(white)', 'Eko and Vegetable Soup');
+  ('Friday', '', 'Jollof Spaghetti', 'Eba and Edikang Ikang soup'),
+  ('Saturday', 'Beans cake(Akara)', '', 'Eko and Vegetable Soup');
 
 -- Create Grocery List
 INSERT INTO Allegies_UW2_Grocery (Date, Item) VALUES 
-  ('Sunday', 'Bread, Tea ,  Vegetable Leaf, rice, Tomatoes, Pepper, Maggi, Salt, Meat, Chicken,'),
+  ('Sunday', '  Vegetable Leaf, rice, Tomatoes, Pepper, Maggi, Salt, Meat, Chicken,'),
   ('Monday', 'Beans, Spaghetti,Tomatoes, Pepper, Maggi, Salt '),
   ('Tueday', 'Grounded beans, rice, Tomatoes, Pepper, Maggi ,  Salt,  Meat, Beans'),
-  ('Wenesday', 'Bread, tea, Beans, Grounded Plantain, Tomatoes, Pepper, Maggi ,  Salt,  Meat'),
-  ('Thursday', 'Potatoes, Watermellon, Groundnut oil, Rice, Tomatoes, Pepper, Maggi ,  Salt,  Meat'),
+  ('Wenesday', ', Beans, Grounded Plantain, Tomatoes, Pepper, Maggi ,  Salt,  Meat'),
+  ('Thursday', 'Potatoes, Watermellon, Vegetable, Rice, Tomatoes, Pepper, Maggi ,  Salt,  Meat'),
   ('Friday', 'Bread, tea, Spaghetti, Tomatoes, Pepper, Maggi , Garri,  Salt, Bitterleaf, Garri'),
   ('Saturday', 'Grounded beans, Tomatoes, Eko, Spaghetti, Pepper, Maggi ,  Salt, Cucumber');
 
@@ -358,21 +358,21 @@ INSERT INTO Allegies_UW2_Grocery (Date, Item) VALUES
   
 -- Create Timetable for Normal_weight
 INSERT INTO Allegies_NW2 (Date, BreakFast, Lunch, Dinner) VALUES 
-  ('Sunday', 'Bread and tea', 'Jollof rice and Tofu', 'Eba and Vegetable soup'),
-  ('Monday', 'Tofu Lettuce Wraps', 'Beans', 'Pasta(White)'),
+  ('Sunday', '', 'Jollof rice and Tofu', 'Eba and Vegetable soup'),
+  ('Monday', 'Tofu Lettuce Wraps', '', 'Pasta(White)'),
   ('Tueday', 'Fruit Salad', 'Rice and Beef Stew', 'Eba with Cream of Beaf Soup'),
-  ('Wenesday', 'Sweet Potatoes', 'Tofu', 'Amala and Ogbono Soup'),
-  ('Thursday', 'Tofu Lettuce Wraps', 'Beans', 'Rice and Tomatoe Stew'),
-  ('Friday', 'Bread and tea', 'Jollof Spaghetti', 'Eba and Edi Ikiankon soup'),
+  ('Wenesday', '', 'Tofu', 'Amala and Ogbono Soup'),
+  ('Thursday', 'Tofu Lettuce Wraps', '', 'Rice and Tomatoe Stew'),
+  ('Friday', '', 'Jollof Spaghetti', 'Eba and Edi Ikiankon soup'),
   ('Saturday', 'Beans cake(Akara)', 'Grape', 'Jollof Rice');
 
 -- Create Grocery List
 INSERT INTO Allegies_NW2_Grocery (Date, Item) VALUES 
-  ('Sunday', 'Bread, Tea ,  Vegetable Leaf, rice, Tomatoes, Pepper, Maggi , Salt,  Meat, Chicken, Garri'),
+  ('Sunday', ' Vegetable Leaf, rice, Tomatoes, Pepper, Maggi , Salt,  Meat, Chicken, Garri'),
   ('Monday', 'Beans, Spaghetti,Tomatoes, Pepper, Maggi, Salt '),
   ('Tueday', 'Fruit, rice, Tomatoes, Pepper, Garri, Maggi , Garri, Salt,  Meat, Beans'),
   ('Wenesday', 'Potatoes, Beans, Grounded Plantain, Tomatoes, Pepper, Maggi ,  Salt,  Meat'),
-  ('Thursday', 'Beans, Groundnut oil, Rice, Tomatoes, Pepper, Maggi ,  Salt,  Meat'),
+  ('Thursday', 'Beans, vegetable, Rice, Tomatoes, Pepper, Maggi ,  Salt,  Meat'),
   ('Friday', 'Bread, tea, Spaghetti, Tomatoes, Pepper, Maggi , Garri, Salt, Bitterleaf, Garri'),
   ('Saturday', 'Grounded beans, Tomatoes,Eko, Grape, rice, Pepper, Maggi ,  Salt, Cucumber');
 
@@ -380,19 +380,19 @@ INSERT INTO Allegies_NW2_Grocery (Date, Item) VALUES
 -- Create Timetable for Over_weight
 INSERT INTO Allegies_OW2 (Date, BreakFast, Lunch, Dinner) VALUES 
   ('Sunday', 'Beans cake(Akara)', 'Fruit Salad', 'Jollof Rice'),
-  ('Monday', 'White Spaghetti with Beaf Stew', 'Tofu Lettuce Wraps', 'Amala and Vegetanble soup'),
-  ('Tueday', 'Fruit Salad', 'Tofu', 'Jollof rice'),
+  ('Monday', 'White Spaghetti with Beaf Stew', '', 'Amala and Vegetanble soup'),
+  ('Tueday', 'Fruit Salad', '', 'Jollof rice'),
   ('Wenesday', 'Beans Cake(Akara)', 'Berry', 'Vegetables'),
-  ('Thursday', 'Bread and tea ', 'Fruit Salad', 'Eba and Egusi Soup'),
+  ('Thursday', '', 'Fruit Salad', 'Eba and Egusi Soup'),
   ('Friday', 'Potatoes(Boiled)', 'Orange', 'Eba and Edi Ikiankon soup'),
   ('Saturday', 'Healthy Body Fast', 'Cucumber', 'Rice and Beans with Beaf Stew');
   
   -- Create Grocery List
-INSERT INTO Allegies_OW3_Grocery (Date, Item) VALUES 
+INSERT INTO Allegies_OW2_Grocery (Date, Item) VALUES 
   ('Sunday', 'Grounded beans, Fruits, rice, Tomatoes, Pepper, Maggi ,  Salt,  Meat, Chicken, Garri'),
   ('Monday', 'Beans, Spaghetti,Tomatoes, Pepper, Maggi, Salt, Grounded Plantain '),
   ('Tueday', 'Fruit, rice, Tomatoes, Pepper, Maggi , Beans, Salt,  Meat, Beans'),
   ('Wenesday', 'Grounded beans, fruit, Vegetable Leaf'),
-  ('Thursday', 'Bread and tea, Fruits, Garri, Tomatoes, Pepper, Maggi ,  Salt,  Meat'),
+  ('Thursday', ', Fruits, Garri, Tomatoes, Pepper, Maggi ,  Salt,  Meat'),
   ('Friday', 'Potatoes, Fruit ,Tomatoes, Pepper, Maggi , Garri, Salt, Bitterleaf, Garri'),
   ('Saturday', 'Tomatoes,Eko, Cucumber, rice, Pepper, Maggi ,  Salt, Cucumber');
