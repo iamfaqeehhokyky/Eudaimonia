@@ -9,6 +9,13 @@
 </head>
 <body>
     <h1>Group Chat</h1>
+    {% for message in messages %}
+        <div>         
+                <p>{{ message['timestamp'] }}</p>
+                <p>{{ message['name'] }}-{{ message['content'] }}</p>
+                <br>
+        </div>
+    {% endfor %}
 
     <div id="chat-messages"></div>
 

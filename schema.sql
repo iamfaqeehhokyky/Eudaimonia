@@ -264,15 +264,6 @@ CREATE TABLE IF NOT EXISTS Allegies_OW2_Grocery (
 );
 
 
-
-
-
-
-
-
-
-
-
 -- ####################################################################################################
 -- ##################### STRESS MANAGEMENT RESOURCES ####################################################
 
@@ -316,57 +307,10 @@ CREATE TABLE IF NOT EXISTS milestones (
   FOREIGN KEY (goal_id) REFERENCES goals(id)
 );
 
-
-
-
 -- create community group chat table
 CREATE TABLE IF NOT EXISTS community_chat (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  sender_id INTEGER,
-  content TEXT,
-  notification_enabled INTEGER,
-  timestamp DATETIME
-);
-
--- ################################################################################################
--- create usage_history  table 
-CREATE TABLE IF NOT EXISTS usage_history (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_id INTEGER,
-  route TEXT,
-  timestamp DATETIME
-);
-
-
--- create goal table
-CREATE TABLE IF NOT EXISTS goals (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_id INTEGER,
-  title TEXT,
-  description TEXT,
-  notification_enabled INTEGER,
-  completed INTEGER
-);
-
--- create milestones table
-CREATE TABLE IF NOT EXISTS milestones (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  goal_id INTEGER,
-  user_id INTEGER,
-  title TEXT,
-  description TEXT,
-  notification_enabled INTEGER,
-  completed INTEGER,
-  FOREIGN KEY (goal_id) REFERENCES goals(id)
-);
-
-
-
-
--- create community group chat table
-CREATE TABLE IF NOT EXISTS community_chat (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  sender_id INTEGER,
+  username Text,
   content TEXT,
   notification_enabled INTEGER,
   timestamp DATETIME

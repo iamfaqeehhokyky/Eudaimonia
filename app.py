@@ -925,10 +925,11 @@ def group_chat():
     if request.method == 'POST':
         message = request.form['message']
 
-        sender_id = session['user_id']
+        name = g.user['username']
+        timestamp = datetime.datetime.now()
 
-        query = "INSERT INTO community_chat (sender_id, content) VALUES (?, ?)"
-        args = (sender_id, message)
+        query = "INSERT INTO community_chat (username, content, timestamp) VALUES (?, ?, ?)"
+        args = (name, message, timestamp)
         db_connection = get_db()
         cur = db_connection.cursor()
         cur.execute(query, args)
