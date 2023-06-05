@@ -926,7 +926,8 @@ def group_chat():
         message = request.form['message']
 
         name = g.user['username']
-        timestamp = datetime.datetime.now()
+        date = datetime.datetime.now()
+        timestamp = date.strftime('%H:%M')
 
         query = "INSERT INTO community_chat (username, content, timestamp) VALUES (?, ?, ?)"
         args = (name, message, timestamp)
