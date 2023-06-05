@@ -719,7 +719,8 @@ def settings():
 
 
 def record_usage_history(user_id, route):
-    timestamp = datetime.datetime.now()
+    date = datetime.datetime.now()
+    timestamp = date.strftime('%Y-%m-%d %H:%M')
 
     query = "INSERT INTO usage_history (user_id, route, timestamp) VALUES (?, ?, ?)"
     args = (user_id, route, timestamp)
