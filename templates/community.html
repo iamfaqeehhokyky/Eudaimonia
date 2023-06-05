@@ -1,4 +1,5 @@
-
+{% extends 'user_base.html' %} {% block title %}Eudaimonia - Welcome{% endblock
+    %} {%block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,9 +7,72 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Group Chat</title>
-</head>
+    <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <!-- Favicons -->
+    <link
+      href="{{ url_for('static', filename='img/favicon.png') }}"
+      rel="icon"
+    />
+    <link
+      href="{{ url_for('static', filename='img/favicon.png') }}"
+      rel="apple-touch-icon"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS Files -->
+    <link
+      href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='assets/vendor/glightbox/css/glightbox.min.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='assets/vendor/remixicon/remixicon.css') }}"
+      rel="stylesheet"
+    />
+
+    <link
+      href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}"
+      rel="stylesheet"
+    />
+
+    <!-- Template Main CSS File -->
+    <link
+      href="{{ url_for('static', filename='assets/css/style.css') }}"
+      rel="stylesheet"
+    />
+  </head>
+
 <body>
-    <h1>Group Chat</h1>
+  <br><br><br>
+  <main id="main">
+    <!-- ======= main Section ======= -->
+    <section id="services" class="values">
+
+      <div class="container" >
+
+        <div class="row gy4">
+
     {% for message in messages %}
         <div>         
                 <p>{{ message['timestamp'] }}</p>
@@ -24,42 +88,27 @@
         <input type="submit" value="Send">
     </form>
 
+  
+  </div>
 
-<script>
-    $(document).ready(function() {
-        // display all messages from the community route as get method
-        function fetchMessages() {
-            $.ajax({
-                url: '/community', 
-                method: 'GET',
-                success: function(response) {
-                    $('#chat-messages').html(response);
-                }
-            });
-        }
+</div>
 
-        // Using Polling to periodically fetch new messages
-        // Adjust the interval as needed
-        setInterval(fetchMessages, 2000); 
+</section>
+<!-- End Section -->
+</main>
 
-        // Submit form and send message
-        $('#chat-form').submit(function(event) {
-            event.preventDefault();
+<!-- Vendor JS Files -->
+<script src="{{url_for('static', filename='assets/vendor/purecounter/purecounter_vanilla.js')}}"></script>
+<script src="{{url_for('static', filename='assets/vendor/aos/aos.js')}}"></script>
+<script src="{{url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{url_for('static', filename='assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
+<script src="{{url_for('static', filename='assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+<script src="{{url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
+<script src="{{url_for('static', filename='assets/vendor/php-email-form/validate.js')}}"></script>
 
-             // sends the message to the community post route
-            var message = $('#message-input').val();
-            $.ajax({
-                url: '/community',
-                method: 'POST',
-                data: { message: message },
-                success: function(response) {
-                    $('#message-input').val('');
-                    // Refresh messages after sending a new one
-                    fetchMessages(); 
-                }
-            });
-        });
-    });
-</script>    
+<!-- Template Main JS File -->
+<script src="{{url_for('static', filename='assets/js/main.js')}}"></script>  
 </body>
 </html>
+
+{% endblock %}

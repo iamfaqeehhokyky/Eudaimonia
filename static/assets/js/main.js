@@ -338,3 +338,42 @@ function myFunction() {
       }
     });
   });
+
+
+  // for community route
+
+  
+  $(document).ready(function() {
+    // display all messages from the community route as get method
+    function fetchMessages() {
+        $.ajax({
+            url: '/community', 
+            method: 'GET',
+            success: function(response) {
+                $('#chat-messages').html(response);
+            }
+        });
+    }
+
+    // Using Polling to periodically fetch new messages
+    // Adjust the interval as needed
+    setInterval(fetchMessages, 2000); 
+
+    // Submit form and send message
+    $('#chat-form').submit(function(event) {
+        event.preventDefault();
+
+         // sends the message to the community post route
+        var message = $('#message-input').val();
+        $.ajax({
+            url: '/community',
+            method: 'POST',
+            data: { message: message },
+            success: function(response) {
+                $('#message-input').val('');
+                // Refresh messages after sending a new one
+                fetchMessages(); 
+            }
+        });
+    });
+});
