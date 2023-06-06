@@ -14,6 +14,8 @@ import googleapiclient.discovery
 from googleapiclient.discovery import build
 import requests
 import datetime
+from flask import send_from_directory
+
 
 
 app = Flask(__name__)
@@ -653,24 +655,6 @@ def home():
 
     return render_template('home.html', user=g.user)
 
-
-@app.route('/stress')
-def video_list():
-    if g.user is None:
-        return redirect(url_for('signin'))
-
-    visited = "used the relaxation page"
-    user_id = session['user_id']
-    record_usage_history(user_id, visited)
-
-    med_files = ['m1.mp4', 'm2.mp4', 'm3.mp4', 'm4.mp4', 'm5.mp4',
-                 'm6.mp4', 'm7.mp4', 'm8.mp4', 'm9.mp4', 'm10.mp4', 'm11.mp4']
-    pers_files = ['p1.mp4', 'p2.mp4', 'p3.mp4', 'p4.mp4', 'p5.mp4']
-    relax_files = ['r1.mp4', 'r2.mp4', 'r3.mp4', 'r4.mp4',
-                   'r5.mp4', 'r6.mp4', 'r7.mp4', 'r8.mp4', 'r9.mp4', 'r10.mp4']
-    return render_template('mental.html', meditations=med_files, personalize=pers_files, relax=relax_files)
-
-
 # User settings
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
@@ -942,6 +926,49 @@ def group_chat():
     messages = db_query(query, ())
 
     return render_template('community.html', messages=messages)
+
+
+@app.route('/news')
+def news():
+    # this makes an API request to retrieve news articles related to mental health
+    url = 'https://newsapi.org/v2/everything'
+    params = {
+        'q': 'mental health',
+        'apiKey': 'ea769aa48ea34019afac1ed0dc22f7b3'
+    }
+    response = requests.get(url, params=params)
+    data = response.json()
+
+    articles = data['articles']
+
+    return render_template('news.html', articles=articles)
+
+
+
+@app.route('/stress')
+def video_list():
+    if g.user is None:
+        return redirect(url_for('signin'))
+
+    visited = "used the relaxation page"
+    user_id = session['user_id']
+    record_usage_history(user_id, visited)
+
+    med_files = ['m1.mp4', 'm2.mp4', 'm3.mp4', 'm4.mp4', 'm5.mp4',
+                 'm6.mp4', 'm7.mp4', 'm8.mp4', 'm9.mp4', 'm10.mp4', 'm11.mp4']
+    pers_files = ['p1.mp4', 'p2.mp4', 'p3.mp4', 'p4.mp4', 'p5.mp4']
+    relax_files = ['r1.mp4', 'r2.mp4', 'r3.mp4', 'r4.mp4',
+                   'r5.mp4', 'r6.mp4', 'r7.mp4', 'r8.mp4', 'r9.mp4', 'r10.mp4']
+    return render_template('mental.html', meditations=med_files, personalize=pers_files, relax=relax_files)
+
+@app.route('/videos/<path:filename>')
+def serve_video(filename):
+    video_directory = os.path.join(app.root_path, 'static', 'video')
+    cache_timeout = 3600
+
+    return send_from_directory(video_directory, filename, cache_timeout=cache_timeout)
+
+
 
 
 if __name__ == '__main__':

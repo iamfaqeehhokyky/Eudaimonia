@@ -2570,3 +2570,31 @@ section {
       color: #0d64fd;
   }
 }
+
+#video-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.videos {
+  margin: 10px;
+}
+
+
+#header {
+  position: relative;
+  z-index: 10;
+}
+
+#navbar {
+  position: relative;
+  z-index: 10;
+}
+
+#med {
+  margin-top: 80px; 
+}
+
+.video-grid {
+  margin-top: 0; 
+}
