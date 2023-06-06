@@ -1,3 +1,4 @@
+
 {% extends 'user_base.html' %} {% block title %}Eudaimonia - Welcome{% endblock
     %} {%block content %}
 <!DOCTYPE html>
@@ -64,17 +65,15 @@
     <!-- ======= main Section ======= -->
     <section id="services" class="values">
 
-      <div class="container" >
-
-        <div class="row gy4">
-    <form action="/create_milestone/{{ goal_id }}" method="POST">
-        <label>Description</label>
-        <textarea name="description" required></textarea><br>
-        <input type="submit" value="Create Milestone">
-    </form>
-  </div>
-
-</div>
+      <div class="container">
+        <div class="row gy-4">
+            <form action="/create_milestone/{{ goal_id }}" method="POST">
+                <label>Description</label>
+                <textarea name="description" required></textarea><br>
+                <button type="submit" class="btn-primary">Create Milestone</button>
+            </form>
+        </div>
+    </div>
 
 </section>
 <!-- End Section -->
@@ -96,3 +95,5 @@
 </body>
 </html>
 {% endblock %}
+
+

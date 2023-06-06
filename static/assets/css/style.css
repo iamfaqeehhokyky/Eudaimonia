@@ -2554,6 +2554,19 @@ section {
 
 .completed {
   text-decoration: line-through;
+  color: #0d64fd;
 }
 
 
+/* Responsive styles for mobile view for the calendar page*/
+@media (max-width: 767px) {
+  .container {
+      padding: 20px;
+  }
+  
+  .btn-primary {
+      font-size: 14px;
+      padding: 10px 20px;
+      color: #0d64fd;
+  }
+}

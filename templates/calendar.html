@@ -65,31 +65,28 @@
     <section id="services" class="values">
 
       <div class="container">
-
-        <div class="row gy4">
-    <h2>Goals</h2>
-    <a href="/create_goal" class="sign"><span>Create Goals</span> <i class="bi bi-arrow-right"></i></a>
-    <ul>
-        {% for goal in goals %}
-            <li>{{ goal['title'] }} - {{ goal['description'] }}</li>
+        <div class="row gy-4">
+            <h2>Goals</h2>
+            <a href="/create_goal" class="btn-primary"><span>Create Goals</span> <i class="bi bi-arrow-right"></i></a>
             <ul>
-                {% set milestones = get_milestones(goal['id']) %}
-                {% for milestone in milestones %}
-                    <li {% if milestone['completed'] %}class="completed"{% endif %}>
-                        {{ milestone['description'] }}
-                        <form action="/update_progress/{{ milestone['id'] }}" method="POST" style="display:inline;">
-                            <input type="checkbox" name="completed" {% if milestone['completed'] %}checked{% endif %} onchange="this.form.submit()">
-                        </form>
-                    </li>
+                {% for goal in goals %}
+                    <li>{{ goal['title'] }} - {{ goal['description'] }}</li>
+                    <ul>
+                        {% set milestones = get_milestones(goal['id']) %}
+                        {% for milestone in milestones %}
+                            <li {% if milestone['completed'] %}class="completed"{% endif %}>
+                                {{ milestone['description'] }}
+                                <form action="/update_progress/{{ milestone['id'] }}" method="POST" style="display:inline;">
+                                    <input type="checkbox" name="completed" {% if milestone['completed'] %}checked{% endif %} onchange="this.form.submit()">
+                                </form>
+                            </li>
+                        {% endfor %}
+                        <li><a href="/create_milestone/{{ goal.id }}" class="btn-primary">Create Milestone</a></li>
+                    </ul>
                 {% endfor %}
-                <li><a href="/create_milestone/{{ goal.id }}">Create Milestone</a></li>
             </ul>
-        {% endfor %}
-    </ul>
-
-  </div>
-
-</div>
+        </div>
+    </div>
 
 </section>
 <!-- End Section -->
@@ -111,3 +108,4 @@
 </html>
 
 {% endblock %}
+
