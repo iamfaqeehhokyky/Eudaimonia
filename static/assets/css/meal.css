@@ -32,3 +32,34 @@ button{
     background-color: #4f4e7a;
     color: #fff;
 }
+
+  /* Styles for mobile devices */
+  @media (max-width: 768px) {
+
+    body {
+      font-size: 14px;
+    }
+    table {
+      font-size: 12px;
+    }
+  }
+  table {
+  overflow-x: auto;
+  display: block;
+  width: 100%;
+  }
+  /* Set a minimum width for each cell */
+  td, th {
+  min-width: 100px; 
+  }
+  .container {
+  padding: 20px;
+  }
+  .row {
+  margin: 10px 0;
+  }
+
+  #instructions{
+    background-color: #5ca5c2;
+    color: rgb(75, 75, 236);
+  }

@@ -35,9 +35,14 @@ endblock %} {%block content %}
           {% endfor %}
         </table>
         <!-- instruct users on how to edit the content of the table -->
-        <a href="/i" class="sign"><span>I</span> <i class="bi bi-arrow-right"></i></a>
-      </div>
+        <div class="dropdown">
+          <a href="#" onclick="toggleInstructions()"><span>I</span> <i class="bi bi-chevron-down"></i></a>
+          <div id="instructions" class="sub_settings" style="display: none; color: blue;">
+            <p>You can change the food item on the table by clicking on the box that contains the item you want to change, make the edit, and click outside the table to save the changes.</p>
+          </div>
+        </div>
 
+    <div>
       <button onclick="show()" id="grocery" class="grocery">
         Grocery Lists
       </button>
@@ -52,6 +57,7 @@ endblock %} {%block content %}
         </thead>
         <tbody></tbody>
       </table>
+    </div>
     </div>
   </div>
 </section>

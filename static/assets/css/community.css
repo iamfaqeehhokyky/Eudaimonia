@@ -1,0 +1,68 @@
+
+/* Style for the message container */
+.message-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+/* Style for the timestamp */
+.timestamp {
+    font-size: 12px;
+    color: #001eff;
+    margin: 0;
+}
+
+/* Style for the message content */
+.message-content {
+    background-color: #a7aad5;
+    border-radius: 20px;
+    padding: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+/* Style for the sender's name */
+.sender-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: black;
+}
+
+/* Style for the message container of the current user */
+.message-container.current-user {
+    align-items: flex-end;
+}
+
+/* Style for the message content of the current user */
+.message-content.current-user {
+    background-color: #11346d;
+    border-radius: 20px;
+    padding: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+    background-color: #4505e9;
+    align-self: flex-end;
+}
+
+/* Style for the send button */
+.send-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #a7aad5;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Media query for mobile view */
+@media (max-width: 767px) {
+    .send-button {
+        font-size: 14px;
+    }
+}

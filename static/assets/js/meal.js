@@ -65,4 +65,13 @@ document.getElementById('grocery').addEventListener('click', function() {
         table.style.display = "none";
       }
     }
+
+    function toggleInstructions() {
+      var instructionsDiv = document.getElementById("instructions");
+      if (instructionsDiv.style.display === "none") {
+        instructionsDiv.style.display = "block";
+      } else {
+        instructionsDiv.style.display = "none";
+      }
+    }
     

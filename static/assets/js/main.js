@@ -350,7 +350,7 @@ function myFunction() {
             url: '/community', 
             method: 'GET',
             success: function(response) {
-                $('#chat-messages').html(response);
+                $('#chat_messages').html(response);
             }
         });
     }
@@ -360,7 +360,7 @@ function myFunction() {
     setInterval(fetchMessages, 2000); 
 
     // Submit form and send message
-    $('#chat-form').submit(function(event) {
+    $('#chat_form').submit(function(event) {
         event.preventDefault();
 
          // sends the message to the community post route
