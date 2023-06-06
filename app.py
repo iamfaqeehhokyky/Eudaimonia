@@ -15,6 +15,7 @@ from googleapiclient.discovery import build
 import requests
 import datetime
 from flask import send_from_directory
+from werkzeug.utils import secure_filename
 
 
 
@@ -561,6 +562,22 @@ def delete_stress_management_resource(id):
 
 ############################# STRESS MANAGEMENT RESOUCE END ##########################
 
+def check_user_exists(email, username):
+    # Check if user with the given email exists
+    query = "SELECT * FROM users WHERE email = ?"
+    args = (email,)
+    user_email = db_query(query, args)
+
+    # Check if user with the given username exists
+    query1 = "SELECT * FROM users WHERE username = ?"
+    args1 = (username,)
+    user_username = db_query(query1, args1)
+
+    if user_email or user_username:
+        return True 
+    else:
+        return False 
+    
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -574,6 +591,12 @@ def signup():
         university_name = request.form['university_name']
         password = request.form['password']
         session['username'] = username
+
+        # Check if user already exists
+        user_exists = check_user_exists(email, username)
+        if user_exists:
+            error_message = 'User with the same email or username already exists.'
+            return render_template('signup.html', error=error_message)
 
         # Hash password
         password_hash = hash_password(password)
@@ -593,6 +616,7 @@ def signup():
 
     # Render sign-up page
     return render_template('signup.html')
+
 
 
 @app.route('/signin', methods=['GET', 'POST'])
@@ -859,6 +883,8 @@ def profile():
     return render_template('profile.html', user=user)
 
 # profile update
+IMAGE = os.path.join(app.root_path, 'static', 'img') 
+
 @app.route('/profile_update', methods=['GET', 'POST'])
 def profile_update():
     if g.user is None:
@@ -878,16 +904,32 @@ def profile_update():
         username = request.form.get('username')
         email = request.form.get('email')
         university_name = request.form.get('university_name')
+        profile_image = request.files.get('profile_image')
+        
 
+        if profile_image:
+            filename = secure_filename(profile_image.filename)
+            filepath = os.path.join(IMAGE, filename)
+            profile_image.save(filepath)
+
+            db_connection = get_db()
+            cur = db_connection.cursor()
+            query = "UPDATE users SET profile_name = ? WHERE id = ?"
+            args = (filename, user_id)
+            cur.execute(query, args)
+            db_connection.commit()
+
+        # Updates user profile
         query = "UPDATE users SET first_name = ?, last_name = ?, username = ?, email = ?, university_name = ? WHERE id = ?"
-        args = (first_name, last_name, username,
-                email, university_name, user_id)
+        args = (first_name, last_name, username, email, university_name, user_id)
         db_connection = get_db()
         cur = db_connection.cursor()
         cur.execute(query, args)
         db_connection.commit()
 
         return redirect('/profile')
+    print(user.profile_image)
+    print(user['profile_image'])
 
     return render_template('profile.html', user=user)
 
@@ -955,7 +997,7 @@ def video_list():
     record_usage_history(user_id, visited)
 
     med_files = ['m1.mp4', 'm2.mp4', 'm3.mp4', 'm4.mp4', 'm5.mp4',
-                 'm6.mp4', 'm7.mp4', 'm8.mp4', 'm9.mp4', 'm10.mp4', 'm11.mp4']
+                 'm6.mp4', 'm7.mp4', 'm8.mp4', 'm9.mp4', 'm10.mp4', 'm11.mp4', 'm1.mp4', 'm2.mp4']
     pers_files = ['p1.mp4', 'p2.mp4', 'p3.mp4', 'p4.mp4', 'p5.mp4']
     relax_files = ['r1.mp4', 'r2.mp4', 'r3.mp4', 'r4.mp4',
                    'r5.mp4', 'r6.mp4', 'r7.mp4', 'r8.mp4', 'r9.mp4', 'r10.mp4']

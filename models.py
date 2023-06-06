@@ -19,13 +19,14 @@ c = conn.cursor()
 #               university_name TEXT,
 #               notification_enabled INTEGER,
 #               privacy_enabled INTEGER,
-#               password_hash TEXT)''')
+#               password_hash TEXT,
+#               profile_name TEXT)''')
 
 # conn.commit()
 # conn.close()
 
 
-# class User(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(50))
-#     email = db.Column(db.String(50), unique=True)
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    email = db.Column(db.String(50), unique=True)
