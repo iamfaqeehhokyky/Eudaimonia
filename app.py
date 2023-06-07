@@ -875,23 +875,32 @@ def dashboard():
 def profile():
     if g.user is None:
         return redirect(url_for('signin'))
+    
+    name = g.user['username']
+
 
     visited = "You checked your profile"
     user_id = session['user_id']
     record_usage_history(user_id, visited)
     user = get_user(user_id)
-    return render_template('profile.html', user=user)
+    query = "SELECT profile_image FROM users WHERE username = ?"
+    args = (name,)
+    image_row = db_query(query, args)[0]
+    image = dict(image_row)
 
-import base64
+    session['image'] = image
 
-# profile update
-IMAGE = os.path.join(app.root_path, 'static', 'img')
+    return render_template('profile.html', user=user, image=session['image'])
+
+
+IMAGE = os.path.join(app.root_path, 'static', 'assets/img')
 
 @app.route('/profile_update', methods=['GET', 'POST'])
 def profile_update():
     if g.user is None:
         return redirect(url_for('signin'))
-
+    
+    name = g.user['username']
     user_id = session['user_id']
     user = get_user(user_id)
     if user is None:
@@ -901,6 +910,7 @@ def profile_update():
     record_usage_history(user_id, visited)
 
     if request.method == 'POST':
+        # Retrieve form data
         first_name = request.form.get('first_name')
         last_name = request.form.get('last_name')
         username = request.form.get('username')
@@ -909,36 +919,40 @@ def profile_update():
         profile_image = request.files.get('profile_image')
 
         if profile_image:
+            # Save the uploaded profile image
             filename = secure_filename(profile_image.filename)
-            filepath = os.path.join(IMAGE, filename)
-            profile_image.save(filepath)
+            profile_image.save(os.path.join(IMAGE, filename))
+            user['profile_image'] = filename
 
+            # Update user profile with image data
+            query = "UPDATE users SET first_name = ?, last_name = ?, username = ?, email = ?, university_name = ?, profile_image = ? WHERE id = ?"
+            args = (first_name, last_name, username, email, university_name, user['profile_image'], user_id)
             db_connection = get_db()
             cur = db_connection.cursor()
-            query = "UPDATE users SET profile_name = ? WHERE id = ?"
-            args = (filename, user_id)
             cur.execute(query, args)
             db_connection.commit()
 
-        # Updates user profile
-        query = "UPDATE users SET first_name = ?, last_name = ?, username = ?, email = ?, university_name = ? WHERE id = ?"
-        args = (first_name, last_name, username, email, university_name, user_id)
-        db_connection = get_db()
-        cur = db_connection.cursor()
-        cur.execute(query, args)
-        db_connection.commit()
-
-        # Retrieve the updated user object from the database
         user = get_user(user_id)
+        
+        # Retrieve the image data and store it in session['image']
+        query = "SELECT profile_image FROM users WHERE username = ?"
+        args = (name,)
+        image_row = db_query(query, args)[0]
+        session['image'] = dict(image_row)
 
         return redirect('/profile')
+    
+    # Retrieve the image data and store it in session['image']
+    query = "SELECT profile_image FROM users WHERE username = ?"
+    args = (name,)
+    image_row = db_query(query, args)[0]
+    session['image'] = dict(image_row)
 
-    return render_template('profile.html', user=user)
+    return render_template('profile.html', user=user, image=session['image'])
+
 
 
 # community route
-
-
 @app.route('/community', methods=['GET', 'POST'])
 def group_chat():
     if g.user is None:

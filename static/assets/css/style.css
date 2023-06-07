@@ -2586,10 +2586,10 @@ section {
   z-index: 10;
 }
 
-#navbar {
+/* #navbar {
   position: relative;
   z-index: 10;
-}
+} */
 
 #med {
   margin-top: 80px; 

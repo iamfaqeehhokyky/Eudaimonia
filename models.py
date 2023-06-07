@@ -20,7 +20,7 @@ c = conn.cursor()
 #               notification_enabled INTEGER,
 #               privacy_enabled INTEGER,
 #               password_hash TEXT,
-#               profile_name TEXT)''')
+#               profile_image TEXT )''')
 
 # conn.commit()
 # conn.close()
