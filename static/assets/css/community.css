@@ -16,10 +16,9 @@
 
 /* Style for the message content */
 .message-content {
-    background-color: #9fa2da;
+    background-color: #a7aad5;
     border-radius: 20px;
     padding: 10px;
-    font-size: 20px;
     max-width: 70%;
     word-wrap: break-word;
 }
