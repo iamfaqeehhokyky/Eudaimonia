@@ -882,8 +882,10 @@ def profile():
     user = get_user(user_id)
     return render_template('profile.html', user=user)
 
+import base64
+
 # profile update
-IMAGE = os.path.join(app.root_path, 'static', 'img') 
+IMAGE = os.path.join(app.root_path, 'static', 'img')
 
 @app.route('/profile_update', methods=['GET', 'POST'])
 def profile_update():
@@ -905,7 +907,6 @@ def profile_update():
         email = request.form.get('email')
         university_name = request.form.get('university_name')
         profile_image = request.files.get('profile_image')
-        
 
         if profile_image:
             filename = secure_filename(profile_image.filename)
@@ -927,11 +928,13 @@ def profile_update():
         cur.execute(query, args)
         db_connection.commit()
 
+        # Retrieve the updated user object from the database
+        user = get_user(user_id)
+
         return redirect('/profile')
-    print(user.profile_image)
-    print(user['profile_image'])
 
     return render_template('profile.html', user=user)
+
 
 # community route
 

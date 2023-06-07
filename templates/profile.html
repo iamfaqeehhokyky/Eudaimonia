@@ -20,11 +20,12 @@
           <div class="form-group col-md-6">
             <label for="profile_image">Profile Image:</label>
             {% if user.profile_image %}
-              <img src="{{ user.profile_image }}" alt="Profile Image" width="150">
+              <img src="data:image/jpeg;base64,{{ user.profile_image }}" alt="Profile Image" width="150">
               <p>Upload a new image:</p>
             {% endif %}
             <input type="file" id="profile_image" name="profile_image" class="form-control" accept="image/*">
           </div>
+          
 
           <div class="row gy-4">
             <div class="form-group col-md-6">
@@ -94,6 +95,9 @@
       </div>
     </div>
   </div>
+  <div>{% if user.profile_image %}
+    <img src="data:image/jpeg;base64,{{ user.profile_image }}" alt="Profile Image" width="150">
+  {% endif %}</div>
 </section>
 
      
