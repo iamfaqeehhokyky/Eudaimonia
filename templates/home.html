@@ -72,20 +72,31 @@
         <nav id="navbar" class="navbar">
           <ul>
             <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-            <li><a class="nav-link scrollto" href="#about">About</a></li>
+            <li>
+              <ul class="settings">
+                <li class="dropdown">
+                  <a href="#about"
+                    ><span>About</span> <i class="bi bi-chevron-down"></i
+                  ></a>
+                  <ul class="sub_settings">
+                    <li><a href="/hometeam">Team</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
             <li><a class="nav-link scrollto" href="#services">Services</a></li>
             <li><a class="nav-link scrollto" href="#testimonials">Testimonials</a></li>
             <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
             <li><ul class="settings">
               <li class="dropdown">
-                <a href="#"><span>Settings</span> <i class="bi bi-chevron-down"></i></a>
+                <a class="nav-link scrollto" href="#"><span>Settings</span> <i class="bi bi-chevron-down"></i></a>
                 <ul class="sub_settings">
-                  <li><a href="/history">Usage History</a></li>
-                  <li><a href="/settings">Privacy Settings</a></li>
+                  <li><a class="nav-link scrollto" href="/history">Usage History</a></li>
+                  <li><a class="nav-link scrollto" href="/settings">Privacy Settings</a></li>
                 </ul>
               </li>
             </ul></li>
-            <li><a href="/homeblog">Blog</a></li>
+            <li><a class="nav-link scrollto" href="/homeblog">Blog</a></li>
             <li>
               <a class="signout scrollto" href="/signout">Sign Out</a>
             </li>
@@ -177,6 +188,7 @@
           </div>
         </div>
       </section>
+      <br/><br/>
       <!-- End About Section -->
 
       <!-- ======= Values Section ======= -->
@@ -229,6 +241,7 @@
       </div>
 
       </section>
+      <br/><br/>
       <!-- End Values Section -->
 
       <!-- ======= Testimonials Section ======= -->
@@ -346,7 +359,9 @@
 
       </div>
 
-    </section><!-- End Testimonials Section -->
+    </section>
+    <br/><br/>
+    <!-- End Testimonials Section -->
 
    <!-- ======= Contact Section ======= -->
    <section id="contact" class="contact">
@@ -368,6 +383,7 @@
       </div>
     </div>
     </section>
+    <br/><br/>
     <!-- End Contact Section -->
     </main>
     <!-- End #main -->

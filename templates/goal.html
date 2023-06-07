@@ -1,101 +1,69 @@
-
-
 {% extends 'user_base.html' %} {% block title %}Eudaimonia - Welcome{% endblock
-    %} {%block content %}
+%} {%block content %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Goal</title>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <!-- Favicons -->
-    <link
-      href="{{ url_for('static', filename='img/favicon.png') }}"
-      rel="icon"
-    />
-    <link
-      href="{{ url_for('static', filename='img/favicon.png') }}"
-      rel="apple-touch-icon"
-    />
-
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-      rel="stylesheet"
-    />
-
-    <!-- Vendor CSS Files -->
-    <link
-      href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}"
-      rel="stylesheet"
-    />
-    <link
-      href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}"
-      rel="stylesheet"
-    />
-    <link
-      href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}"
-      rel="stylesheet"
-    />
-    <link
-      href="{{ url_for('static', filename='assets/vendor/glightbox/css/glightbox.min.css') }}"
-      rel="stylesheet"
-    />
-    <link
-      href="{{ url_for('static', filename='assets/vendor/remixicon/remixicon.css') }}"
-      rel="stylesheet"
-    />
-
-    <link
-      href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}"
-      rel="stylesheet"
-    />
 
     <!-- Template Main CSS File -->
     <link
-      href="{{ url_for('static', filename='assets/css/style.css') }}"
+      href="{{ url_for('static', filename='assets/css/goal.css') }}"
       rel="stylesheet"
     />
-</head>
-<body>
-  <br><br><br>
-  <main id="main">
+  </head>
+  <body>
     <!-- ======= main Section ======= -->
-    <section id="services" class="values">
-
+    <section id="contact" class="contact d-flex align-items-center contact">
       <div class="container">
-        <div class="row gy-4">
+        <header class="col-lg-12 col-md-12 hero-img section-header">
+          <div id="about" class="about">
+            <div class="content">
+              <h2>Create a new goal!</h2>
+            </div>
+          </div>
+        </header>
+        <div class="container">
+          <div class="row gy-4">
             <form action="/create_goal" method="POST">
-                <label>Title</label>
-                <input type="text" name="title" required><br>
-                <label>Description</label>
-                <textarea name="description" required></textarea><br>
-                <button type="submit" class="btn-primary">Create Goal</button>
+              <label>Title</label>
+              <input
+                type="text"
+                class="form-control"
+                name="title"
+                required
+              /><br />
+              <label>Description</label>
+              <textarea
+                name="description"
+                class="form-control"
+                required
+              ></textarea
+              ><br />
+              <button type="submit" class="btn-primary">Create Goal</button>
             </form>
+          </div>
         </div>
-    </div>
+      </div>
+    </section>
+    <!-- End Section -->
 
-</section>
-<!-- End Section -->
-</main>
+    <!-- Vendor JS Files -->
+    <script src="{{url_for('static', filename='assets/vendor/purecounter/purecounter_vanilla.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/aos/aos.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/php-email-form/validate.js')}}"></script>
 
-
-<!-- Vendor JS Files -->
-<script src="{{url_for('static', filename='assets/vendor/purecounter/purecounter_vanilla.js')}}"></script>
-<script src="{{url_for('static', filename='assets/vendor/aos/aos.js')}}"></script>
-<script src="{{url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{url_for('static', filename='assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
-<script src="{{url_for('static', filename='assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
-<script src="{{url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
-<script src="{{url_for('static', filename='assets/vendor/php-email-form/validate.js')}}"></script>
-
-<!-- Template Main JS File -->
-<script src="{{url_for('static', filename='assets/js/main.js')}}"></script>  
-</body>
+    <!-- Template Main JS File -->
+    <script src="{{url_for('static', filename='assets/js/main.js')}}"></script>
+  </body>
 </html>
 {% endblock %}
-
-

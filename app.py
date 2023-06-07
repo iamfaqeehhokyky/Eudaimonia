@@ -18,7 +18,6 @@ from flask import send_from_directory
 from werkzeug.utils import secure_filename
 
 
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.secret_key = os.urandom(16)
@@ -217,12 +216,15 @@ def update():
     return '/meal'
 
 # this directs users to the database were they fill the form were a table can be made for them base on their nutrional requirements
+
+
 @app.route('/first_input')
 def first_input():
     if g.user is not None:
         first_name = g.user["first_name"]
         return render_template('allergies.html', first_name=first_name)
     return redirect(url_for('signin'))
+
 
 @app.route('/input')
 def input():
@@ -231,7 +233,9 @@ def input():
         return render_template('input.html', first_name=first_name)
     return redirect(url_for('signin'))
 
-#This process the first submitted form for allegies 
+# This process the first submitted form for allegies
+
+
 @app.route('/allergies', methods=["GET", "POST"])
 def allergies():
     if g.user is None:
@@ -246,12 +250,15 @@ def allergies():
             return render_template('input.html', first_name=first_name)
         if allergies == 'No':
             return render_template('input.html', first_name=first_name)
-        
-#implementation for replacing whaet in the meals
+
+# implementation for replacing whaet in the meals
+
+
 def wheat(meal):
     substituted_meal = []
     name = g.user['username']
-    query = "SELECT Date, BreakFast, Lunch, Dinner FROM {} WHERE BreakFast LIKE %s OR Lunch LIKE %s OR Dinner LIKE %s.".format(name)
+    query = "SELECT Date, BreakFast, Lunch, Dinner FROM {} WHERE BreakFast LIKE %s OR Lunch LIKE %s OR Dinner LIKE %s.".format(
+        name)
     args = ('%wheat%', '%wheat%', '%wheat%')
     meals_with_wheat = db_query(query, args)
 
@@ -277,11 +284,14 @@ def wheat(meal):
 
     return substituted_meal
 
-#implementation for replacing oat in the meals
+# implementation for replacing oat in the meals
+
+
 def oat(meal):
     substituted_meal = []
     name = g.user['username']
-    query = "SELECT Date, BreakFast, Lunch, Dinner FROM {} WHERE BreakFast LIKE %s OR Lunch LIKE %s OR Dinner LIKE %s.".format(name)
+    query = "SELECT Date, BreakFast, Lunch, Dinner FROM {} WHERE BreakFast LIKE %s OR Lunch LIKE %s OR Dinner LIKE %s.".format(
+        name)
     args = ('%Oatmeal%', '%Oatmeal%', '%Oatmeal%')
     meals_with_wheat = db_query(query, args)
 
@@ -307,11 +317,14 @@ def oat(meal):
 
     return substituted_meal
 
-#implementation for replacing egg in the meals
+# implementation for replacing egg in the meals
+
+
 def egg(meal):
     substituted_meal = []
     name = g.user['username']
-    query = "SELECT Date, BreakFast, Lunch, Dinner FROM {} WHERE BreakFast LIKE %s OR Lunch LIKE %s OR Dinner LIKE %s.".format(name)
+    query = "SELECT Date, BreakFast, Lunch, Dinner FROM {} WHERE BreakFast LIKE %s OR Lunch LIKE %s OR Dinner LIKE %s.".format(
+        name)
     args = ('%egg%', '%egg%', '%Oatmeal%')
     meals_with_wheat = db_query(query, args)
 
@@ -337,11 +350,14 @@ def egg(meal):
 
     return substituted_meal
 
-#implementation for replacing oil in the meals
+# implementation for replacing oil in the meals
+
+
 def oil(meal):
     substituted_meal = []
     name = g.user['username']
-    query = "SELECT Date, BreakFast, Lunch, Dinner FROM {} WHERE BreakFast LIKE %s OR Lunch LIKE %s OR Dinner LIKE %s.".format(name)
+    query = "SELECT Date, BreakFast, Lunch, Dinner FROM {} WHERE BreakFast LIKE %s OR Lunch LIKE %s OR Dinner LIKE %s.".format(
+        name)
     args = ('%groundnut oil%', '%groundnut oil%', '%groundnut oil%')
     meals_with_wheat = db_query(query, args)
 
@@ -368,11 +384,13 @@ def oil(meal):
     return substituted_meal
 
 # this performs the replacing of the food items, based on the allegies chosen
+
+
 def allergy_meals(meal, allergies):
     if 'Wheat' in allergies:
         allergy = wheat(meal)
         return allergy
-    
+
     if 'Oil' in allergies:
         allergy = oil(meal)
         return allergy
@@ -441,12 +459,12 @@ def meal():
         groceries = get_meal_from_db(grocery)
         meal = get_meal_from_db(name)
 
-         # This changes the selected food a user have allergies for
+        # This changes the selected food a user have allergies for
         if allergies == 'Yes':
             meal = allergy_meals(meal, allergies)
             meal_data = get_meal_from_db(name)
             meal = list(meal_data)
-            
+
         return render_template("meal.html", meal=meal, groceries=groceries, first_name=name)
 
     elif request.method == "GET":
@@ -502,6 +520,8 @@ class StressManagementResource(db.Model):
         }
 
 # API endpoint to get all stress management resources
+
+
 @app.route('/resources', methods=['GET'])
 def get_stress_management_resources():
     resources = []
@@ -562,6 +582,7 @@ def delete_stress_management_resource(id):
 
 ############################# STRESS MANAGEMENT RESOUCE END ##########################
 
+
 def check_user_exists(email, username):
     # Check if user with the given email exists
     query = "SELECT * FROM users WHERE email = ?"
@@ -574,10 +595,10 @@ def check_user_exists(email, username):
     user_username = db_query(query1, args1)
 
     if user_email or user_username:
-        return True 
+        return True
     else:
-        return False 
-    
+        return False
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -616,7 +637,6 @@ def signup():
 
     # Render sign-up page
     return render_template('signup.html')
-
 
 
 @app.route('/signin', methods=['GET', 'POST'])
@@ -679,7 +699,18 @@ def home():
 
     return render_template('home.html', user=g.user)
 
+
+@app.route('/team')
+def team():
+    return render_template('team.html')
+
+@app.route('/hometeam')
+def hometeam():
+    return render_template('hometeam.html')
+
 # User settings
+
+
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
     user_id = session.get('user_id')
@@ -783,6 +814,8 @@ def create_goal():
     return render_template('goal.html')
 
 # Create a milestone for a goal
+
+
 @app.route('/create_milestone/<int:goal_id>', methods=['GET', 'POST'])
 def create_milestone(goal_id):
     if g.user is None:
@@ -836,6 +869,8 @@ def update_progress(milestone_id):
     return redirect('/calendar')
 
 # This gets the milestone from the db, so it can be accesed with goal using foreign keys
+
+
 @app.template_global()
 def get_milestones(goal_id):
     query = "SELECT * FROM milestones WHERE goal_id = ?"
@@ -861,6 +896,8 @@ def calendar():
     return render_template('calendar.html', goals=goals)
 
 # Dashboard route
+
+
 @app.route('/dashboard')
 def dashboard():
     if g.user is None:
@@ -871,6 +908,8 @@ def dashboard():
     return render_template('dashboard.html')
 
 # profile route
+
+
 @app.route('/profile')
 def profile():
     if g.user is None:
@@ -980,7 +1019,6 @@ def group_chat():
         cur.execute(query, args)
         db_connection.commit()
 
-
     query = "SELECT * FROM community_chat"
     messages = db_query(query, ())
 
@@ -1003,7 +1041,6 @@ def news():
     return render_template('news.html', articles=articles)
 
 
-
 @app.route('/stress')
 def video_list():
     if g.user is None:
@@ -1020,14 +1057,13 @@ def video_list():
                    'r5.mp4', 'r6.mp4', 'r7.mp4', 'r8.mp4', 'r9.mp4', 'r10.mp4']
     return render_template('mental.html', meditations=med_files, personalize=pers_files, relax=relax_files)
 
+
 @app.route('/videos/<path:filename>')
 def serve_video(filename):
     video_directory = os.path.join(app.root_path, 'static', 'video')
     cache_timeout = 3600
 
     return send_from_directory(video_directory, filename, cache_timeout=cache_timeout)
-
-
 
 
 if __name__ == '__main__':
