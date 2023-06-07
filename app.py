@@ -702,14 +702,11 @@ def home():
 
 @app.route('/team')
 def team():
-    if g.user is None:
-        return redirect(url_for('signin'))
+    return render_template('team.html')
 
-    visited = "new sign in"
-    user_id = session['user_id']
-    record_usage_history(user_id, visited)
-
-    return render_template('team.html', user=g.user)
+@app.route('/hometeam')
+def hometeam():
+    return render_template('hometeam.html')
 
 # User settings
 
