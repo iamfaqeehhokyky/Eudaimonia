@@ -1,126 +1,137 @@
-
-
 {% extends 'user_base.html' %} {% block title %}Eudaimonia - Profile{% endblock
-  %} {%block content %}
-  
-  <section id="contact" class="contact d-flex align-items-center contact">
-    <div class="container">
-      <header class="col-lg-12 hero-img section-header">
-        <div id="about" class="about">
-          <div class="content">
-            <h2>Profile</h2>
-          </div>
-        </div>
-        <style>
-          .profile-image-container {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin: 0 auto;
-          }
+%} {%block content %}
 
-          .profile-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-
-        </style>
-      </header>
-  
-      <div class="container">
-        <div class="col-lg-12 justify-content-center">
-          <h4>
-            See the details we have in our database. Feel free to make changes!
-          </h4>
-          <form action="/profile_update" method="POST" enctype="multipart/form-data" class="my-email-form">
-    
-            
-            
-            {% if session['image']['profile_image'] %}
-            <div class="form-group col-md-6">
-              <label>Current Profile Image:</label><br>
-              <div class="profile-image-container">
-                <img src="{{ url_for('static', filename='assets/img/' + session['image']['profile_image']) }}" alt="Profile Image" class="profile-image">
-            {% endif %}
-              </div>
-              
-            <div class="form-group col-md-6">
-              <label for="profile_image">Profile Image:</label>
-              <input type="file" id="profile_image" name="profile_image" class="form-control-file">
-            </div>   
-            
-            
-            <div class="row gy-4">
-              <div class="form-group col-md-6">
-                <label for="first_name">First Name:</label>
-                <input
-                  type="text"
-                  id="first_name"
-                  name="first_name"
-                  class="form-control"
-                  value="{{ user.first_name }}"
-                />
-              </div>
-  
-              <div class="form-group col-md-6">
-                <label for="last_name">Last Name:</label>
-                <input
-                  type="text"
-                  id="last_name"
-                  name="last_name"
-                  class="form-control"
-                  value="{{ user.last_name }}"
-                />
-              </div>
-  
-              <div class="form-group col-md-6">
-                <label for="username">Username:</label>
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  class="form-control"
-                  value="{{ user.username }}"
-                />
-              </div>
-  
-              <div class="form-group col-md-6">
-                <label for="email">Email:</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  class="form-control"
-                  value="{{ user.email }}"
-                />
-              </div>
-  
-              <div class="form-group col-md-6">
-                <label for="university_name">University Name:</label>
-                <input
-                  type="text"
-                  id="university_name"
-                  name="university_name"
-                  class="form-control"
-                  value="{{ user.university_name }}"
-                />
-              </div>
-            </div>
-  
-            <div class="container">
-              <div class="row">
-                <div class="col-md-12 text-center">
-                  <input type="submit" value="Save Changes" class="btn btn-primary" />
-                </div>
-              </div>
-            </div>
-          </form>
+<section id="contact" class="contact d-flex align-items-center contact">
+  <div class="container">
+    <header class="col-lg-12 hero-img section-header">
+      <div id="about" class="about">
+        <div class="content">
+          <h2>Profile</h2>
         </div>
       </div>
+      <style>
+        .profile-image-container {
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+          overflow: hidden;
+          margin: 0 auto;
+        }
+
+        .profile-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      </style>
+    </header>
+
+    <div class="container">
+      <div class="col-lg-12 justify-content-center this">
+        <h4>
+          See the details we have in our database. Feel free to make changes!
+        </h4>
+        <form
+          action="/profile_update"
+          method="POST"
+          enctype="multipart/form-data"
+          class="my-email-form"
+        >
+          {% if session['image']['profile_image'] %}
+          <div class="form-group col-md-6">
+            <label>Current Profile Image:</label><br />
+            <div class="profile-image-container">
+              <img
+                src="{{ url_for('static', filename='assets/img/' + session['image']['profile_image']) }}"
+                alt="Profile Image"
+                class="profile-image"
+              />
+            </div>
+            {% endif %}
+          </div>
+          <div class="form-group col-md-6">
+            <label for="profile_image">Profile Image:</label>
+            <input
+              type="file"
+              id="profile_image"
+              name="profile_image"
+              class="form-control-file"
+            />
+          </div>
+
+          <div class="row gy-4">
+            <div class="form-group col-md-6">
+              <label for="first_name">First Name:</label>
+              <input
+                type="text"
+                id="first_name"
+                name="first_name"
+                class="form-control"
+                value="{{ user.first_name }}"
+              />
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="last_name">Last Name:</label>
+              <input
+                type="text"
+                id="last_name"
+                name="last_name"
+                class="form-control"
+                value="{{ user.last_name }}"
+              />
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="username">Username:</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                class="form-control"
+                value="{{ user.username }}"
+              />
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control"
+                value="{{ user.email }}"
+              />
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="university_name">University Name:</label>
+              <input
+                type="text"
+                id="university_name"
+                name="university_name"
+                class="form-control"
+                value="{{ user.university_name }}"
+              />
+            </div>
+          </div>
+          <br /><br />
+
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <input
+                  type="submit"
+                  value="Save Changes"
+                  class="btn btn-primary"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-  
-       
+  </div>
+
   {% endblock %}
-  
+</section>
