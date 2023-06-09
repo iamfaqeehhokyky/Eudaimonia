@@ -1066,5 +1066,17 @@ def serve_video(filename):
     return send_from_directory(video_directory, filename, cache_timeout=cache_timeout)
 
 
+youtube_api_key = os.environ.get('YOUTUBE_API_KEY')
+
+@app.route('/stres')
+def stres():
+    med_files = ['Lm4-VgILXJ0', 'wzznoOyQs68', 'rIsW6jlRngk', 'YbF-GvP4rxY', 'EbVRkWxpUHg',
+                 'yeaHIYIdaLE', 'FFeSZr6Shzg', 'muhppUlYRXE', '2rSd5clsbyE', 'LumA2LorU7M', '6zsvGtNjhX8']
+    pers_files = ['xLd6PBx6xUI', 'vTUmLL8f_74', 'a8tQOuGPO3I', 'w6qSTR1p0IY', 'NqbSnkG8PyA']
+    relax_files = ['FXcfQ0atNK4', 'BF06BBqpDas', '160DBDwZlH0', 'CEtmDvGLZWc',
+                   'aMuHqQAwx_s', 'HHiRQ3CQCRA', 'a4VDQTaVhAM', 'mqa9pn7GsN4', 'ucmTkcS2XyA', 'oDEkTz9wLRI']
+    return render_template('ment.html', meditations=med_files, personalize=pers_files, relax=relax_files, api_key=youtube_api_key)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
