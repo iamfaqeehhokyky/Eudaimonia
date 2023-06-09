@@ -55,24 +55,121 @@
    />
   </head>
   <body>
-    <div class="video-container">
-      {% for video_id in relax %}
-      <div id="{{ video_id }}" class="click-to-play" onclick="createPlayer('{{ video_id }}')">Click to Play</div>
-      {% endfor %}
-    </div>
 
-    <div class="video-container">
-      {% for video_id in meditations %}
-      <div id="{{ video_id }}" class="click-to-play" onclick="createPlayer('{{ video_id }}')">Click to Play</div>
-      {% endfor %}
-    </div>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top">
+      <div
+        class="container-fluid container-xl d-flex align-items-center justify-content-between"
+      >
+        <a href="/home" class="logo d-flex align-items-center">
+          <img src="{{url_for('static', filename='img/emblem.png')}}" alt="" />
+          <span>Eudaimonia</span>
+        </a>
 
-    <div class="video-container">
-      {% for video_id in personalize %}
-      <div id="{{ video_id }}" class="click-to-play" onclick="createPlayer('{{ video_id }}')">Click to Play</div>
-      {% endfor %}
-    </div>
+        <nav id="navbar" class="navbar">
+          <ul>
+            <li>
+              <a class="home scrollto" href="/dashboard">Dashboard</a>
+            </li>
+            <li><a class="nav-link scrollto active" href="#med">Meditations</a></li>
+            <li><a class="nav-link scrollto" href="#relax">Relaxation</a></li>
+            <li><a class="nav-link scrollto" href="#pers">Personalized</a></li>
+            <li><a class="nav-link scrollto" href="#contact">Professional</a></li>
+            <li>
+              <a class="signout scrollto" href="/signout">Sign Out</a>
+            </li>
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+        <!-- .navbar -->
+      </div>
+    </header>
+    <!-- End Header -->
 
+    <main id="main">
+
+            <!-- ======= Meditation Section ======= -->
+            <section id="med" class="hero d-flex align-items-center">
+              <div class="container">
+                <header class="section-header">
+                  <p>Meditation Section</p>
+                </header>
+                <div class="row gx-0">
+                  <div class="col-lg-6 d-flex flex-column justify-content-center">
+                    <div id="video-container" class="video-grid">
+                          <div class="video-container">
+                            {% for video_id in meditations %}
+                            <div id="{{ video_id }}" class="click-to-play" onclick="createPlayer('{{ video_id }}')">Click to Play</div>
+                            {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                
+  <!-- ======= Relaxation Section ======= -->
+  <section id="relax" class="about">
+    <div class="container" data-aos="fade-up">
+      <header class="section-header">
+        <p>Relaxation Section</p>
+      </header>
+      <div class="row gx-0">
+        <div class="col-lg-6 d-flex flex-column justify-content-center">
+          <div id="video-container" class="video-grid">
+              <div class="video-container">
+                {% for video_id in relax %}
+                <div id="{{ video_id }}" class="click-to-play" onclick="createPlayer('{{ video_id }}')">Click to Play</div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    
+    <!-- ======= Personalized Section ======= -->
+    <section id="pers" class="testimonials">
+      <div class="container" data-aos="fade-up">
+        <header class="section-header">
+          <p>Personalized Stress management Section</p>
+        </header>
+        <div class="row gx-0">
+          <div class="col-lg-6 d-flex flex-column justify-content-center">
+            <div id="video-container" class="video-grid">
+              <div class="video-container">
+                {% for video_id in personalize %}
+                <div id="{{ video_id }}" class="click-to-play" onclick="createPlayer('{{ video_id }}')">Click to Play</div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Personalized Section -->
+
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container" data-aos="fade-up">
+        <header class="section-header">
+          <p>Talk to a Professional!</p>
+        </header>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-10">
+              <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScnLzezCX5Chuq5h_XVeipr_f1h1Dcl2C2Y020gtMNRtOOYng/viewform?embedded=true" width="700" height="520" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Contact Section -->
+
+  </main>
     <!-- Vendor JS Files -->
     <script src="{{url_for('static', filename='assets/vendor/purecounter/purecounter_vanilla.js')}}"></script>
     <script src="{{url_for('static', filename='assets/vendor/aos/aos.js')}}"></script>
