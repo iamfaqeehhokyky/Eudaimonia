@@ -1,107 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-
-    <title>Eudaimonia - Health Built Page</title>
-    <meta content="" name="description" />
-    <meta content="" name="keywords" />
-
-    <!-- Favicons -->
-    <link
-      href="{{ url_for('static', filename='img/favicon.png') }}"
-      rel="icon"
-    />
-    <link
-      href="{{ url_for('static', filename='img/favicon.png') }}"
-      rel="apple-touch-icon"
-    />
-
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-      rel="stylesheet"
-    />
-
-    <!-- Vendor CSS Files -->
-    <link
-      href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}"
-      rel="stylesheet"
-    />
-    <link
-      href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}"
-      rel="stylesheet"
-    />
-    <link
-      href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}"
-      rel="stylesheet"
-    />
-    <link
-      href="{{ url_for('static', filename='assets/vendor/glightbox/css/glightbox.min.css') }}"
-      rel="stylesheet"
-    />
-    <link
-      href="{{ url_for('static', filename='assets/vendor/remixicon/remixicon.css') }}"
-      rel="stylesheet"
-    />
-
-    <link
-      href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}"
-      rel="stylesheet"
-    />
-
-    <!-- Template Main CSS File -->
+    <title>Stress Videos</title>
+    <script src="https://www.youtube.com/iframe_api"></script>
     <link
       href="{{ url_for('static', filename='assets/css/style.css') }}"
       rel="stylesheet"
     />
-    <style>
-      .video-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr); /* 4 videos per row */
-        grid-gap: 20px; /* Adjust the gap as needed */
-        justify-content: center;
-        align-items: center;
-      }
+    <link
+      href="{{ url_for('static', filename='assets/css/mental.css') }}"
+      rel="stylesheet"
+    />
+     <!-- Favicons -->
+     <link
+     href="{{ url_for('static', filename='img/favicon.png') }}"
+     rel="icon"
+   />
+   <link
+     href="{{ url_for('static', filename='img/favicon.png') }}"
+     rel="apple-touch-icon"
+   />
 
-      .videos {
-        width: 300px;
-        height: 200px;
-        position: relative;
-      }
+   <!-- Google Fonts -->
+   <link
+     href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+     rel="stylesheet"
+   />
 
-      .videos video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
+   <!-- Vendor CSS Files -->
+   <link
+     href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}"
+     rel="stylesheet"
+   />
+   <link
+     href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}"
+     rel="stylesheet"
+   />
+   <link
+     href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}"
+     rel="stylesheet"
+   />
+   <link
+     href="{{ url_for('static', filename='assets/vendor/glightbox/css/glightbox.min.css') }}"
+     rel="stylesheet"
+   />
+   <link
+     href="{{ url_for('static', filename='assets/vendor/remixicon/remixicon.css') }}"
+     rel="stylesheet"
+   />
 
-      .video_play {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: #fff;
-        font-size: 24px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-
-      .videos:hover .video_play {
-        opacity: 1;
-      }
-    </style>
+   <link
+     href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}"
+     rel="stylesheet"
+   />
   </head>
-
   <body>
+
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top">
       <div
@@ -134,94 +88,83 @@
 
     <main id="main">
 
-      <!-- ======= Meditation Section ======= -->
-      <section id="med" class="hero d-flex align-items-center">
+            <!-- ======= Meditation Section ======= -->
+            <section id="med" class="hero d-flex align-items-center">
+              <div class="container">
+                  <span>Meditation Section</span>
+              
+                <div class="row gx-0">
+                  <div class="col-lg-6 d-flex flex-column justify-content-center">
+                    <div id="video-container" class="video-grid">
+                          <div class="video-container">
+                            {% for video_id in meditations %}
+                            <div id="{{ video_id }}" class="click-to-play" onclick="createPlayer('{{ video_id }}')">Click to Play</div>
+                            {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                
+  <!-- ======= Relaxation Section ======= -->
+  <section id="relax" class="about">
+    <div class="container" data-aos="fade-up">
+        <span>Relaxation Section</span>
+      <div class="row gx-0">
+        <div class="col-lg-6 d-flex flex-column justify-content-center">
+          <div id="video-container" class="video-grid">
+              <div class="video-container">
+                {% for video_id in relax %}
+                <div id="{{ video_id }}" class="click-to-play" onclick="createPlayer('{{ video_id }}')">Click to Play</div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    
+    <!-- ======= Personalized Section ======= -->
+    <section id="pers" class="testimonials">
+      <div class="container" data-aos="fade-up">
+          <span>Personalized Section</span>
+        <div class="row gx-0">
+          <div class="col-lg-6 d-flex flex-column justify-content-center">
+            <div id="video-container" class="video-grid">
+              <div class="video-container">
+                {% for video_id in personalize %}
+                <div id="{{ video_id }}" class="click-to-play" onclick="createPlayer('{{ video_id }}')">Click to Play</div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Personalized Section -->
+
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container" data-aos="fade-up">
+        <header class="section-header">
+          <p>Talk to a Professional!</p>
+        </header>
         <div class="container">
-          <div class="row gx-0">
-            <div class="col-lg-6 d-flex flex-column justify-content-center">
-              <div id="video-container" class="video-grid">
-                {% for video in meditations %}
-                <div class="videos">
-                  <video id="video-{{ loop.index }}" width="300" height="200" preload="metadata">
-                    <source src="{{ url_for('serve_video', filename=video) }}" type="video/mp4">
-                  </video>
-                  <div class="video_play">
-                    <span>Click to Play</span>
-                  </div>
-                </div>
-                {% endfor %}
-              </div>
+          <div class="row justify-content-center">
+            <div class="col-lg-10">
+              <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScnLzezCX5Chuq5h_XVeipr_f1h1Dcl2C2Y020gtMNRtOOYng/viewform?embedded=true" width="700" height="520" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
             </div>
           </div>
         </div>
-      </section>
-      <!-- End Meditation Section -->
+      </div>
+    </section>
+    <!-- End Contact Section -->
 
-      <!-- ======= Relaxation Section ======= -->
-      <section id="relax" class="about">
-        <div class="container" data-aos="fade-up">
-          <div class="row gx-0">
-            <div class="col-lg-6 d-flex flex-column justify-content-center">
-              <div id="video-container" class="video-grid">
-                {% for video in relax %}
-                <div class="videos">
-                  <video id="video-{{ loop.index }}" width="300" height="200" preload="metadata">
-                    <source src="{{ url_for('serve_video', filename=video) }}" type="video/mp4">
-                  </video>
-                  <div class="video_play">
-                    <span>Click to Play</span>
-                  </div>
-                </div>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- End Relaxation Section -->
-
-      <!-- ======= Personalized Section ======= -->
-      <section id="pers" class="testimonials">
-        <div class="container" data-aos="fade-up">
-          <div class="row gx-0">
-            <div class="col-lg-6 d-flex flex-column justify-content-center">
-              <div id="video-container" class="video-grid">
-                {% for video in personalize %}
-                <div class="videos">
-                  <video id="video-{{ loop.index }}" width="300" height="200" preload="metadata">
-                    <source src="{{ url_for('serve_video', filename=video) }}" type="video/mp4">
-                  </video>
-                  <div class="video_play">
-                    <span>Click to Play</span>
-                  </div>
-                </div>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- End Personalized Section -->
-
-      <!-- ======= Contact Section ======= -->
-      <section id="contact" class="contact">
-        <div class="container" data-aos="fade-up">
-          <header class="section-header">
-            <p>Talk to a Professional!</p>
-          </header>
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-lg-10">
-                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScnLzezCX5Chuq5h_XVeipr_f1h1Dcl2C2Y020gtMNRtOOYng/viewform?embedded=true" width="700" height="520" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- End Contact Section -->
-
-    </main>
-
+  </main>
     <!-- Vendor JS Files -->
     <script src="{{url_for('static', filename='assets/vendor/purecounter/purecounter_vanilla.js')}}"></script>
     <script src="{{url_for('static', filename='assets/vendor/aos/aos.js')}}"></script>
@@ -231,8 +174,7 @@
     <script src="{{url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
     <script src="{{url_for('static', filename='assets/vendor/php-email-form/validate.js')}}"></script>
 
-    <!-- Template Main JS File -->
     <script src="{{url_for('static', filename='assets/js/main.js')}}"></script>
-
+    <script src="{{url_for('static', filename='assets/js/mental.js')}}"></script>
   </body>
 </html>

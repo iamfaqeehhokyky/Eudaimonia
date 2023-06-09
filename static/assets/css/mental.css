@@ -32,5 +32,12 @@
     box-sizing: border-box;
   }
 
-  
+  span {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #012970;
+    font-family: "Nunito", sans-serif;
+    margin-top: 3px;
+  }
   
