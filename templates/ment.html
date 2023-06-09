@@ -2,70 +2,57 @@
 <html>
   <head>
     <title>Stress Videos</title>
-    <style>
-      .video-container {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr); /* Adjust the number of columns as needed */
-        grid-template-rows: repeat(4, 1fr); /* Adjust the number of rows as needed */
-        grid-gap: 10px; /* Adjust the gap as needed */
-        justify-content: center;
-        align-items: center;
-        height: 100vh; /* Adjust the height as needed */
-      }
-
-      .video-container .click-to-play {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        background-color: #f1f1f1;
-        color: #333;
-        font-size: 20px;
-        font-weight: bold;
-      }
-
-      .video-container .click-to-play:hover {
-        background-color: #e1e1e1;
-      }
-
-      .video-container .video-frame {
-        width: 100%;
-        height: 100%;
-      }
-    </style>
     <script src="https://www.youtube.com/iframe_api"></script>
-    <script>
-      // Load the YouTube IFrame Player API asynchronously
-      function loadYouTubeAPI() {
-        var tag = document.createElement('script');
-        tag.src = 'https://www.youtube.com/iframe_api';
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-      }
+    <link
+      href="{{ url_for('static', filename='assets/css/style.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='assets/css/mental.css') }}"
+      rel="stylesheet"
+    />
+     <!-- Favicons -->
+     <link
+     href="{{ url_for('static', filename='img/favicon.png') }}"
+     rel="icon"
+   />
+   <link
+     href="{{ url_for('static', filename='img/favicon.png') }}"
+     rel="apple-touch-icon"
+   />
 
-      // Create an <iframe> (video player) for each video ID
-      function createPlayer(videoId) {
-        new YT.Player(videoId, {
-          height: '100%',
-          width: '100%',
-          videoId: videoId,
-          playerVars: {
-            autoplay: 1,
-            controls: 1,
-            modestbranding: 1,
-            rel: 0
-          },
-          events: {
-            'onReady': onPlayerReady
-          }
-        });
-      }
+   <!-- Google Fonts -->
+   <link
+     href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+     rel="stylesheet"
+   />
 
-      // The API calls this function when the player is ready
-      function onPlayerReady(event) {
-        // Do something when the player is ready
-      }
-    </script>
+   <!-- Vendor CSS Files -->
+   <link
+     href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}"
+     rel="stylesheet"
+   />
+   <link
+     href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}"
+     rel="stylesheet"
+   />
+   <link
+     href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}"
+     rel="stylesheet"
+   />
+   <link
+     href="{{ url_for('static', filename='assets/vendor/glightbox/css/glightbox.min.css') }}"
+     rel="stylesheet"
+   />
+   <link
+     href="{{ url_for('static', filename='assets/vendor/remixicon/remixicon.css') }}"
+     rel="stylesheet"
+   />
+
+   <link
+     href="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.css') }}"
+     rel="stylesheet"
+   />
   </head>
   <body>
     <div class="video-container">
@@ -86,16 +73,16 @@
       {% endfor %}
     </div>
 
-    <script>
-      // Add click-to-play functionality to the video containers
-      const videoContainers = document.querySelectorAll('.click-to-play');
-      videoContainers.forEach((container) => {
-        container.addEventListener('click', () => {
-          const videoId = container.getAttribute('id');
-          container.style.display = 'none';
-          createPlayer(videoId);
-        });
-      });
-    </script>
+    <!-- Vendor JS Files -->
+    <script src="{{url_for('static', filename='assets/vendor/purecounter/purecounter_vanilla.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/aos/aos.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/php-email-form/validate.js')}}"></script>
+
+    <script src="{{url_for('static', filename='assets/js/main.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/js/mental.js')}}"></script>
   </body>
 </html>
