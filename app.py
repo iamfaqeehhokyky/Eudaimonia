@@ -1053,8 +1053,8 @@ def video_list():
     med_files = ['m1.mp4', 'm2.mp4', 'm3.mp4', 'm4.mp4', 'm5.mp4',
                  'm6.mp4', 'm7.mp4', 'm8.mp4', 'm9.mp4', 'm10.mp4', 'm11.mp4', 'm1.mp4', 'm2.mp4']
     pers_files = ['p1.mp4', 'p2.mp4', 'p3.mp4', 'p4.mp4', 'p5.mp4']
-    relax_files = ['r1.mp4', 'r2.mp4', 'r3.mp4', 'r4.mp4',
-                   'r5.mp4', 'r6.mp4', 'r7.mp4', 'r8.mp4', 'r9.mp4', 'r10.mp4']
+    relax_files = ['FXcfQ0atNK4', 'BF06BBqpDas', '160DBDwZlH0', 'CEtmDvGLZWc',
+                   'aMuHqQAwx_s', 'HHiRQ3CQCRA', 'a4VDQTaVhAM', 'mqa9pn7GsN4', 'ucmTkcS2XyA', 'oDEkTz9wLRI']
     return render_template('mental.html', meditations=med_files, personalize=pers_files, relax=relax_files)
 
 
@@ -1075,7 +1075,7 @@ def stres():
     pers_files = ['xLd6PBx6xUI', 'vTUmLL8f_74', 'a8tQOuGPO3I', 'w6qSTR1p0IY', 'NqbSnkG8PyA']
     relax_files = ['r1.mp4', 'r2.mp4', 'r3.mp4', 'r4.mp4',
                    'r5.mp4', 'r6.mp4', 'r7.mp4', 'r8.mp4', 'r9.mp4', 'r10.mp4']
-    return render_template('ment.html', meditations=med_files, video_ids=pers_files, relax=relax_files, api_key=youtube_api_key)
+    return render_template('ment.html', meditations=med_files, personalize=pers_files, relax=relax_files, api_key=youtube_api_key)
 
 
 if __name__ == '__main__':

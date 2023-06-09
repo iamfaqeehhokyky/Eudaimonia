@@ -2,17 +2,35 @@
 <html>
   <head>
     <title>Stress Videos</title>
+    <style>
+      .video-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* Adjust the number of columns as needed */
+        grid-template-rows: repeat(4, 1fr); /* Adjust the number of rows as needed */
+        grid-gap: 10px; /* Adjust the gap as needed */
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Adjust the height as needed */
+      }
+
+      .video-container iframe {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
   </head>
   <body>
-    {% for video_id in video_ids %}
     <div class="video-container">
-      <div id="player{{ loop.index }}"></div>
+      {% for video_id in personalize %}
+      <iframe
+        id="player{{ loop.index }}"
+        src="https://www.youtube.com/embed/{{ video_id }}"
+        allowfullscreen
+      ></iframe>
+      {% endfor %}
     </div>
-    {% endfor %}
 
     <script>
-      var apiKey = '{{ api_key }}';  // Retrieve the API key from Flask route
-
       // Load the YouTube IFrame Player API asynchronously
       var tag = document.createElement('script');
       tag.src = "https://www.youtube.com/iframe_api";
@@ -23,17 +41,7 @@
       var players = [];
       function onYouTubeIframeAPIReady() {
         {% for video_id in video_ids %}
-        players[{{ loop.index0 }}] = new YT.Player('player{{ loop.index }}', {
-          height: '360',
-          width: '640',
-          videoId: '{{ video_id }}',
-          playerVars: {
-            modestbranding: 1,  // Hide the YouTube logo
-            showinfo: 0,       // Hide the video title
-            controls: 1,
-            key: apiKey        // Pass the API key to the playerVars
-          }
-        });
+        players[{{ loop.index0 }}] = new YT.Player('player{{ loop.index }}');
         {% endfor %}
       }
     </script>
