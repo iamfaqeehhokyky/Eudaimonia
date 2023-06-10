@@ -3,7 +3,6 @@ import sqlite3, requests, hashlib, os, warnings, requests, datetime
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.secret_key = os.urandom(16)
 
 # i kept on getting a warning about flask future upadate so i
@@ -570,6 +569,11 @@ def delete_stress_management_resource(id):
     conn.close()
     return '', 204
 
+@app.route('/api', methods=['GET', 'POST'])
+def api():
+    if g.user is None:
+        return redirect(url_for('signin'))
+    return render_template('api.html')
 
 ############################# STRESS MANAGEMENT RESOUCE END ##########################
 

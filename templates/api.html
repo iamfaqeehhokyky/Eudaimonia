@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eudaimonia API Documentation</title>
+    <link
+      href="{{ url_for('static', filename='assets/css/api.css') }}"
+      rel="stylesheet"
+    />
+</head>
+<body>
+    <h1>Eudaimonia API Documentation</h1>
+
+  <div class="endpoint">
+    <h2>Get All Stress Management Resources</h2>
+    <pre><code>GET /resources</code></pre>
+    <p>Retrieves all stress management resources.</p>
+    <div class="response">
+      <p><strong>Response:</strong></p>
+      <pre><code>{
+  "resources": [
+    {
+      "id": 1,
+      "title": "Resource Title",
+      "description": "Resource Description",
+      "link": "Resource Link"
+    },
+    {
+      "id": 2,
+      "title": "Resource Title",
+      "description": "Resource Description",
+      "link": "Resource Link"
+    },
+    ...
+  ]
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="endpoint">
+    <h2>Get Stress Management Resource</h2>
+    <pre><code>GET /resources/{id}</code></pre>
+    <p>Retrieves a specific stress management resource.</p>
+    <div class="response">
+      <p><strong>Response:</strong></p>
+      <pre><code>{
+  "resource": {
+    "id": 1,
+    "title": "Resource Title",
+    "description": "Resource Description",
+    "link": "Resource Link"
+  }
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="endpoint">
+    <h2>Create Stress Management Resource</h2>
+    <pre><code>POST /resources</code></pre>
+    <p>Creates a new stress management resource.</p>
+    <div class="response">
+      <p><strong>Request Body:</strong></p>
+      <pre><code>{
+  "title": "Resource Title",
+  "description": "Resource Description",
+  "link": "Resource Link"
+}</code></pre>
+      <p><strong>Response:</strong></p>
+      <pre><code>{
+  "resource": {
+    "id": 1,
+    "title": "Resource Title",
+    "description": "Resource Description",
+    "link": "Resource Link"
+  }
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="endpoint">
+    <h2>Update Stress Management Resource</h2>
+    <pre><code>PUT /resources/{id}</code></pre>
+    <p>Updates an existing stress management resource.</p>
+    <div class="response">
+      <p><strong>Request Body:</strong></p>
+      <pre><code>{
+  "title": "Updated Resource Title",
+  "description": "Updated Resource Description",
+  "link": "Updated Resource Link"
+}</code></pre>
+      <p><strong>Response:</strong></p>
+      <pre><code>{
+  "resource": {
+    "id": 1,
+    "title": "Updated Resource Title",
+    "description": "Updated Resource Description",
+    "link": "Updated Resource Link"
+  }
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="endpoint">
+    <h2>Delete Stress Management Resource</h2>
+    <pre><code>DELETE /resources/{id}</code></pre>
+    <p>Deletes a specific stress management resource.</p>
+    <div class="response">
+      <p><strong>Response:</strong></p>
+      <pre><code>Status Code: 204 No Content</code></pre>
+    </div>
+  </div>
+
+  <div class="endpoint">
+    <h2>Error Handling</h2>
+    <pre><code>DELETE /resources/{id}</code></pre>
+    <p>Deletes a specific stress management resource.</p>
+    <div class="response">
+      <p><strong>Response:</strong></p>
+      <p>404 Not Found</p>
+      <pre><code>{
+        "message": "Resource not found"
+      }
+      </code></pre>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>SDKs and Libraries</h2>
+    <p>Currently, there are no SDKs or client libraries available for the Eudaimonia API. However, you can use standard HTTP libraries in your preferred programming language to interact with the API.</p>
+  </div>
+
+  <div class="section">
+    <h2>Contact Support</h2>
+    <p>If you have any further questions or need assistance, please don't hesitate to contact our support team at <a href="mailto:eudaimonia.kibo@gmail.com">eudaimonia.kibo@gmail.com</a>.</p>
+  </div>
+
+
+    <script src="{{url_for('static', filename='assets/js/api.js')}}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>
