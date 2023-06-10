@@ -5,7 +5,7 @@ INSERT INTO Under_weight3 (Date, BreakFast, Lunch, Dinner) VALUES
   ('Tueday', 'Oatmeal', 'Rice and Beef Stew', 'Tofu'),
   ('Wenesday', 'Bread and tea', 'Beans and Pap', 'Wheat and Egusi Soup'),
   ('Thursday', 'Fried Potatoes ', 'Watermellon', 'Rice and Tomatoe Stew'),
-  ('Friday', 'Bread, Egg and tea', 'Jollof Spaghetti', 'Eba and Edikang Ikang soup'),
+  ('Friday', 'Bread, Egg and tea', 'Jollof Spaghetti', 'Fufu and Edikang Ikang soup'),
   ('Saturday', 'Beans cake(Akara)', 'Pasta(white)', 'Eko and Vegetable Soup');
 
 -- Create Grocery List
@@ -26,7 +26,7 @@ INSERT INTO Normal_weight3 (Date, BreakFast, Lunch, Dinner) VALUES
   ('Tueday', 'Apple Fruit', 'Rice and Beef Stew', 'Wheat and Vegetable soup'),
   ('Wenesday', 'Sweet Potatoes', 'Tofu', 'Semovita and Ogbono Soup'),
   ('Thursday', 'Bread and tea ', 'Beans', 'Rice and Tomatoe Stew'),
-  ('Friday', 'Bread, Egg and tea', 'Jollof Spaghetti', 'Eba and Edi Ikiankon soup'),
+  ('Friday', 'Bread, Egg and tea', 'Jollof Spaghetti', 'FufU and Edi Ikiankon soup'),
   ('Saturday', 'Beans cake(Akara)', 'Cucumber(Fruit intake)', 'Jollof Rice');
 
 -- Create Grocery List
@@ -48,7 +48,7 @@ INSERT INTO Over_weight3 (Date, BreakFast, Lunch, Dinner) VALUES
   ('Tueday', 'Apple Fruit', 'Tofu', 'Jollof rice'),
   ('Wenesday', 'Beans Cake(Akara)', 'Cucumber', 'Vegetables'),
   ('Thursday', 'Bread and tea ', 'Peas/Almond', 'Eba and Egusi Soup'),
-  ('Friday', 'Potatoes(Boiled)', 'Watermellon', 'Eba and Edi Ikiankon soup'),
+  ('Friday', 'Potatoes(Boiled)', 'Watermellon', 'Fufu and Edi Ikiankon soup'),
   ('Saturday', 'Healthy Body Fast', 'Cucumber(Fruit intakes)', 'Rice and Beans with Beaf Stew');
 
 -- Create Grocery List
@@ -72,7 +72,7 @@ INSERT INTO Vegetarian_UW3 (Date, BreakFast, Lunch, Dinner) VALUES
   ('Tueday', 'Oatmeal', 'Rice and Beef Stew', 'Tofu'),
   ('Wenesday', 'Bread and tea', 'Beans and Pap', 'Wheat and Egusi Soup'),
   ('Thursday', 'Fried Potatoes ', 'Watermellon', 'Rice and Tomatoe Stew'),
-  ('Friday', 'Bread and tea', 'Jollof Spaghetti', 'Eba and Edikang Ikang soup'),
+  ('Friday', 'Bread and tea', 'Jollof Spaghetti', 'Fufu and Edikang Ikang soup'),
   ('Saturday', 'Beans cake(Akara)', 'Pasta(white)', 'Eko and Vegetable Soup');
 
 -- Create Grocery List
@@ -93,7 +93,7 @@ INSERT INTO Vegetarian_NW3 (Date, BreakFast, Lunch, Dinner) VALUES
   ('Tueday', 'Apple Fruit', 'Rice and Beef Stew', 'Wheat with Cream of Mushroom Soup'),
   ('Wenesday', 'Sweet Potatoes', 'Tofu', 'Semovita and Ogbono Soup'),
   ('Thursday', 'Tofu Lettuce Wraps', 'Beans', 'Rice and Tomatoe Stew'),
-  ('Friday', 'Bread and tea', 'Jollof Spaghetti', 'Eba and Edi Ikiankon soup'),
+  ('Friday', 'Bread and tea', 'Jollof Spaghetti', 'Fufu and Edi Ikiankon soup'),
   ('Saturday', 'Beans cake(Akara)', 'Cucumber(Fruit intake)', 'Jollof Rice');
 
 -- Create Grocery List
@@ -137,7 +137,7 @@ INSERT INTO Allegies_UW3 (Date, BreakFast, Lunch, Dinner) VALUES
   ('Tueday', 'Akara(beans cake)', 'Rice and Beef Stew', 'Tofu'),
   ('Wenesday', 'Bread and tea', 'Beans and Pap', 'Amala and Egusi Soup'),
   ('Thursday', 'Fried Potatoes ', 'Watermellon', 'Rice and Tomatoe Stew'),
-  ('Friday', 'Bread and tea', 'Jollof Spaghetti', 'Eba and Edikang Ikang soup'),
+  ('Friday', 'Bread and tea', 'Jollof Spaghetti', 'Fufu and Edikang Ikang soup'),
   ('Saturday', 'Beans cake(Akara)', 'Pasta(white)', 'Eko and Vegetable Soup');
 
 -- Create Grocery List
@@ -159,7 +159,7 @@ INSERT INTO Allegies_NW3 (Date, BreakFast, Lunch, Dinner) VALUES
   ('Tueday', 'Fruit Salad', 'Rice and Beef Stew', 'Eba with Cream of Beaf Soup'),
   ('Wenesday', 'Sweet Potatoes', 'Tofu', 'Semovita and Ogbono Soup'),
   ('Thursday', 'Tofu Lettuce Wraps', 'Beans', 'Rice and Tomatoe Stew'),
-  ('Friday', 'Bread and tea', 'Jollof Spaghetti', 'Eba and Edi Ikiankon soup'),
+  ('Friday', 'Bread and tea', 'Jollof Spaghetti', 'Fufu and Edi Ikiankon soup'),
   ('Saturday', 'Beans cake(Akara)', 'Grape', 'Jollof Rice');
 
 -- Create Grocery List
@@ -180,7 +180,7 @@ INSERT INTO Allegies_OW3 (Date, BreakFast, Lunch, Dinner) VALUES
   ('Tueday', 'Fruit Salad', 'Tofu', 'Jollof rice'),
   ('Wenesday', 'Beans Cake(Akara)', 'Berry', 'Vegetables'),
   ('Thursday', 'Bread and tea ', 'Fruit Salad', 'Eba and Egusi Soup'),
-  ('Friday', 'Potatoes(Boiled)', 'Orange', 'Eba and Edi Ikiankon soup'),
+  ('Friday', 'Potatoes(Boiled)', 'Orange', 'Fufu and Edi Ikiankon soup'),
   ('Saturday', 'Healthy Body Fast', 'Cucumber', 'Rice and Beans with Beaf Stew');
 
 -- Create Grocery List
@@ -228,7 +228,7 @@ INSERT INTO Normal_weight2 (Date, BreakFast, Lunch, Dinner) VALUES
   ('Tueday', 'Apple Fruit', 'Rice and Beef Stew', 'Wheat and Vegetable soup'),
   ('Wenesday', '', 'Tofu', 'Semovita and Ogbono Soup'),
   ('Thursday', ' ', 'Beans', 'Rice and Tomatoe Stew'),
-  ('Friday', 'Bread, Egg and tea', '', 'Eba and Edi Ikiankon soup'),
+  ('Friday', 'Bread, Egg and tea', '', 'Fufu and Edi Ikiankon soup'),
   ('Saturday', 'Beans cake(Akara)', 'Cucumber(Fruit intake)', 'Jollof Rice');
 
 -- Create Grocery List
@@ -250,7 +250,7 @@ INSERT INTO Over_weight2 (Date, BreakFast, Lunch, Dinner) VALUES
   ('Tueday', 'Apple Fruit', 'Tofu', ''),
   ('Wenesday', '', 'Cucumber', 'Vegetables'),
   ('Thursday', ' ', 'Peas/Almond', 'Eba and Egusi Soup'),
-  ('Friday', '', 'Watermellon', 'Eba and Edi Ikiankon soup'),
+  ('Friday', '', 'Watermellon', 'Fufu and Edi Ikiankon soup'),
   ('Saturday', 'Healthy Body Fast', 'Cucumber(Fruit intakes)', 'Rice and Beans with Beaf Stew');
 
 -- Create Grocery List
@@ -340,7 +340,7 @@ INSERT INTO Allegies_UW2 (Date, BreakFast, Lunch, Dinner) VALUES
   ('Tueday', 'Akara(beans cake)', 'Rice and Beef Stew', ''),
   ('Wenesday', '', 'Beans and Pap', 'Amala and Egusi Soup'),
   ('Thursday', 'Fried Potatoes ', 'Watermellon', 'Rice and Tomatoe Stew'),
-  ('Friday', '', 'Jollof Spaghetti', 'Eba and Edikang Ikang soup'),
+  ('Friday', '', 'Jollof Spaghetti', 'Fufu and Edikang Ikang soup'),
   ('Saturday', 'Beans cake(Akara)', '', 'Eko and Vegetable Soup');
 
 -- Create Grocery List
@@ -363,7 +363,7 @@ INSERT INTO Allegies_NW2 (Date, BreakFast, Lunch, Dinner) VALUES
   ('Tueday', 'Fruit Salad', 'Rice and Beef Stew', 'Eba with Cream of Beaf Soup'),
   ('Wenesday', '', 'Tofu', 'Amala and Ogbono Soup'),
   ('Thursday', 'Tofu Lettuce Wraps', '', 'Rice and Tomatoe Stew'),
-  ('Friday', '', 'Jollof Spaghetti', 'Eba and Edi Ikiankon soup'),
+  ('Friday', '', 'Jollof Spaghetti', 'Fufu and Edi Ikiankon soup'),
   ('Saturday', 'Beans cake(Akara)', 'Grape', 'Jollof Rice');
 
 -- Create Grocery List
