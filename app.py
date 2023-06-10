@@ -493,11 +493,10 @@ class StressManagementResource:
 # API endpoint to get all stress management resources
 @app.route('/resources', methods=['GET'])
 def get_stress_management_resources():
-    conn = sqlite3.connect('database.db')
-    c = conn.cursor()
-    c.execute('SELECT * FROM stress_management_resources')
+    query = "SELECT * FROM stress_management_resources"
+    rows = db_query(query, ())
     resources = []
-    for row in c.fetchall():
+    for row in rows:
         resource = StressManagementResource(
             title=row[1],
             description=row[2],
@@ -505,16 +504,13 @@ def get_stress_management_resources():
         )
         resource.id = row[0]
         resources.append(resource.to_dict())
-    conn.close()
     return jsonify({'resources': resources})
 
 @app.route('/resources/<int:id>')
 def get_stress_management_resource(id):
-    conn = sqlite3.connect('database.db')
-    c = conn.cursor()
-    c.execute('SELECT * FROM stress_management_resources WHERE id = ?', (id,))
-    row = c.fetchone()
-    conn.close()
+    query = "SELECT * FROM stress_management_resources WHERE id = ?"
+    args = (id,)
+    row = db_query(query, args)
     if row is None:
         return jsonify({'message': 'Resource not found'}), 404
     resource = StressManagementResource(
@@ -552,21 +548,22 @@ def update_stress_management_resource(id):
         link=data['link']
     )
     resource.id = id
-    conn = sqlite3.connect('database.db')
-    c = conn.cursor()
-    c.execute('UPDATE stress_management_resources SET title = ?, description = ?, link = ? WHERE id = ?',
-              (resource.title, resource.description, resource.link, resource.id))
-    conn.commit()
-    conn.close()
+    query = "UPDATE stress_management_resources SET title = ?, description = ?, link = ? WHERE id = ?"
+    args = (resource.title, resource.description, resource.link, resource.id)
+    db_connection = get_db()
+    cur = db_connection.cursor()
+    cur.execute(query, args)
+    db_connection.commit()
     return jsonify({'resource': resource.to_dict()})
 
 @app.route('/resources/<int:id>', methods=['DELETE'])
 def delete_stress_management_resource(id):
-    conn = sqlite3.connect('database.db')
-    c = conn.cursor()
-    c.execute('DELETE FROM stress_management_resources WHERE id = ?', (id,))
-    conn.commit()
-    conn.close()
+    query = "DELETE FROM stress_management_resources WHERE id = ?"
+    args = (id,)
+    db_connection = get_db()
+    cur = db_connection.cursor()
+    cur.execute(query, args)
+    db_connection.commit()
     return '', 204
 
 @app.route('/api', methods=['GET', 'POST'])

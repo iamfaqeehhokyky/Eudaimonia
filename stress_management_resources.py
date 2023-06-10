@@ -18,4 +18,3 @@ stress_management_resources = [
 
     },
 ]
-
