@@ -1,22 +1,6 @@
-from flask import Flask, render_template, request, g, session, jsonify, url_for, redirect, flash
-from models import db
-from stress_management_resources import stress_management_resources
-from flask_migrate import Migrate
-import sqlite3
-import requests
-import hashlib
-import os
-import warnings
-import google.auth
-from google.auth.transport.requests import Request
-from google.oauth2 import service_account
-import googleapiclient.discovery
-from googleapiclient.discovery import build
-import requests
-import datetime
-from flask import send_from_directory
+from flask import Flask, render_template, request, g, session, jsonify, url_for, redirect, flash, send_from_directory
+import sqlite3, requests, hashlib, os, warnings, requests, datetime
 from werkzeug.utils import secure_filename
-
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -25,10 +9,6 @@ app.secret_key = os.urandom(16)
 # i kept on getting a warning about flask future upadate so i
 # Ignored the FSADeprecationWarning
 warnings.filterwarnings("ignore", category=DeprecationWarning)
-
-# initialize the app with the extension
-db.init_app(app)
-migrate = Migrate(app, db)
 
 #  for mySQLite
 app.secret_key = 'your'
@@ -43,8 +23,6 @@ def hash_password(password):
     return salt + password_hash
 
 # Function handling the password checker for correctness and tallying
-
-
 def check_password(password, password_hash):
     salt = password_hash[:16]
     stored_password_hash = password_hash[16:]
@@ -497,19 +475,12 @@ def grocery():
 ############# THE STRESS MANAGEMENT RESOUCEs ROUTE #########################
 
 
-class StressManagementResource(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(255), nullable=False)
-    description = db.Column(db.Text, nullable=False)
-    link = db.Column(db.String(255), nullable=True)
-
+class StressManagementResource:
     def __init__(self, title, description, link):
+        self.id = None
         self.title = title
         self.description = description
         self.link = link
-
-    def __repr__(self):
-        return f"StressManagementResource(id={self.id}, title='{self.title}', link='{self.link}')"
 
     def to_dict(self):
         return {
@@ -519,66 +490,86 @@ class StressManagementResource(db.Model):
             'link': self.link
         }
 
+
 # API endpoint to get all stress management resources
-
-
 @app.route('/resources', methods=['GET'])
 def get_stress_management_resources():
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute('SELECT * FROM stress_management_resources')
     resources = []
-    for resource in stress_management_resources:
-        new_resource = StressManagementResource(
-            title=resource["title"],
-            description=resource["description"],
-            link=resource["link"]
+    for row in c.fetchall():
+        resource = StressManagementResource(
+            title=row[1],
+            description=row[2],
+            link=row[3]
         )
-        db.session.add(new_resource)
-        db.session.commit()
-        resources.append(new_resource.to_dict())
+        resource.id = row[0]
+        resources.append(resource.to_dict())
+    conn.close()
     return jsonify({'resources': resources})
-
 
 @app.route('/resources/<int:id>')
 def get_stress_management_resource(id):
-    resource = StressManagementResource.query.get(id)
-    if resource is None:
-        return 404
-    return jsonify({'resource': resource})
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute('SELECT * FROM stress_management_resources WHERE id = ?', (id,))
+    row = c.fetchone()
+    conn.close()
+    if row is None:
+        return jsonify({'message': 'Resource not found'}), 404
+    resource = StressManagementResource(
+        title=row[1],
+        description=row[2],
+        link=row[3]
+    )
+    resource.id = row[0]
+    return jsonify({'resource': resource.to_dict()})
 
 # API endpoint to create a new stress management resouce
-
-
 @app.route('/resources', methods=['POST'])
 def create_stress_management_resources():
     data = request.get_json()
-    new_resource = StressManagementResource(
-        title=data['title'], description=data['description'], link=data['link'])
-    db.session.add(new_resource)
-    db.session.commit()
-    # return jsonify({'message': 'Resource created successfully'})
-    return jsonify({'resource': new_resource}), 201
-
+    resource = StressManagementResource(
+        title=data['title'],
+        description=data['description'],
+        link=data['link']
+    )
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute('INSERT INTO stress_management_resources (title, description, link) VALUES (?, ?, ?)',
+              (resource.title, resource.description, resource.link))
+    conn.commit()
+    resource.id = c.lastrowid
+    conn.close()
+    return jsonify({'resource': resource.to_dict()}), 201
 
 @app.route('/resources/<int:id>', methods=['PUT'])
 def update_stress_management_resource(id):
     data = request.get_json()
-    resource = StressManagementResource.query.get(id)
-    if resource is None:
-        return 404
-    resource.title = data['title']
-    resource.description = data['description']
-    resource.link = data['link']
-    db.session.commit()
-    return 200, {'resource': resource}
-
+    resource = StressManagementResource(
+        title=data['title'],
+        description=data['description'],
+        link=data['link']
+    )
+    resource.id = id
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute('UPDATE stress_management_resources SET title = ?, description = ?, link = ? WHERE id = ?',
+              (resource.title, resource.description, resource.link, resource.id))
+    conn.commit()
+    conn.close()
+    return jsonify({'resource': resource.to_dict()})
 
 @app.route('/resources/<int:id>', methods=['DELETE'])
 def delete_stress_management_resource(id):
-    resource = StressManagementResource.query.get(id)
-    if resource is None:
-        return 404
-    db.session.delete(resource)
-    db.session.commit()
-    return 204
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute('DELETE FROM stress_management_resources WHERE id = ?', (id,))
+    conn.commit()
+    conn.close()
+    return '', 204
+
 
 ############################# STRESS MANAGEMENT RESOUCE END ##########################
 
