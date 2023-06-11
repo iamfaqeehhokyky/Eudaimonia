@@ -26,7 +26,6 @@ function createPlayer(videoId) {
 
 // The API calls this function when the player is ready
 function onPlayerReady(event) {
-  // Do something when the player is ready
 }
 
 // Added click-to-play functionality to the video containers
@@ -38,3 +37,4 @@ videoContainers.forEach((container) => {
     createPlayer(videoId);
   });
 });
+
