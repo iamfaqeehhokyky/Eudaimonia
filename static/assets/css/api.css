@@ -109,3 +109,30 @@ a:hover {
   border-radius: 5px;
   cursor: pointer;
 }
+
+/* Mobile Styles */
+@media (max-width: 600px) {
+  body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .endpoint h2 {
+    font-size: 20px;
+  }
+
+  .endpoint pre {
+    font-size: 12px;
+  }
+
+  .response pre {
+    font-size: 12px;
+  }
+
+  .section h2 {
+    font-size: 18px;
+  }
+}
