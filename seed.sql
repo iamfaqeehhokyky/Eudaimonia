@@ -396,3 +396,19 @@ INSERT INTO Allegies_OW2_Grocery (Date, Item) VALUES
   ('Thursday', ', Fruits, Garri, Tomatoes, Pepper, Maggi ,  Salt,  Meat'),
   ('Friday', 'Potatoes, Fruit ,Tomatoes, Pepper, Maggi , Garri, Salt, Bitterleaf, Garri'),
   ('Saturday', 'Tomatoes,Eko, Cucumber, rice, Pepper, Maggi ,  Salt, Cucumber');
+
+-- Insert into stress_management_resources table
+INSERT INTO stress_management_resources (title, description, link) VALUES 
+('How to Relieve Stress', 'This video is made for you to relieve any form of stress or depression', 'https://youtu.be/xLd6PBx6xUI');
+INSERT INTO stress_management_resources (title, description, link) VALUES 
+('Relaxation', 'You just have to listen to this beautifull music to ace your mind and make you think clearly', 'https://youtu.be/FXcfQ0atNK4');
+-- Insert into stress_management_resources table
+INSERT INTO stress_management_resources (title, description, link) VALUES 
+('Meditation', 'Help to meditate and concentrate on your surroundings', 'https://youtu.be/Lm4-VgILXJ0');
+INSERT INTO stress_management_resources (title, description, link) VALUES 
+('Meditation', 'Teaches on how to meditate', 'https://youtube.com/shorts/YbF-GvP4rxY?feature=share4');
+-- Insert into stress_management_resources table
+INSERT INTO stress_management_resources (title, description, link) VALUES 
+('Stress Training', 'Teaches you  how to calm down nerves to prepare you for a task', 'https://youtu.be/w6qSTR1p0IY');
+INSERT INTO stress_management_resources (title, description, link) VALUES 
+('Relaxation', 'Make you feel relax with a wonderful sound for rest or sleep', 'https://youtu.be/mqa9pn7GsN4');
