@@ -1019,6 +1019,9 @@ def group_chat():
 
 @app.route('/news')
 def news():
+    if g.user is None:
+        return redirect(url_for('signin'))
+    
     # this makes an API request to retrieve news articles related to mental health
     url = 'https://newsapi.org/v2/everything'
     params = {
